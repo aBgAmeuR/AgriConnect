@@ -1,0 +1,66 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id Int [pk, increment]
+  email String [unique, not null]
+  password String [not null]
+  role Role [not null]
+  orders Order [not null]
+  products Product [not null]
+  sentMessages Message [not null]
+  receivedMessages Message [not null]
+}
+
+Table Product {
+  id Int [pk, increment]
+  name String [not null]
+  description String [not null]
+  price Float [not null]
+  stock Int [not null]
+  producerId Int [not null]
+  producer User [not null]
+  orders Order [not null]
+}
+
+Table Order {
+  id Int [pk, increment]
+  status OrderStatus [not null]
+  clientId Int [not null]
+  client User [not null]
+  productId Int [not null]
+  product Product [not null]
+}
+
+Table Message {
+  id Int [pk, increment]
+  content String [not null]
+  senderId Int [not null]
+  sender User [not null]
+  receiverId Int [not null]
+  receiver User [not null]
+}
+
+Enum Role {
+  CLIENT
+  PRODUCER
+  ADMIN
+}
+
+Enum OrderStatus {
+  PENDING
+  READY
+  DELIVERED
+  CANCELED
+}
+
+Ref: Product.producerId > User.id
+
+Ref: Order.clientId > User.id
+
+Ref: Order.productId > Product.id
+
+Ref: Message.senderId > User.id
+
+Ref: Message.receiverId > User.id
