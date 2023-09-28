@@ -50,7 +50,7 @@ export const authOptions: NextAuthOptions = {
         //   id: user.id,
         //   name: user.name,
         // };
-        const user = { id: '1234', email: '1234@gmail.com', password: 'nextauth' };
+        const user = { id: '1234', email: '1234@gmail.com', password: 'nextauth', role: 'admin' };
 
         function timeout(delay: number) {
           return new Promise((res) => setTimeout(res, delay));
@@ -58,7 +58,10 @@ export const authOptions: NextAuthOptions = {
         await timeout(1000); // wait 1 second
 
         if (credentials?.email === user.email && credentials.password === user.password) {
-          return user;
+          return {
+            id: user.id,
+            role: user.role,
+          };
         } else {
           return null;
         }
@@ -100,6 +103,7 @@ export const authOptions: NextAuthOptions = {
     async session(params: { session: Session; token: JWT; user: User }) {
       if (params.session.user) {
         params.session.user.id = params.token.id as string;
+        params.session.user.role = params.token.role as 'client' | 'producer' | 'admin';
       }
 
       return params.session;
@@ -107,6 +111,7 @@ export const authOptions: NextAuthOptions = {
     async jwt(params: { token: JWT; user?: User | undefined; account?: Account | null | undefined; profile?: Profile | undefined; isNewUser?: boolean | undefined }) {
       if (params.user) {
         params.token.id = params.user.id;
+        params.token.role = params.user.role;
       }
 
       return params.token;
