@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Plateforme de Gestion et de Distribution pour Producteurs Alimentaires Locaux
 
-## Getting Started
+## Description
+Ce projet vise à créer une plateforme qui facilite la gestion et la distribution de produits alimentaires locaux. Il permet aux producteurs de gérer leurs produits, stocks et commandes, et aux clients de découvrir des producteurs locaux, de passer des commandes et bien plus encore.
 
-First, run the development server:
+## Table des Matières 
+- [Installation](#installation) 
+- [Utilisation](#utilisation) 
+- [Licence](#licence)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Installation
+1. Clonez ce dépôt
+2. Installez les dépendances
+3. Configurez la base de données
+4. Lancez l'application
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Utilisation
+Après avoir lancé l'application, vous pouvez :
+- Vous inscrire en tant que client ou producteur
+- Explorer les produits disponibles
+- Passer des commandes
+- Gérer votre compte et vos produits (pour les producteurs)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Licence
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Ce projet est sous licence GNU General Public License v3.0 - voir le fichier **LICENSE.md** pour plus de détails.
