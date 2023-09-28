@@ -6,6 +6,7 @@ Ce projet vise à créer une plateforme qui facilite la gestion et la distributi
 ## Table des Matières 
 - [Installation](#installation) 
 - [Utilisation](#utilisation) 
+- [Technologies Utilisées](#technologies-utilisées) 
 - [Licence](#licence)
 
 ## Installation
@@ -20,6 +21,14 @@ Après avoir lancé l'application, vous pouvez :
 - Explorer les produits disponibles
 - Passer des commandes
 - Gérer votre compte et vos produits (pour les producteurs)
+
+## Technologies Utilisées
+- **Next.js**: Framework pour le développement côté serveur et côté client.
+- **Prisma**: ORM pour la gestion de la base de données.
+- **MySQL**: Système de gestion de base de données relationnelle.
+- **TypeScript**: Superset de JavaScript offrant des types statiques.
+- **NextAuth**: Bibliothèque pour l'authentification côté serveur.
+- **Shadcn/UI**: Bibliothèque d'interface utilisateur pour des composants réactifs et esthétiques.
 
 ## Licence
 
