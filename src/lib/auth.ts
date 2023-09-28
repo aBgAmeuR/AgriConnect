@@ -51,6 +51,12 @@ export const authOptions: NextAuthOptions = {
         //   name: user.name,
         // };
         const user = { id: '1234', email: '1234@gmail.com', password: 'nextauth' };
+
+        function timeout(delay: number) {
+          return new Promise((res) => setTimeout(res, delay));
+        }
+        await timeout(1000); // wait 1 second
+
         if (credentials?.email === user.email && credentials.password === user.password) {
           return user;
         } else {

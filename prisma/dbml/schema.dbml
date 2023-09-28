@@ -2,65 +2,94 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
-Table User {
-  id Int [pk, increment]
+Table Client {
+  id String [pk]
+  firstName String [not null]
+  lastName String [not null]
   email String [unique, not null]
   password String [not null]
-  role Role [not null]
   orders Order [not null]
-  products Product [not null]
-  sentMessages Message [not null]
-  receivedMessages Message [not null]
+  messages Message [not null]
 }
 
-Table Product {
-  id Int [pk, increment]
-  name String [not null]
-  description String [not null]
-  price Float [not null]
-  stock Int [not null]
-  producerId Int [not null]
-  producer User [not null]
-  orders Order [not null]
+Table Producer {
+  id String [pk]
+  firstName String [not null]
+  lastName String [not null]
+  address String [not null]
+  email String [unique, not null]
+  password String [not null]
+  products Product [not null]
+  messages Message [not null]
+}
+
+Table Admin {
+  id String [pk]
+  firstName String [not null]
+  lastName String [not null]
+  email String [unique, not null]
+  password String [not null]
+  messages Message [not null]
 }
 
 Table Order {
-  id Int [pk, increment]
+  id String [pk]
+  products ProductOrder [not null]
   status OrderStatus [not null]
-  clientId Int [not null]
-  client User [not null]
-  productId Int [not null]
+  date DateTime [default: `now()`, not null]
+  clientId String [not null]
+  client Client [not null]
+}
+
+Table Product {
+  id String [pk]
+  name String [not null]
+  stock Int [not null]
+  producerId String [not null]
+  producer Producer [not null]
+  orders ProductOrder [not null]
+}
+
+Table ProductOrder {
+  productId String [not null]
+  orderId String [not null]
   product Product [not null]
+  order Order [not null]
+
+  indexes {
+    (productId, orderId) [pk]
+  }
 }
 
 Table Message {
-  id Int [pk, increment]
+  id String [pk]
   content String [not null]
-  senderId Int [not null]
-  sender User [not null]
-  receiverId Int [not null]
-  receiver User [not null]
-}
-
-Enum Role {
-  CLIENT
-  PRODUCER
-  ADMIN
+  sender String [not null]
+  client Client
+  clientId String
+  producer Producer
+  producerId String
+  admin Admin
+  adminId String
 }
 
 Enum OrderStatus {
   PENDING
   READY
   DELIVERED
-  CANCELED
+  CANCELLED
 }
 
-Ref: Product.producerId > User.id
+Ref: Order.clientId > Client.id
 
-Ref: Order.clientId > User.id
+Ref: Product.producerId > Producer.id
 
-Ref: Order.productId > Product.id
+Ref: ProductOrder.productId > Product.id
 
-Ref: Message.senderId > User.id
+Ref: ProductOrder.orderId > Order.id
 
-Ref: Message.receiverId > User.id
+Ref: Message.clientId > Client.id
+
+Ref: Message.producerId > Producer.id
+
+Ref: Message.adminId > Admin.id

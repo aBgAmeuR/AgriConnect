@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
-// import { signIn } from "next-auth/client"
+import { signIn } from 'next-auth/react';
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -20,8 +20,12 @@ import {
 import { Input } from "@/components/ui/input"
 
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
+  email: z.string().email({
+    message: "Veuillez entrer une adresse e-mail valide."
+  }),
+  password: z.string().min(8, {
+    message: "Le mot de passe doit avoir au moins 8 caractères."
+  }),
 })
 
 export function SignInForm() {
@@ -38,25 +42,26 @@ export function SignInForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // startTransition(async () => {
-    //   try {
-    //     const result = await signIn.create({
-    //       identifier: data.email,
-    //       password: data.password,
-    //     })
+    startTransition(async () => {
+      try {
+        const signInResponse  = await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          // redirect: true,
+          // callbackUrl: "/",
+        })
 
-    //     if (result.status === "complete") {
-    //       await setActive({ session: result.createdSessionId })
-
-    //       router.push(`${window.location.origin}/`)
-    //     } else {
-    //       /*Investigate why the login hasn't completed */
-    //       console.log(result)
-    //     }
-    //   } catch (err) {
-    //     catchClerkError(err)
-    //   }
-    // })
+        if (!signInResponse || signInResponse.ok !== true) {
+          console.log("nn",signInResponse);
+        } else {
+          console.log("ok" ,signInResponse);
+          
+          // router.refresh();
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })
     console.log(values);
   }
 
@@ -72,7 +77,7 @@ export function SignInForm() {
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="rodneymullen180@gmail.com"
+                  placeholder="damiencren35@gmail.com"
                   {...field}
                 />
               </FormControl>
@@ -87,7 +92,7 @@ export function SignInForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-              <Input
+                <Input
                   type="password"
                   placeholder="********"
                   {...field}

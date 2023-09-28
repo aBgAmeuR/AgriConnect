@@ -1,3 +1,5 @@
+import AuthProviders from '@/hooks/auth-provider'
+import { ThemeProvider } from '@/hooks/theme-provider'
 import '@/styles/global.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -16,7 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AuthProviders>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </AuthProviders>
+      </body>
     </html>
   )
 }

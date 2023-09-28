@@ -20,7 +20,7 @@ export default async function SignInPage() {
   return (
     <div className="relative flex items-center justify-center p-8">
       <Link className={buttonVariants({ variant: "ghost" }) + " absolute top-8 right-8"} href="signup">Créer un compte</Link>
-      <div className="flex flex-col gap-6 w-full max-w-xs">
+      <div className="flex flex-col gap-3 w-full max-w-xs">
         <h1 className="text-xl">Se connecter</h1>
         <SignInForm />
         <p className="text-sm text-muted-foreground text-center">En cliquant sur Créer, vous acceptez nos Conditions d&apos;utilisation et politique de confidentialité.</p>
