@@ -28,7 +28,7 @@ const formSchema = z.object({
   }),
 })
 
-export function SignInForm() {
+export function LoginForm() {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
@@ -109,8 +109,8 @@ export function SignInForm() {
               aria-hidden="true"
             />
           )} */}
-          Sign in
-          <span className="sr-only">Sign in</span>
+          Se connecter
+          <span className="sr-only">Se connecter</span>
         </Button>
       </form>
     </Form>

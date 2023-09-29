@@ -1,6 +1,7 @@
 import AuthProviders from "@/hooks/auth-provider"
 import { ThemeProvider } from "@/hooks/theme-provider"
 import Image from "next/image"
+import { Toaster } from "@/components/ui/toaster"
 
 interface AuthLayoutProps {
   children: React.ReactNode
@@ -24,6 +25,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
           </div>
           {children}
         </main>
+        <Toaster />
       </ThemeProvider>
     </AuthProviders>
   )

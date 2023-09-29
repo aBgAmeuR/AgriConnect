@@ -5,24 +5,24 @@ import { redirect } from "next/navigation"
 import { getCurrentUser } from "@/lib/session"
 
 import { Button, buttonVariants } from "@/components/ui/button"
-import { SignInForm } from "@/components/forms/signin-form"
+import { LoginForm } from "@/components/forms/login-form"
 
 export const metadata: Metadata = {
   // metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
-  title: "Sign In",
-  description: "Sign in to your account",
+  title: "Login",
+  description: "Login to your account",
 }
 
-export default async function SignInPage() {
+export default async function LoginPage() {
   const user = await getCurrentUser()
   if (user) redirect("/");
 
   return (
     <div className="relative flex items-center justify-center p-8">
-      <Link className={buttonVariants({ variant: "ghost" }) + " absolute top-8 right-8"} href="signup">Créer un compte</Link>
-      <div className="flex flex-col gap-3 w-full max-w-xs">
-        <h1 className="text-xl">Se connecter</h1>
-        <SignInForm />
+      <Link className={buttonVariants({ variant: "ghost" }) + " absolute top-8 right-8"} href="register">Créer un compte</Link>
+      <div className="flex flex-col gap-3 w-[350px]">
+        <h1 className="text-xl text-center">Se connecter</h1>
+        <LoginForm />
         <p className="text-sm text-muted-foreground text-center">En cliquant sur Créer, vous acceptez nos Conditions d&apos;utilisation et politique de confidentialité.</p>
       </div>
     </div>

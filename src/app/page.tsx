@@ -5,7 +5,6 @@ import { signOut } from "next-auth/react"
 
 export default async function Home() {
   const user = await getCurrentUser()
-  console.log(user);
   
   if (!user) {
     return (
