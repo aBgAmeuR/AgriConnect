@@ -22,15 +22,12 @@ const formSchema = z.object({
   email: z.string().email({
     message: 'Veuillez entrer une adresse e-mail valide.',
   }),
-  phone: z.string().regex(/^[0-9]{10}$/, {
-    message: 'Veuillez entrer un numéro de téléphone valide.',
-  }),
   password: z.string().min(8, {
     message: 'Le mot de passe doit avoir au moins 8 caractères.',
   }),
 });
 
-export function RegisterClientForm() {
+export function RegisterProducerForm() {
   const [isPending, startTransition] = React.useTransition();
 
   // react-hook-form
@@ -40,7 +37,6 @@ export function RegisterClientForm() {
       surname: '',
       name: '',
       email: '',
-      phone: '',
       password: '',
     },
   });
@@ -100,19 +96,6 @@ export function RegisterClientForm() {
               {/* <FormLabel>Email</FormLabel> */}
               <FormControl>
                 <Input type="email" placeholder="damiencren35@gmail.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              {/* <FormLabel>Téléphone</FormLabel> */}
-              <FormControl>
-                <Input type="text" placeholder="Téléphone" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

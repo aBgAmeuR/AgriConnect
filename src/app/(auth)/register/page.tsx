@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RegisterClientForm } from '@/components/forms/register-client-form';
+import { RegisterProducerForm } from '@/components/forms/register-producer-form';
 
 export const metadata: Metadata = {
   // metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -31,7 +32,9 @@ export default async function RegisterPage() {
           <TabsContent value="client" className="mt-6">
             <RegisterClientForm />
           </TabsContent>
-          <TabsContent value="producteur" className="mt-6"></TabsContent>
+          <TabsContent value="producteur" className="mt-6">
+            <RegisterProducerForm />
+          </TabsContent>
         </Tabs>
         <p className="text-sm text-muted-foreground text-center">En cliquant sur Créer, vous acceptez nos Conditions d&apos;utilisation et politique de confidentialité.</p>
       </div>
