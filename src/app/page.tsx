@@ -1,11 +1,9 @@
-import { authOptions } from "@/lib/auth";
+import { Step, Steps } from "@/components/ui/steps"
 import { getCurrentUser } from "@/lib/session"
-import { getServerSession } from "next-auth";
-import { signOut } from "next-auth/react"
 
 export default async function Home() {
   const user = await getCurrentUser()
-  
+
   if (!user) {
     return (
       <>
@@ -15,16 +13,11 @@ export default async function Home() {
     )
   }
 
-  // const handleClick = async () => {
-  //   signOut({ redirect: true, callbackUrl: "/signin" })
-  // }
-
   return (
     <>
       <h1>AgriConnect</h1>
       <h2>Connecter</h2>
-
-      {/* <button onClick={handleClick}>se deconnecter</button> */}
+      <p>Role : {user.role}</p>
     </>
   )
 }

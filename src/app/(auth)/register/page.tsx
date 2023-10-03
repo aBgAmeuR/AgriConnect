@@ -5,6 +5,8 @@ import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RegisterClientForm } from '@/components/forms/register-client-form';
 import { RegisterProducerForm } from '@/components/forms/register-producer-form';
+import { getCurrentUser } from '@/lib/session';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   // metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -13,6 +15,9 @@ export const metadata: Metadata = {
 };
 
 export default async function RegisterPage() {
+  const user = await getCurrentUser()
+  if (user) redirect("/");
+
   return (
     <div className="relative flex items-center justify-center p-8">
       <Link className={buttonVariants({ variant: 'ghost' }) + ' absolute top-8 right-8'} href="login">
