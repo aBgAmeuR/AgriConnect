@@ -1,5 +1,4 @@
 import type { Account, NextAuthOptions, Profile, Session, User } from 'next-auth';
-// import prisma from '@/app/lib/prisma';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
