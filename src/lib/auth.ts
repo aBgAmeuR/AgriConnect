@@ -50,7 +50,7 @@ export const authOptions: NextAuthOptions = {
         //   id: user.id,
         //   name: user.name,
         // };
-        const user = { id: '1234', email: '1234@gmail.com', password: 'nextauth', role: 'admin' };
+        const user = { id: '1234', email: '1234@gmail.com', password: 'nextauth', role: 'client' };
 
         function timeout(delay: number) {
           return new Promise((res) => setTimeout(res, delay));
