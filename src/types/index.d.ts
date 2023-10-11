@@ -4,10 +4,10 @@ export type NavLinkItem = {
 };
 
 export type NavLinkBar = {
-  visitor: NavItem[];
-  client: NavItem[];
-  producer: NavItem[];
-  admin: NavItem[];
+  visitor: NavLinkItem[];
+  client: NavLinkItem[];
+  producer: NavLinkItem[];
+  admin: NavLinkItem[];
 };
 
 export type NavBtnItem = {
@@ -18,7 +18,7 @@ export type NavBtnItem = {
 };
 
 export type NavBtnBar = {
-  visitor: NavBtnItem[];
+  visitor: [NavBtnItem[], NavBtnItem];
   client: NavBtnItem[];
   producer: NavBtnItem[];
   admin: NavBtnItem[];

@@ -55,14 +55,20 @@ export const navBarLinks: NavLinkBar = {
   ],
 };
 
-
 export const navBarBtns: NavBtnBar = {
   visitor: [
-    {
-      title: 'Espace Producteur',
-      href: '/producer',
-      variant: 'outline',
-    },
+    [
+      {
+        title: 'Espace Producteur',
+        href: '/producer',
+        variant: 'outline',
+      },
+      {
+        title: 'Espace Client',
+        href: '/',
+        variant: 'outline',
+      },
+    ],
     {
       title: 'Connexion',
       href: '/login',
@@ -100,4 +106,4 @@ export const navBarBtns: NavBtnBar = {
       variant: 'default',
     },
   ],
-}
+};
