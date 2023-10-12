@@ -33,7 +33,6 @@ const formSchema = z.object({
 export function RegisterClientForm() {
   const [isPending, startTransition] = React.useTransition();
 
-  // react-hook-form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,6 +47,7 @@ export function RegisterClientForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
       try {
+        // TODO: send request
         toast({
           title: 'Vous avez envoyé les valeurs suivantes :',
           description: (
@@ -57,10 +57,9 @@ export function RegisterClientForm() {
           ),
         });
       } catch (err) {
-        console.log(err);
+        // TODO: handle error
       }
     });
-    console.log(values);
   }
 
   return (
@@ -132,12 +131,6 @@ export function RegisterClientForm() {
           )}
         />
         <Button type="submit" disabled={isPending}>
-          {/* {isPending && (
-            <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
-              aria-hidden="true"
-            />
-          )} */}
           Créer un compte
           <span className="sr-only">Créer un compte</span>
         </Button>

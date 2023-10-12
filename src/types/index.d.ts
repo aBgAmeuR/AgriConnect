@@ -23,3 +23,8 @@ export type NavBtnBar = {
   producer: NavBtnItem[];
   admin: NavBtnItem[];
 };
+
+export type SiteConfig = {
+  name: string;
+  description: string;
+};

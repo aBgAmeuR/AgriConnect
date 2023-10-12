@@ -1,3 +1,4 @@
+import { siteConfig } from '@/config/site'
 import AuthProviders from '@/hooks/auth-provider'
 import { ThemeProvider } from '@/hooks/theme-provider'
 import '@/styles/global.css'
@@ -6,10 +7,7 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'AgriConnect',
-  description: 'AgriConnect',
-}
+export const metadata: Metadata = siteConfig
 
 export default function RootLayout({
   children,

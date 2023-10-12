@@ -1,19 +1,16 @@
-'use client'
-
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { navBarBtns, navBarLinks } from "@/config/navBar"
 import { NavBtnItem, NavLinkItem } from "@/types"
 import Link from "next/link"
 import { Button } from "./ui/button"
+import { NavBarBtnsVisitor, NavBarLinks } from "./main-navbar-client"
 
 type NavBarProps = {
   role: string
 }
 
 export default function MainNavBar({ role }: NavBarProps) {
-  const pathname = usePathname()
-  const navBarLinksList: NavLinkItem[] = navBarLinks[role as keyof typeof navBarLinks]
 
   return (
     <header className="w-full h-16 px-4 border-b border-zinc-200 justify-between items-center inline-flex">
@@ -23,23 +20,12 @@ export default function MainNavBar({ role }: NavBarProps) {
           <div className="text-zinc-950 font-semibold">AgriConnect</div>
         </div>
         <div className="justify-start items-center gap-6 flex">
-          {navBarLinksList.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`${pathname === item.href
-                ? "text-zinc-950"
-                : "text-zinc-500 hover:text-zinc-950"
-                } font-semibold text-sm`}
-            >
-              {item.title}
-            </Link>
-          ))}
+          <NavBarLinks role={role} />
         </div>
       </div>
       <div className="justify-start items-center gap-2 flex">
         {role === "visitor" ?
-          <NavBarBtnsVisitor pathname={pathname} /> :
+          <NavBarBtnsVisitor /> :
           <NavBarBtnsOtherRoles role={role} />
         }
       </div>
@@ -57,24 +43,4 @@ const NavBarBtnsOtherRoles = ({ role }: { role: string }) => {
       </Button>
     </Link>
   ))
-}
-
-const NavBarBtnsVisitor = ({ pathname }: { pathname: string }) => {
-  const navBarBtnsList: [NavBtnItem[], NavBtnItem] = navBarBtns['visitor']
-  const outlinBtn: NavBtnItem = navBarBtnsList[0].find((item) => item.href !== pathname) as NavBtnItem
-
-  return (
-    <>
-      <Link href={outlinBtn.href}>
-        <Button variant={outlinBtn.variant}>
-          {outlinBtn.title}
-        </Button>
-      </Link>
-      <Link href={navBarBtnsList[1].href}>
-        <Button variant={navBarBtnsList[1].variant}>
-          {navBarBtnsList[1].title}
-        </Button>
-      </Link>
-    </>
-  )
 }

@@ -29,10 +29,8 @@ const formSchema = z.object({
 })
 
 export function LoginForm() {
-  const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
-  // react-hook-form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,7 +42,7 @@ export function LoginForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
       try {
-        const signInResponse  = await signIn("credentials", {
+        const signInResponse = await signIn("credentials", {
           email: values.email,
           password: values.password,
           // redirect: true,
@@ -52,17 +50,16 @@ export function LoginForm() {
         })
 
         if (!signInResponse || signInResponse.ok !== true) {
-          console.log("nn",signInResponse);
+          // TODO: handle error
         } else {
-          console.log("ok" ,signInResponse);
-          
+          // TODO: redirect
+
           // router.refresh();
         }
       } catch (err) {
-        console.log(err);
+        // TODO: handle error
       }
     })
-    console.log(values);
   }
 
   return (
@@ -103,12 +100,6 @@ export function LoginForm() {
           )}
         />
         <Button type="submit" disabled={isPending}>
-          {/* {isPending && (
-            <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
-              aria-hidden="true"
-            />
-          )} */}
           Se connecter
           <span className="sr-only">Se connecter</span>
         </Button>
