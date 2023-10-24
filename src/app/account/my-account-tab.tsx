@@ -2,8 +2,8 @@ import { AccountParamsForm } from '@/components/forms/account-params-form'
 import React from 'react'
 
 const data = {
-  name: 'John Doe',
-  surname: 'Doe',
+  name: 'Doe',
+  surname: 'John',
   email: 'johndoe@gmail.com',
   phoneNumber: '0606060606',
 }
