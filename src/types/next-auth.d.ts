@@ -1,17 +1,19 @@
 import { User } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 
+export type rolesType = 'visitor' | 'client' | 'producer' | 'admin';
+
 declare module 'next-auth/jwt' {
   interface JWT {
     id: string;
-    role: 'client' | 'producer' | 'admin';
+    role: rolesType;
   }
 }
 
 declare module 'next-auth' {
   interface User {
     id: string;
-    role: 'client' | 'producer' | 'admin';
+    role: rolesType;
   }
 
   interface Session {

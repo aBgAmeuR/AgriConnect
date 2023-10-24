@@ -2,6 +2,7 @@ import type { Account, NextAuthOptions, Profile, Session, User } from 'next-auth
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
+import { rolesType } from '@/types/next-auth';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -102,7 +103,7 @@ export const authOptions: NextAuthOptions = {
     async session(params: { session: Session; token: JWT; user: User }) {
       if (params.session.user) {
         params.session.user.id = params.token.id as string;
-        params.session.user.role = params.token.role as 'client' | 'producer' | 'admin';
+        params.session.user.role = params.token.role as rolesType;
       }
 
       return params.session;

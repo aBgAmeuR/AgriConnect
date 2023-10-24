@@ -45,8 +45,6 @@ export function LoginForm() {
         const signInResponse = await signIn("credentials", {
           email: values.email,
           password: values.password,
-          // redirect: true,
-          // callbackUrl: "/",
         })
 
         if (!signInResponse || signInResponse.ok !== true) {
