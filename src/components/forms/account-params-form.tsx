@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useForm } from 'react-hook-form'
+import { signOut } from 'next-auth/react'
 
 type Props = {
   data: {
@@ -200,7 +201,9 @@ export const AccountParamsForm = ({ data }: Props) => {
             Supprimer le compte
             <span className="sr-only">Supprimer le compte</span>
           </Button>
-          <Button variant="destructive">
+          <Button variant="destructive" onClick={e => signOut({
+            callbackUrl: '/login',
+          })} disabled={isPending}>
             Se déconnecter
             <span className="sr-only">Se déconnecter</span>
           </Button>
