@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { SelectGroup } from '@/components/ui/select';
 import { getCurrentUser } from '@/lib/session';
 import Image from 'next/image';
+import CategoriesShowcase from './components/home-catego';
 
 export default async function HomePage() {
   const user = await getCurrentUser();
@@ -51,20 +52,9 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-        <div className="w-full h-[382px] px-[23px] pt-4 pb-8 bg-stone-50 flex-col justify-center items-center gap-6 inline-flex">
-          <div className="w-[1224px] h-[270px] justify-center items-center gap-16 inline-flex">
-            <img className="grow shrink basis-0 h-[270.50px]" src="https://via.placeholder.com/194x270" />
-            <img className="grow shrink basis-0 h-[270.39px]" src="https://via.placeholder.com/194x270" />
-            <img className="grow shrink basis-0 h-[270.39px]" src="https://via.placeholder.com/194x270" />
-            <img className="grow shrink basis-0 h-[270.39px]" src="https://via.placeholder.com/194x270" />
-            <img className="grow shrink basis-0 h-[270.39px]" src="https://via.placeholder.com/194x270" />
-          </div>
-          <div className=" justify-center items-center gap-2 inline-flex">
-            <Button>
-              <p className="text-neutral-50 text-sm font-medium leading-tight">Afficher toutes les categorie</p>
-            </Button>
-          </div>
-        </div>
+
+        <CategoriesShowcase />
+
         <InfoSection />
 
         <div className="-z-10 w-full h-[545px] absolute">
