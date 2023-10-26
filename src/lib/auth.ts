@@ -1,7 +1,8 @@
 import type { Account, NextAuthOptions, Profile, Session, User } from 'next-auth';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
+import { rolesType } from '@/types/next-auth';
+import { config } from '@/config/config';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -14,49 +15,26 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        // if (!credentials?.username || !credentials.password) {
-        //   console.log('premier null');
+        if (!credentials?.email || !credentials.password) {
+          console.log('premier null');
 
-        //   return null;
-        // }
-
-        // const name = credentials.username;
-        // const password = credentials.password;
-
-        // const user = await prisma.user.findUnique({
-        //   where: {
-        //     name,
-        //   },
-        // });
-
-        // if (!user) {
-        //   console.log('deuxieme null');
-
-        //   return null;
-        // }
-
-        // const userPassword = user.password;
-
-        // const isValidPassword = bcrypt.compareSync(password, userPassword);
-
-        // if (!isValidPassword) {
-        //   console.log('troisieme null');
-        //   return null;
-        // }
-        // console.log('log ok : ', user);
-
-        // return {
-        //   id: user.id,
-        //   name: user.name,
-        // };
-        const user = { id: '1234', email: '1234@gmail.com', password: 'nextauth', role: 'client' };
-
-        function timeout(delay: number) {
-          return new Promise((res) => setTimeout(res, delay));
+          return null;
         }
-        await timeout(1000); // wait 1 second
 
-        if (credentials?.email === user.email && credentials.password === user.password) {
+        var formdata = new FormData();
+        formdata.append('email', credentials.email);
+        formdata.append('password', credentials.password);
+
+        const res = await fetch(config.API_URL + '/login', {
+          method: 'POST',
+          redirect: 'follow',
+          body: formdata,
+        });
+
+        const data = await res.json();
+        const user = data[0];
+
+        if (user.id) {
           return {
             id: user.id,
             role: user.role,
@@ -102,7 +80,7 @@ export const authOptions: NextAuthOptions = {
     async session(params: { session: Session; token: JWT; user: User }) {
       if (params.session.user) {
         params.session.user.id = params.token.id as string;
-        params.session.user.role = params.token.role as 'client' | 'producer' | 'admin';
+        params.session.user.role = params.token.role as rolesType;
       }
 
       return params.session;

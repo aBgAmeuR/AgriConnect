@@ -25,6 +25,6 @@ export type NavBtnBar = {
 };
 
 export type SiteConfig = {
-  name: string;
+  title: string;
   description: string;
 };

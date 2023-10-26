@@ -90,7 +90,7 @@ export const navBarBtns: NavBtnBar = {
   producer: [
     {
       title: 'Ma boutique',
-      href: '/shop',
+      href: '/myshop',
       variant: 'outline',
     },
     {
