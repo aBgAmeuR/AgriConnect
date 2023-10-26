@@ -11,8 +11,8 @@ export default function CategoriesShowcase() {
   ];
 
   return (
-    <div className="w-full h-[382px] px-[23px] pt-4 pb-8 bg-stone-50 flex flex-col justify-center items-center gap-6">
-      <div className="w-[1224px] h-[270px] flex justify-center items-center gap-16">
+    <div className="w-full px-4 py-8 bg-stone-50 flex flex-col items-center gap-6 ">
+      <div className="flex flex-wrap justify-center gap-16">
         {categories.map((category, index) => (
           <div key={index} className="relative">
             <img className="grow shrink basis-0 h-[270px]" src={category.src} alt={`Catégorie ${index + 1}`} />
@@ -20,7 +20,7 @@ export default function CategoriesShowcase() {
           </div>
         ))}
       </div>
-      <Button>
+      <Button className="mt-6">
         <p className="text-neutral-50 text-sm font-medium leading-tight">Afficher toutes les catégories</p>
       </Button>
     </div>
