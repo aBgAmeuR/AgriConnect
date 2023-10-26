@@ -192,8 +192,8 @@ export const AccountParamsForm = ({ data }: Props) => {
             <span className="sr-only">Annuler les changements</span>
           </Button>
           <Button type="submit" disabled={isPending}>
-            Se connecter
-            <span className="sr-only">Se connecter</span>
+            Sauvegarder
+            <span className="sr-only">Sauvegarder</span>
           </Button>
         </div>
         <div className='flex flex-row gap-2 pb-4'>
