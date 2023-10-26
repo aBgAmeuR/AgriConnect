@@ -61,7 +61,7 @@ export const AccountParamsForm = ({ data }: Props) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
       try {
-        // TODO: send request
+        // TODO: handle success
       } catch (err) {
         // TODO: handle error
       }
