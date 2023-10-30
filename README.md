@@ -30,9 +30,8 @@ Après avoir lancé l'application, vous pouvez :
 ## Technologies Utilisées
 
 - **Next.js**: Framework pour le développement côté serveur et côté client.
-- **Prisma**: ORM pour la gestion de la base de données.
-- **MySQL**: Système de gestion de base de données relationnelle.
 - **TypeScript**: Superset de JavaScript offrant des types statiques.
+- **TailwindCSS**: Un framework CSS de niveau utilitaire pour la création rapide de designs personnalisés.
 - **NextAuth**: Bibliothèque pour l'authentification côté serveur.
 - **Shadcn/UI**: Bibliothèque d'interface utilisateur pour des composants réactifs et esthétiques.
 
