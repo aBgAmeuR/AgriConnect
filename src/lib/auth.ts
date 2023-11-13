@@ -25,21 +25,20 @@ export const authOptions: NextAuthOptions = {
         formdata.append('email', credentials.email);
         formdata.append('password', credentials.password);
 
-        // const res = await fetch(config.API_URL + '/login', {
-        //   method: 'POST',
-        //   redirect: 'follow',
-        //   body: formdata,
-        // });
+        const res = await fetch(config.API_URL + '/login', {
+          method: 'POST',
+          redirect: 'follow',
+          body: formdata,
+        });
 
-        // const data = await res.json();
-        // const user = data[0];
-        const user = {
-          id: '1',
-          role: 'client',
-          accessToken: 'token',
-        };
+        const { data: user, error } = await res.json();
+        // const user = {
+        //   id: '1',
+        //   role: 'client',
+        //   accessToken: 'token',
+        // };
 
-        if (user.id) {
+        if (!error) {
           return {
             id: user.id,
             role: user.role,
