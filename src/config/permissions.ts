@@ -1,7 +1,7 @@
 export const permissions = {
-  '/': ['visitor', 'client'],
-  '/explore': ['visitor', 'client'],
-  '/producer': ['visitor', 'client'],
+  '/': ['visitor', 'client', 'producer', 'admin'],
+  '/explore': ['visitor', 'client', 'producer', 'admin'],
+  '/producer': ['visitor', 'client', 'producer', 'admin'],
   '/messages': ['client', 'producer', 'admin'],
   '/commands': ['producer'],
   '/stock': ['producer'],

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useForm } from 'react-hook-form'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 type Props = {
   data: {
@@ -47,6 +47,7 @@ const formSchema = z.object({
 
 export const AccountParamsForm = ({ data }: Props) => {
   const [isPending, startTransition] = React.useTransition()
+  const { data: session } = useSession()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -61,7 +62,9 @@ export const AccountParamsForm = ({ data }: Props) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
       try {
-        // TODO: send request
+        const user = session?.user
+        console.log(user);
+
       } catch (err) {
         // TODO: handle error
       }

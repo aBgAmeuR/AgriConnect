@@ -1,4 +1,4 @@
-import type { Account, NextAuthOptions, Profile, Session, User } from 'next-auth';
+import type { NextAuthOptions, Session, User } from 'next-auth';
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
 import { rolesType } from '@/types/next-auth';
@@ -25,23 +25,24 @@ export const authOptions: NextAuthOptions = {
         formdata.append('email', credentials.email);
         formdata.append('password', credentials.password);
 
-        // const res = await fetch(config.API_URL + '/login', {
-        //   method: 'POST',
-        //   redirect: 'follow',
-        //   body: formdata,
-        // });
+        const res = await fetch(config.API_URL + '/login', {
+          method: 'POST',
+          redirect: 'follow',
+          body: formdata,
+        });
 
-        // const data = await res.json();
-        // const user = data[0];
-        const user = {
-          id: '1',
-          role: 'client',
-        };
+        const { data: user, error } = await res.json();
+        // const user = {
+        //   id: '1',
+        //   role: 'client',
+        //   accessToken: 'token',
+        // };
 
-        if (user.id) {
+        if (!error) {
           return {
             id: user.id,
             role: user.role,
+            accessToken: user.accessToken,
           };
         } else {
           return null;
@@ -81,21 +82,17 @@ export const authOptions: NextAuthOptions = {
     updateAge: 24 * 60 * 60, // 24 hours
   },
   callbacks: {
-    async session(params: { session: Session; token: JWT; user: User }) {
-      if (params.session.user) {
-        params.session.user.id = params.token.id as string;
-        params.session.user.role = params.token.role as rolesType;
-      }
-
-      return params.session;
+    async jwt({ token, user }: { token: JWT; user: User }) {
+      return { ...token, ...user };
     },
-    async jwt(params: { token: JWT; user?: User | undefined; account?: Account | null | undefined; profile?: Profile | undefined; isNewUser?: boolean | undefined }) {
-      if (params.user) {
-        params.token.id = params.user.id;
-        params.token.role = params.user.role;
+    async session({ session, token, user }: { session: Session; token: JWT; user: User }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as rolesType;
+        session.user.accessToken = token.accessToken as string;
       }
 
-      return params.token;
+      return session;
     },
   },
 };
