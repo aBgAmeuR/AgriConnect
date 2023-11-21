@@ -8,10 +8,10 @@ import { Input } from '@/components/ui/input';
 import { SelectGroup } from '@/components/ui/select';
 import { getCurrentUser } from '@/lib/session';
 import Image from 'next/image';
-import CategoriesShowcase from './components/home-catego';
-import SearchBar from './components/search-bar';
+import CategoriesShowcase from '../components/home-catego';
+import SearchBar from '../components/search-bar';
 
-export default async function HomePage() {
+export default async function HomePageCustomer() {
   const user = await getCurrentUser();
 
   return (

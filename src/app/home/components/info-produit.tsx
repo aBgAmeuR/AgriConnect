@@ -1,4 +1,5 @@
 import React from 'react';
+import InfoCard from './home-infCard';
 
 export default function InfoSection() {
   return (
@@ -10,23 +11,6 @@ export default function InfoSection() {
         <InfoCard title="Un geste engagé" description="Consommer local, c'est penser à ses papilles, aux producteurs et à la planète !" />
         <InfoCard title="Vos achats en quelques clics" description="Emballé, c'est pesé. Vous choisissez, vous cliquez, vous achetez. Rien de plus simple." />
       </div>
-    </div>
-  );
-}
-
-type InfoCardProps = {
-  title: string;
-  description: string;
-};
-
-function InfoCard({ title, description }: InfoCardProps) {
-  return (
-    <div className="w-[250px] h-[103px] text-center">
-      <span className="block text-black text-base font-bold leading-tight">
-        {title}
-        <br />
-      </span>
-      <span className="block text-black text-sm font-normal leading-tight">{description}</span>
     </div>
   );
 }

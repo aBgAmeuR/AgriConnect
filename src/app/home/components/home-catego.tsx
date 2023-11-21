@@ -3,11 +3,11 @@ import { Button } from '@/components/ui/button';
 
 export default function CategoriesShowcase() {
   const categories = [
-    { src: './fruits.jpg', alt: 'Category Image 1', link: '/categorie-1', text: 'Fruits' },
-    { src: './letus.jpg', alt: 'Category Image 2', link: '/categorie-2', text: 'Salades' },
-    { src: './viande.jpg', alt: 'Category Image 3', link: '/categorie-3', text: 'Viandes' },
-    { src: './charcuterie.jpg', alt: 'Category Image 4', link: '/categorie-4', text: 'Charcuterie' },
-    { src: './frommage.jpg', alt: 'Category Image 5', link: '/categorie-5', text: 'Frommages' },
+    { src: '../fruits.jpg', alt: 'Category Image 1', link: '/categorie-1', text: 'Fruits' },
+    { src: '../letus.jpg', alt: 'Category Image 2', link: '/categorie-2', text: 'Salades' },
+    { src: '../viande.jpg', alt: 'Category Image 3', link: '/categorie-3', text: 'Viandes' },
+    { src: '../charcuterie.jpg', alt: 'Category Image 4', link: '/categorie-4', text: 'Charcuterie' },
+    { src: '../frommage.jpg', alt: 'Category Image 5', link: '/categorie-5', text: 'Frommages' },
   ];
 
   return (
