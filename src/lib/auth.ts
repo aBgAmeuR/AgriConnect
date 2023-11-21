@@ -39,8 +39,8 @@ export const authOptions: NextAuthOptions = {
         if (!error) {
           return {
             id: user.id,
-            // role: user.role,
-            role: 'client',
+            role: 'admin',
+            // role: 'client',
             accessToken: user.accessToken,
           };
         } else {
