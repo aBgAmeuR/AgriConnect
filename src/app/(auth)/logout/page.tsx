@@ -1,8 +1,9 @@
-import { signOut } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+'use client';
 
-export default async function Logout() {
-  await signOut({ redirect: true, callbackUrl: "/login" });
+import { signOut } from 'next-auth/react';
+
+export default function Logout() {
+  signOut({ redirect: true, callbackUrl: "/login" });
 
   return <h1></h1>;
 }
