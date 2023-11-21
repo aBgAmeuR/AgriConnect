@@ -35,10 +35,10 @@ export default async function HomePage() {
 
         <InfoSection />
 
-        <div className="-z-10 w-full h-[545px] absolute">
+        <div className="-z-10 w-full min-h-full h-[517px] absolute">
           <Image src="/home-picture.jpg" alt="Background" fill style={{ objectFit: 'cover' }} />
 
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex space-x-36 flex-col md:flex-row ">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col space-y-8 sm:flex-row sm:space-y-0 sm:space-x-36">
             <LocalProductsCard />
             <SellProductsCard />
           </div>
