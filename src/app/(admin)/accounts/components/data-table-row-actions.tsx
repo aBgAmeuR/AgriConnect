@@ -2,7 +2,6 @@
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
-import { categories } from "../data/data"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -19,16 +18,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { taskSchema } from "../data/schema"
+import { AccountSchema } from "../data/schema"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
 }
 
+const roles = [
+  { value: 'Visiteur', label: 'Visiteur' },
+  { value: 'Client', label: 'Client' },
+  { value: 'Producteur', label: 'Producteur' },
+  { value: 'Admin', label: 'Administrateur' },
+]
+
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = taskSchema.parse(row.original)
+  const task = AccountSchema.parse(row.original)
 
   return (
     <DropdownMenu>
@@ -42,22 +48,21 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
+        {task.role === 'Producteur' ?
+          <DropdownMenuItem>
+            Voir le profile
+          </DropdownMenuItem> : null}
         <DropdownMenuItem>
-          Edit
-          <DropdownMenuShortcut>E</DropdownMenuShortcut>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          Make a copy
-          <DropdownMenuShortcut>C</DropdownMenuShortcut>
+          Contacter
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Category</DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger>Rôle</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuRadioGroup value={task.name}>
-              {categories.map((categorie) => (
-                <DropdownMenuRadioItem key={categorie.value} value={categorie.value}>
-                  {categorie.label}
+              {roles.map((role) => (
+                <DropdownMenuRadioItem key={role.value} value={role.value}>
+                  {role.label}
                 </DropdownMenuRadioItem>
               ))}
             </DropdownMenuRadioGroup>
@@ -65,8 +70,7 @@ export function DataTableRowActions<TData>({
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          Delete
-          <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
+          Supprimer
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
