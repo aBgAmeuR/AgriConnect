@@ -1,5 +1,6 @@
 import MainNavBar from "@/components/main-navbar"
 import { getCurrentUser } from "@/lib/session"
+import { ProducersListMap } from "./components/producers-list-map"
 
 export default async function Explore() {
   const user = await getCurrentUser()
@@ -7,7 +8,9 @@ export default async function Explore() {
   return (
     <>
       <MainNavBar role={user?.role || "visitor"} />
-      <main>Explore</main>
+      <main className="grid grid-cols-2">
+        <ProducersListMap />
+      </main>
     </>
   )
 }

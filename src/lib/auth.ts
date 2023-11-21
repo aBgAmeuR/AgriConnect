@@ -16,8 +16,6 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          console.log('premier null');
-
           return null;
         }
 
@@ -41,7 +39,8 @@ export const authOptions: NextAuthOptions = {
         if (!error) {
           return {
             id: user.id,
-            role: user.role,
+            // role: user.role,
+            role: 'client',
             accessToken: user.accessToken,
           };
         } else {
@@ -85,7 +84,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }: { token: JWT; user: User }) {
       return { ...token, ...user };
     },
-    async session({ session, token, user }: { session: Session; token: JWT; user: User }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if (session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as rolesType;
