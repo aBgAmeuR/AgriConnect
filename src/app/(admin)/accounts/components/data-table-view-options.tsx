@@ -17,6 +17,14 @@ interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
 }
 
+const columns = [
+  { id: "name", label: "Nom" },
+  { id: "surname", label: "Prénom" },
+  { id: "role", label: "Rôle" },
+  { id: "phone", label: "Téléphone" },
+  { id: "email", label: "Email" },
+]
+
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
@@ -29,11 +37,11 @@ export function DataTableViewOptions<TData>({
           className="ml-auto hidden h-8 lg:flex"
         >
           <MixerHorizontalIcon className="mr-2 h-4 w-4" />
-          View
+          Options
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuLabel>Colonnes</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
@@ -49,7 +57,7 @@ export function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {columns.find((c) => c.id === column.id)?.label}
               </DropdownMenuCheckboxItem>
             )
           })}

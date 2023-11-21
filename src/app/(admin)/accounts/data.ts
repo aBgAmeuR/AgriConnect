@@ -1,3 +1,5 @@
+import { Account } from "./data/schema";
+
 export const data: Account[] = [
   {
     id: 'u1',

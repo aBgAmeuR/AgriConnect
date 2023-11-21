@@ -7,7 +7,7 @@ export const AccountSchema = z.object({
   role: z.string(),
   phone: z.string(),
   email: z.string().email(),
-  createdAt: z.date(),
+  createdAt: z.string(),
 });
 
 export type Account = z.infer<typeof AccountSchema>;

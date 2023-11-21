@@ -54,6 +54,11 @@ export function DataTable<TData, TValue>({
       rowSelection,
       columnFilters,
     },
+    initialState: {
+      pagination: {
+        pageSize: 8,
+      },
+    },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
@@ -113,7 +118,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Aucun résultat trouvé.
                 </TableCell>
               </TableRow>
             )}
