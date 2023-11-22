@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { AccountSchema } from "../data/schema"
+import { config } from '@/config/config'
+import { getAccessToken } from "@/lib/get-access-token"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -30,6 +32,26 @@ const roles = [
   { value: 'Producteur', label: 'Producteur' },
   { value: 'Admin', label: 'Administrateur' },
 ]
+
+const deleteAccount = async (id: string) => {
+  const token = getAccessToken()
+
+  try {
+    const res = await fetch(config.API_URL + '/user/' + id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(res.statusText)
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 export function DataTableRowActions<TData>({
   row,
@@ -69,7 +91,7 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={e => deleteAccount(task.id)}>
           Supprimer
         </DropdownMenuItem>
       </DropdownMenuContent>

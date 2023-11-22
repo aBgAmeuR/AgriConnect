@@ -30,17 +30,11 @@ export const authOptions: NextAuthOptions = {
         });
 
         const { data: user, error } = await res.json();
-        // const user = {
-        //   id: '1',
-        //   role: 'client',
-        //   accessToken: 'token',
-        // };
 
         if (!error) {
           return {
             id: user.id,
-            role: 'admin',
-            // role: 'client',
+            role: user.role,
             accessToken: user.accessToken,
           };
         } else {
