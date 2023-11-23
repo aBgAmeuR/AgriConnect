@@ -14,7 +14,7 @@ export default async function StockPage() {
       <MainNavBar role={user?.role || "visitor"} />
       <main className="mx-16 mt-6">
         <h1 className="text-xl mb-4">Gestion du stock</h1>
-        {/* <StocksTable /> */}
+        <StocksTable />
       </main>
     </>
   )

@@ -19,11 +19,14 @@ interface DataTableViewOptionsProps<TData> {
 
 const columns = [
   { id: "name", label: "Nom" },
-  { id: "surname", label: "Prénom" },
-  { id: "role", label: "Rôle" },
-  { id: "phone", label: "Téléphone" },
-  { id: "email", label: "Email" },
+  { id: "category", label: "Catégorie" },
+  { id: "quantity", label: "Quantité" },
+  { id: "available", label: "Disponible" },
+  { id: "reserved", label: "Réservé" },
+  { id: "price", label: "Prix" },
+  { id: "price", label: "Unité" },
 ]
+
 
 export function DataTableViewOptions<TData>({
   table,

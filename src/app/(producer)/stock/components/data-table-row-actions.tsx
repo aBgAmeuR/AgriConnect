@@ -18,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { AccountSchema } from "../data/schema"
+import { StockSchema } from "../data/schema"
 import { config } from '@/config/config'
 import { getAccessToken } from "@/lib/get-access-token"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
@@ -37,26 +37,26 @@ const roles = [
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = AccountSchema.parse(row.original)
+  const task = StockSchema.parse(row.original)
   const queryClient = useQueryClient();
 
-  const { mutate: deleteUserMutation } = useMutation({
-    mutationFn: async (userId: string) => {
-      await fetch(`${config.API_URL}/user/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + await getAccessToken()
-        },
-      })
-    },
-    onError: (error: any) => {
-      console.log(error)
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-    },
-  });
+  // const { mutate: deleteUserMutation } = useMutation({
+  //   mutationFn: async (userId: string) => {
+  //     await fetch(`${config.API_URL}/user/${userId}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer ' + await getAccessToken()
+  //       },
+  //     })
+  //   },
+  //   onError: (error: any) => {
+  //     console.log(error)
+  //   },
+  //   onSettled: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['users'] });
+  //   },
+  // });
 
   return (
     <DropdownMenu>
@@ -70,13 +70,13 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        {task.role === 'producer' ?
+        {/* {task.role === 'producer' ?
           <DropdownMenuItem>
             Voir le profile
           </DropdownMenuItem> : null}
         <DropdownMenuItem>
           Contacter
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         {/* <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Rôle</DropdownMenuSubTrigger>
@@ -91,9 +91,9 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub> */}
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={e => deleteUserMutation(task.id)}>
+        {/* <DropdownMenuItem onClick={e => deleteUserMutation(task.id)}>
           Supprimer
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   )

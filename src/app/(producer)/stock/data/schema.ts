@@ -7,7 +7,7 @@ export const StockSchema = z.object({
   quantity: z.number(),
   available: z.number(),
   reserved: z.number(),
-  price: z.number(),
+  price: z.string(),
   unit: z.string(),
 });
 

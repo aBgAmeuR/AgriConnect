@@ -20,15 +20,15 @@ export const Labels = [
     label: 'Disponible',
   },
   {
-    value: 'Réservé',
-    label: 'Email',
+    value: 'reserved',
+    label: 'Réservé',
   },
   {
     value: 'price',
     label: 'Prix',
   },
   {
-    value: 'unit',
+    value: 'price',
     label: 'Unité',
   },
 ];
