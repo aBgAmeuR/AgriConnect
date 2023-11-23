@@ -8,23 +8,27 @@ export const Labels = [
     label: 'Nom',
   },
   {
-    value: 'surname',
-    label: 'Prénom',
+    value: 'category',
+    label: 'Catégorie',
   },
   {
-    value: 'role',
-    label: 'Rôle',
+    value: 'quantity',
+    label: 'Quantité',
   },
   {
-    value: 'phone',
-    label: 'Téléphone',
+    value: 'available',
+    label: 'Disponible',
   },
   {
-    value: 'email',
+    value: 'Réservé',
     label: 'Email',
   },
   {
-    value: 'createdAt',
-    label: 'Date de création',
+    value: 'price',
+    label: 'Prix',
   },
-]
+  {
+    value: 'unit',
+    label: 'Unité',
+  },
+];

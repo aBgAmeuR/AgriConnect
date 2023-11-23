@@ -1,13 +1,14 @@
 import { z } from 'zod';
 
-export const AccountSchema = z.object({
+export const StockSchema = z.object({
   id: z.string(),
   name: z.string(),
-  surname: z.string(),
-  role: z.string(),
-  phone: z.number(),
-  email: z.string().email(),
-  createdAt: z.string(),
+  category: z.string(),
+  quantity: z.number(),
+  available: z.number(),
+  reserved: z.number(),
+  price: z.number(),
+  unit: z.string(),
 });
 
-export type Account = z.infer<typeof AccountSchema>;
+export type Stock = z.infer<typeof StockSchema>;
