@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
+import { useRouter } from 'next/navigation';
 import { useForm } from "react-hook-form"
 import { signIn } from 'next-auth/react';
 
@@ -18,6 +18,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast";
+import { getCurrentUser } from "@/lib/session";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -30,6 +33,8 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const [isPending, startTransition] = React.useTransition()
+  const { toast } = useToast()
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,17 +50,36 @@ export function LoginForm() {
         const signInResponse = await signIn("credentials", {
           email: values.email,
           password: values.password,
+          redirect: false,
         })
 
         if (!signInResponse || signInResponse.ok !== true) {
-          // TODO: handle error
+          toast({
+            variant: "destructive",
+            title: "Identifiants incorrects",
+            description: "Veuillez vérifier vos identifiants et réessayer.",
+            action: <ToastAction altText="Try again">Réessayer</ToastAction>,
+          })
         } else {
-          // TODO: redirect
+          const user = await getCurrentUser();
 
-          // router.refresh();
+          switch (user?.role) {
+            case 'admin':
+              router.push('/accounts')
+              break;
+            case 'producer':
+              router.push('/commands')
+              break;
+            case 'client':
+              router.push('/explore')
+              break;
+            default:
+              router.push('/')
+              break;
+          }
         }
       } catch (err) {
-        // TODO: handle error
+        console.error(err);
       }
     })
   }

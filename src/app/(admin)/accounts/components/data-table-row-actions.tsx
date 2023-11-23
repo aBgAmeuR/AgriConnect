@@ -70,14 +70,14 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        {task.role === 'Producteur' ?
+        {task.role === 'producer' ?
           <DropdownMenuItem>
             Voir le profile
           </DropdownMenuItem> : null}
         <DropdownMenuItem>
           Contacter
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        {/* <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Rôle</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
@@ -89,7 +89,7 @@ export function DataTableRowActions<TData>({
               ))}
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        </DropdownMenuSub> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={e => deleteUserMutation(task.id)}>
           Supprimer

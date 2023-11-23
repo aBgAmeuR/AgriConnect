@@ -23,7 +23,7 @@ export default async function LoginPage() {
       <div className="flex flex-col gap-3 w-[350px]">
         <h1 className="text-xl text-center">Se connecter</h1>
         <LoginForm />
-        <p className="text-sm text-muted-foreground text-center">En cliquant sur Créer, vous acceptez nos Conditions d&apos;utilisation et politique de confidentialité.</p>
+        <p className="text-sm text-muted-foreground text-center">En cliquant sur Se connecter, vous acceptez nos Conditions d&apos;utilisation et politique de confidentialité.</p>
       </div>
     </div>
   )
