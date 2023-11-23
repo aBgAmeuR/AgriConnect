@@ -21,6 +21,7 @@ import {
 import { AccountSchema } from "../data/schema"
 import { config } from '@/config/config'
 import { getAccessToken } from "@/lib/get-access-token"
+import { useQueryClient, useMutation } from "@tanstack/react-query"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -33,30 +34,29 @@ const roles = [
   { value: 'Admin', label: 'Administrateur' },
 ]
 
-const deleteAccount = async (id: string) => {
-  const token = getAccessToken()
-
-  try {
-    const res = await fetch(config.API_URL + '/user/' + id, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-    })
-
-    if (!res.ok) {
-      throw new Error(res.statusText)
-    }
-  } catch (error) {
-    console.error(error)
-  }
-}
-
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const task = AccountSchema.parse(row.original)
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteUserMutation } = useMutation({
+    mutationFn: async (userId: string) => {
+      await fetch(`${config.API_URL}/user/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + await getAccessToken()
+        },
+      })
+    },
+    onError: (error: any) => {
+      console.log(error)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
 
   return (
     <DropdownMenu>
@@ -91,7 +91,7 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={e => deleteAccount(task.id)}>
+        <DropdownMenuItem onClick={e => deleteUserMutation(task.id)}>
           Supprimer
         </DropdownMenuItem>
       </DropdownMenuContent>

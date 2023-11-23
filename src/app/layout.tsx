@@ -1,5 +1,6 @@
 import { siteConfig } from '@/config/site'
 import AuthProviders from '@/hooks/auth-provider'
+import { QueryClientProvider } from '@/hooks/query-client-provider'
 import { ThemeProvider } from '@/hooks/theme-provider'
 import '@/styles/global.css'
 import type { Metadata } from 'next'
@@ -19,7 +20,9 @@ export default function RootLayout({
       <body className={inter.className} suppressHydrationWarning={true}>
         <AuthProviders>
           <ThemeProvider>
-            {children}
+            <QueryClientProvider>
+              {children}
+            </QueryClientProvider>
           </ThemeProvider>
         </AuthProviders>
       </body>
