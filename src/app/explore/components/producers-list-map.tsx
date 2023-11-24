@@ -1,7 +1,9 @@
 'use client'
 
 import React from 'react'
-import { ProducersMap } from "./producers-map"
+import dynamic from 'next/dynamic';
+
+const ProducersMap = dynamic(() => import("./producers-map"), { ssr: false });
 
 export const ProducersListMap = () => {
   return (
