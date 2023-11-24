@@ -1,5 +1,8 @@
 import React from 'react';
+// TODO: Utilise @ pour importer les composants
 import { Button } from '../../../components/ui/button';
+
+// TODO: Fusionner avec ProducerJoin et HomeLocal
 
 export function SellProductsCard() {
   return (

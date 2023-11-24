@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 
 export default function CategoriesShowcase() {
+  // TODO: Le type de categories ?
   const categories = [
     { src: '../fruits.jpg', alt: 'Category Image 1', link: '/categorie-1', text: 'Fruits' },
     { src: '../letus.jpg', alt: 'Category Image 2', link: '/categorie-2', text: 'Salades' },
@@ -16,10 +17,12 @@ export default function CategoriesShowcase() {
         {categories.map((category, index) => (
           <div key={index} className="relative">
             <img className="grow shrink basis-0 h-[270px]" src={category.src} alt={`Catégorie ${index + 1}`} />
+            {/* // TODO: Utilise un p */}
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-center p-2">{category.text}</div>
           </div>
         ))}
       </div>
+      {/* // TODO: Pourquoi un p dans un bouton ? */}
       <Button className="mt-6">
         <p className="text-neutral-50 text-sm font-medium leading-tight">Afficher toutes les catégories</p>
       </Button>

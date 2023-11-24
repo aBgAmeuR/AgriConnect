@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from '../../../components/ui/button';
 
+// TODO: Fusionner avec ProducerJoin et HomeOnline
+
 export default function LocalProductsCard() {
   return (
     <div className="w-full h-[369px] px-4 pt-[30px] pb-[77px] bg-white bg-opacity-75 flex flex-col justify-center items-center">
