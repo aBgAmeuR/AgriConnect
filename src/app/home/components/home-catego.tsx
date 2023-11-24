@@ -17,15 +17,13 @@ export default function CategoriesShowcase() {
         {categories.map((category, index) => (
           <div key={index} className="relative">
             <img className="grow shrink basis-0 h-[270px]" src={category.src} alt={`Catégorie ${index + 1}`} />
-            {/* // TODO: Utilise un p */}
-            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-center p-2">{category.text}</div>
+
+            <p className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-center p-2">{category.text}</p>
           </div>
         ))}
       </div>
-      {/* // TODO: Pourquoi un p dans un bouton ? */}
-      <Button className="mt-6">
-        <p className="text-neutral-50 text-sm font-medium leading-tight">Afficher toutes les catégories</p>
-      </Button>
+
+      <Button className="mt-6 text-neutral-50 text-sm font-medium leading-tight">Afficher toutes les catégories</Button>
     </div>
   );
 }
