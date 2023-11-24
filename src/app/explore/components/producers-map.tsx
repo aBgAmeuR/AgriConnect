@@ -16,3 +16,5 @@ export const ProducersMap = () => {
       </MapContainer>
   )
 }
+
+export default ProducersMap
