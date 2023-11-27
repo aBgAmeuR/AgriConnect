@@ -1,7 +1,156 @@
-import React from 'react'
+"use client"
 
-export const ProducersFilters = () => {
+import * as React from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+const formSchema = z.object({
+  text: z.string().optional(),
+  location: z.string().optional(),
+  type: z.string().optional(),
+  distance: z.string().optional(),
+})
+
+export type FormValues = z.infer<typeof formSchema>
+
+type ProducersFiltersProps = {
+  params: FormValues
+  setParams: (params: FormValues) => void
+}
+
+export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
+  const [isPending, startTransition] = React.useTransition()
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      text: params.text,
+      location: params.location,
+      type: params.type,
+      distance: params.distance,
+    },
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    startTransition(async () => {
+      try {
+        console.log(values);
+      } catch (err) {
+        console.error(err);
+      }
+    })
+  }
+
   return (
-    <div>ProducersFilters</div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2 w-full">
+        <div className="flex flex-row gap-2">
+          <FormField
+            control={form.control}
+            name="text"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                {/* <FormLabel>Email</FormLabel> */}
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Search..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                {/* <FormLabel>Password</FormLabel> */}
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Lieu..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex flex-row gap-2">
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                {/* <FormLabel>Password</FormLabel> */}
+                <FormControl>
+                  <Select>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Confitures">Confitures</SelectItem>
+                      <SelectItem value="Fromages">Fromages</SelectItem>
+                      <SelectItem value="Fruits">Fruits</SelectItem>
+                      <SelectItem value="Laits">Laits</SelectItem>
+                      <SelectItem value="Légumes">Légumes</SelectItem>
+                      <SelectItem value="Miels">Miels</SelectItem>
+                      <SelectItem value="Produits laitiers">Produits laitiers</SelectItem>
+                      <SelectItem value="Viandes">Viandes</SelectItem>
+                      <SelectItem value="Vins">Vins</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="distance"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                {/* <FormLabel>Password</FormLabel> */}
+                <FormControl>
+                  <Select>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Distance" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="10">10 km</SelectItem>
+                      <SelectItem value="25">25 km</SelectItem>
+                      <SelectItem value="50">50 km</SelectItem>
+                      <SelectItem value="100">100 km</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={isPending}>
+            Chercher
+            <span className="sr-only">Chercher</span>
+          </Button>
+        </div>
+      </form>
+    </Form>
   )
 }
