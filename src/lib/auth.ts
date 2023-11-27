@@ -30,8 +30,6 @@ export const authOptions: NextAuthOptions = {
         });
 
         const { data: user, error } = await res.json();
-
-        console.log(res.json());
         
         if (!error) {
           return {
@@ -40,7 +38,7 @@ export const authOptions: NextAuthOptions = {
             accessToken: user.accessToken,
           };
         } else {
-          return null;
+          return error;
         }
       },
     },
