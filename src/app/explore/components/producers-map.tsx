@@ -1,6 +1,6 @@
 import React from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { config } from '@/config/config';
+import { env } from '@/lib/env';
 
 const center = {
   lat: 48.866667,
@@ -10,9 +10,9 @@ const center = {
 export const ProducersMap = () => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string
+    googleMapsApiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   })
-  
+
   const [map, setMap] = React.useState(null)
 
   const onLoad = React.useCallback(function callback(map: any) {
@@ -35,10 +35,10 @@ export const ProducersMap = () => {
       onUnmount={onUnmount}
       tilt={0}
     >
-      { /* Child components, such as markers, info windows, etc. */ }
+      { /* Child components, such as markers, info windows, etc. */}
       <></>
     </GoogleMap>
-) : <></>
+  ) : <></>
 }
 
 export default ProducersMap

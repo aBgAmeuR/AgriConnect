@@ -19,9 +19,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { AccountSchema } from "../data/schema"
-import { config } from '@/config/config'
 import { getAccessToken } from "@/lib/get-access-token"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
+import { env } from '@/lib/env'
+
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -42,7 +43,7 @@ export function DataTableRowActions<TData>({
 
   const { mutate: deleteUserMutation } = useMutation({
     mutationFn: async (userId: string) => {
-      await fetch(`${config.API_URL}/user/${userId}`, {
+      await fetch(`${env.NEXT_PUBLIC_API_URL}/user/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

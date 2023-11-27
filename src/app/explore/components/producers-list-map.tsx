@@ -2,10 +2,10 @@
 
 import React from 'react'
 import dynamic from 'next/dynamic';
-import { config } from '@/config/config';
 import { useQuery } from '@tanstack/react-query';
 import { FormValues, ProducersFilters } from './producers-filters';
 import { ProducerCard } from './producer-card';
+import { env } from '@/lib/env';
 
 const ProducersMap = dynamic(() => import("./producers-map"), { ssr: false });
 
@@ -23,7 +23,7 @@ export type Producer = {
 }
 
 const getProducers = async ({ text, location, type, distance }: FormValues) => {
-  const data = await fetch(config.API_URL + '/producer/search?text=&location=&type=&distance=', {
+  const data = await fetch(env.NEXT_PUBLIC_API_URL + '/producer/search?text=&location=&type=&distance=', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

@@ -2,7 +2,7 @@ import type { NextAuthOptions, Session, User } from 'next-auth';
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
 import { rolesType } from '@/types/next-auth';
-import { config } from '@/config/config';
+import { env } from '@/lib/env';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
         formdata.append('email', credentials.email);
         formdata.append('password', credentials.password);
 
-        const res = await fetch(config.API_URL + '/login', {
+        const res = await fetch(process.env.API_URL + '/login', {
           method: 'POST',
           redirect: 'follow',
           body: formdata,
@@ -31,8 +31,6 @@ export const authOptions: NextAuthOptions = {
 
         const { data: user, error } = await res.json();
 
-        console.log(res.json());
-        
         if (!error) {
           return {
             id: user.id,
@@ -50,7 +48,7 @@ export const authOptions: NextAuthOptions = {
     signOut: '/logout',
     newUser: '/register',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: env.NEXTAUTH_SECRET,
   jwt: {
     async encode({ secret, token }) {
       if (!token) {
