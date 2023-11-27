@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
         const error = false;
         const user = {
           id: credentials.email,
-          role: 'admin',
+          role: 'admin' as rolesType,
           accessToken: '123',
         };
 
@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
             accessToken: user.accessToken,
           };
         } else {
-          return error;
+          return null;
         }
       },
     },
