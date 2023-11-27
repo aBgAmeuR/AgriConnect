@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ProducerData } from '@/types/producer';
 import { Banknote, CreditCard, Landmark, MapPin, Phone } from 'lucide-react';
 import Image from 'next/image';
+
 import React from 'react';
 
 export const ProducerAboutTab = ({ data }: { data: ProducerData }) => {
@@ -11,9 +12,9 @@ export const ProducerAboutTab = ({ data }: { data: ProducerData }) => {
       case 'Carte':
         return <CreditCard width={50} height={50} />;
       case 'Espèces':
-        return <Banknote />;
+        return <Banknote width={50} height={50} />;
       case 'Chèque':
-        return <Landmark />;
+        return <Landmark width={50} height={50} />;
       default:
         return null;
     }
