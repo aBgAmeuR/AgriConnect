@@ -52,7 +52,7 @@ export function LoginForm() {
           password: values.password,
           redirect: false,
         })
-
+        
         if (!signInResponse || signInResponse.ok !== true) {
           toast({
             variant: "destructive",

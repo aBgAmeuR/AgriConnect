@@ -31,6 +31,8 @@ export const authOptions: NextAuthOptions = {
 
         const { data: user, error } = await res.json();
 
+        console.log(res.json());
+        
         if (!error) {
           return {
             id: user.id,

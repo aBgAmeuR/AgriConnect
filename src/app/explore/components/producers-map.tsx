@@ -1,20 +1,44 @@
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
-import "leaflet/dist/leaflet.css";
+import React from 'react'
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { config } from '@/config/config';
+
+const center = {
+  lat: 48.866667,
+  lng: 2.333333
+};
 
 export const ProducersMap = () => {
-  return (
-      <MapContainer center={[48.866667, 2.333333]} zoom={13} scrollWheelZoom={false}>
-        <TileLayer
-          // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={[48.866667, 2.333333]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
-  )
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string
+  })
+  
+  const [map, setMap] = React.useState(null)
+
+  const onLoad = React.useCallback(function callback(map: any) {
+    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+
+    setMap(map)
+  }, [])
+
+  const onUnmount = React.useCallback(function callback(map: any) {
+    setMap(null)
+  }, [])
+
+  return isLoaded ? (
+    <GoogleMap
+      center={center}
+      zoom={10}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+      tilt={0}
+    >
+      { /* Child components, such as markers, info windows, etc. */ }
+      <></>
+    </GoogleMap>
+) : <></>
 }
 
 export default ProducersMap
