@@ -23,20 +23,13 @@ export const authOptions: NextAuthOptions = {
         formdata.append('email', credentials.email);
         formdata.append('password', credentials.password);
 
-        // const res = await fetch(config.API_URL + '/login', {
-        //   method: 'POST',
-        //   redirect: 'follow',
-        //   body: formdata,
-        // });
+        const res = await fetch(process.env.API_URL + '/login', {
+          method: 'POST',
+          redirect: 'follow',
+          body: formdata,
+        });
 
-        // const { data: user, error } = await res.json();
-
-        const error = false;
-        const user = {
-          id: credentials.email,
-          role: 'admin' as rolesType,
-          accessToken: '123',
-        };
+        const { data: user, error } = await res.json();
 
         if (!error) {
           return {
