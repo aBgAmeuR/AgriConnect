@@ -2,7 +2,7 @@ import type { NextAuthOptions, Session, User } from 'next-auth';
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
 import { rolesType } from '@/types/next-auth';
-import { config } from '@/config/config';
+import { env } from '@/lib/env';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
     signOut: '/logout',
     newUser: '/register',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: env.NEXTAUTH_SECRET,
   jwt: {
     async encode({ secret, token }) {
       if (!token) {
