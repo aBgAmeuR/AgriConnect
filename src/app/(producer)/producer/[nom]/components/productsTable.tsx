@@ -1,17 +1,15 @@
-'use producteur';
+'use client';
 
 import React from 'react';
-// import { DataTable } from './data-table';
-//import { columns } from './product-columns'; // Assurez-vous que les colonnes correspondent à celles des produits
+
 import { config } from '@/config/config';
 import { getCurrentUser } from '@/lib/session';
 import { useQuery } from '@tanstack/react-query';
-import { Product } from '../data/schema'; // Remplacez par votre type de produit
+import { Product } from '../data/schema';
 
 const getProducts = async () => {
   const user = await getCurrentUser();
-  const data = await fetch(`${config.API_URL}/products/p1`, {
-    // Modifiez l'URL pour pointer vers l'API des produits
+  const data = await fetch(`${process.env.API_URL}/products/p1`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +25,7 @@ const getProducts = async () => {
 
 function useProducts() {
   return useQuery<Product[]>({
-    queryKey: ['products'], // Changez la clé de requête en 'products'
+    queryKey: ['products'],
     queryFn: async () => {
       const products = await getProducts();
       if (Array.isArray(products)) return products;
@@ -37,10 +35,23 @@ function useProducts() {
 }
 
 export const ProductsTable = () => {
-  const { data, isLoading, isError } = useProducts(); // Utilisez le hook useProducts
+  const { data, isLoading, isError } = useProducts();
 
-  if (isError) return <div>Error fetching products</div>;
-  if (isLoading) return <div>Loading products...</div>;
-
-  // return <DataTable columns={columns} data={data ?? []} />;
+  return (
+    <div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : isError ? (
+        <div>Error occurred while fetching products</div>
+      ) : (
+        <ul>
+          {data?.map((product) => (
+            <li key={product.id}>
+              {product.name} - {product.price} {product.unit} - {product.image}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };

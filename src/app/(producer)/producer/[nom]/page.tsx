@@ -5,7 +5,6 @@ import MainNavBar from '@/components/main-navbar';
 import { ProducerCard } from './components/producer-card';
 import { ProducerTabs } from './components/producer-tabs';
 import { Button } from '@/components/ui/button';
-import { ProductsTable } from './components/productsTable';
 
 const getData = async () => {
   const producerData = {
@@ -35,7 +34,6 @@ export default async function ProducerPage({ params }: { params: { nom: string }
           <ProducerCard data={data} />
         </aside>
         <ProducerTabs data={data} />
-        <ProductsTable />
       </main>
     </>
   );
