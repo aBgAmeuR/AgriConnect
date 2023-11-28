@@ -7,32 +7,27 @@ const center = {
   lng: 2.3
 };
 
-export const ProducersMap = () => {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-  })
+type Props = {
+  isLoaded: boolean;
+};
 
-  const [map, setMap] = React.useState(null)
+export const ProducersMap = ({ isLoaded }: Props) => {
+  // const [map, setMap] = React.useState(null)
 
   const onLoad = React.useCallback(function callback(map: any) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-
-    setMap(map)
+    map.setZoom(6)
+    // setMap(map)
   }, [])
 
   const onUnmount = React.useCallback(function callback(map: any) {
-    setMap(null)
+    // setMap(null)
   }, [])
 
   return isLoaded ? (
     <GoogleMap
       center={center}
-      zoom={6}
       onLoad={onLoad}
-      onUnmount={onUnmount}
+      // onUnmount={onUnmount}
     >
       { /* Child components, such as markers, info windows, etc. */}
       <></>

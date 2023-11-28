@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FormValues, ProducersFilters } from './producers-filters';
 import { ProducerCard } from './producer-card';
 import { env } from '@/lib/env';
+import { Libraries, useJsApiLoader } from '@react-google-maps/api';
 
 const ProducersMap = dynamic(() => import("./producers-map"), { ssr: false });
 
@@ -24,7 +25,7 @@ export type Producer = {
 
 const getProducers = async ({ text, location, type, distance }: FormValues) => {
   console.log(text, location, type, distance);
-  
+
   const data = await fetch(env.NEXT_PUBLIC_API_URL + `/producer/search?text=${text}&location=${location}&type=${type}&distance=${distance}`, {
     method: 'GET',
     headers: {
@@ -33,7 +34,7 @@ const getProducers = async ({ text, location, type, distance }: FormValues) => {
   }).then(res => res.json())
     .then(res => res.data)
     .catch(err => console.log(err))
-  
+
   return data
 }
 
@@ -48,6 +49,9 @@ function useProducers({ text, location, type, distance }: FormValues) {
   });
 }
 
+type Librarie = "places";
+const libraries: Librarie[] = ["places"];
+
 export const ProducersListMap = () => {
   const [params, setParams] = React.useState<FormValues>({
     text: '',
@@ -57,21 +61,25 @@ export const ProducersListMap = () => {
   })
   const { data, isLoading, isError } = useProducers(params)
 
-  if (isLoading) return <div>Loading...</div>
-
-  if (isError) return <div>Error occured</div>
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    libraries: libraries as Libraries,
+  })
 
   return (
     <>
       <div className="m-4">
-        <ProducersFilters params={params} setParams={setParams} />
+        <ProducersFilters params={params} setParams={setParams} isLoaded={isLoaded} />
         <div className='mt-4 flex flex-col gap-4'>
-          {data?.map((producer) => (
+          {isLoading && <div>Chargement...</div>}
+          {isError && <div>Une erreur est survenue</div>}
+          {data?.length === 0 ? <div>Aucun producteur trouvé</div> : data?.map((producer) => (
             <ProducerCard key={producer.id} {...producer} />
           ))}
         </div>
       </div>
-      <ProducersMap />
+      <ProducersMap isLoaded={isLoaded} />
     </>
   )
 }
