@@ -23,6 +23,8 @@ export type Producer = {
 }
 
 const getProducers = async ({ text, location, type, distance }: FormValues) => {
+  console.log(text, location, type, distance);
+  
   const data = await fetch(env.NEXT_PUBLIC_API_URL + `/producer/search?text=${text}&location=${location}&type=${type}&distance=${distance}`, {
     method: 'GET',
     headers: {
@@ -31,7 +33,7 @@ const getProducers = async ({ text, location, type, distance }: FormValues) => {
   }).then(res => res.json())
     .then(res => res.data)
     .catch(err => console.log(err))
-
+  
   return data
 }
 
