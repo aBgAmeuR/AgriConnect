@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '../ui/use-toast';
+import { env } from '@/lib/env';
 
 const formSchema = z.object({
   surname: z.string().regex(/^[a-zA-Z]+$/, {
@@ -32,6 +33,7 @@ const formSchema = z.object({
 
 export function RegisterClientForm() {
   const [isPending, startTransition] = React.useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,17 +49,28 @@ export function RegisterClientForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
       try {
-        // TODO: send request
+        const formData = new FormData();
+        formData.append('surname', values.surname);
+        formData.append('name', values.name);
+        formData.append('email', values.email);
+        formData.append('phone', values.phone);
+        formData.append('password', values.password);
+        formData.append('role', 'client');
+
+        const res = await fetch(env.NEXT_PUBLIC_API_URL+'/register', {
+          method: 'POST',
+          body: formData,
+        });
+        router.push('/explore')
+      } catch (err) {
         toast({
-          title: 'Vous avez envoyé les valeurs suivantes :',
+          title: 'Erreur',
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-green-600 p-4">
-              <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+            <pre className="mt-2 w-[340px] rounded-md bg-red-600 p-4">
+              <code className="text-white">{JSON.stringify(err, null, 2)}</code>
             </pre>
           ),
         });
-      } catch (err) {
-        // TODO: handle error
       }
     });
   }
