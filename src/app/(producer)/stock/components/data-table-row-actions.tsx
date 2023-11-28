@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { StockSchema } from "../data/schema"
-import { config } from '@/config/config'
 import { getAccessToken } from "@/lib/get-access-token"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 
