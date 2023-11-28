@@ -2,14 +2,15 @@
 
 import React from 'react';
 
-import { config } from '@/config/config';
 import { getCurrentUser } from '@/lib/session';
 import { useQuery } from '@tanstack/react-query';
 import { Product } from '../data/schema';
+import { env } from '@/lib/env';
+import { ProductItem } from './products-Items';
 
 const getProducts = async () => {
   const user = await getCurrentUser();
-  const data = await fetch(`${process.env.API_URL}/products/p1`, {
+  const data = await fetch(env.NEXT_PUBLIC_API_URL + '/products/p1', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -23,7 +24,7 @@ const getProducts = async () => {
   return data;
 };
 
-function useProducts() {
+export function useProducts() {
   return useQuery<Product[]>({
     queryKey: ['products'],
     queryFn: async () => {
@@ -38,19 +39,13 @@ export const ProductsTable = () => {
   const { data, isLoading, isError } = useProducts();
 
   return (
-    <div>
+    <div className="flex flex-row">
       {isLoading ? (
         <div>Loading...</div>
       ) : isError ? (
         <div>Error occurred while fetching products</div>
       ) : (
-        <ul>
-          {data?.map((product) => (
-            <li key={product.id}>
-              {product.name} - {product.price} {product.unit} - {product.image}
-            </li>
-          ))}
-        </ul>
+        <div className="flex flex-row gap-3">{data?.map((product) => <ProductItem key={product.id} product={product} />)}</div>
       )}
     </div>
   );

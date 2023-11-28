@@ -5,6 +5,7 @@ import { Banknote, CreditCard, Landmark, MapPin, Phone } from 'lucide-react';
 import Image from 'next/image';
 
 import React from 'react';
+import { ProductsTable, useProducts } from './productsTable';
 
 export const ProducerAboutTab = ({ data }: { data: ProducerData }) => {
   const renderPaymentIcon = (paymentMethod: string) => {
@@ -19,6 +20,11 @@ export const ProducerAboutTab = ({ data }: { data: ProducerData }) => {
         return null;
     }
   };
+  const { data: products, isLoading, isError } = useProducts();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error occurred while fetching products</div>;
+
   return (
     <div>
       <Badge className="mb-4">Producteur</Badge>
@@ -38,17 +44,10 @@ export const ProducerAboutTab = ({ data }: { data: ProducerData }) => {
         </div>
         <div className="flex flex-col gap-6 ">
           <h2 className="text-lg font-semibold mt-4">Boutique</h2>
-          <div className="flex flex-wrap justify-start items-start gap-2.5">
-            <div className="flex flex-auto min-w-0 max-w-xs sm:max-w-sm md:w-44 h-[244px] bg-white rounded-lg shadow border border-zinc-200 flex-col justify-start items-center p-4">
-              <div className="flex flex-col items-center gap-2">
-                <Image src={''} alt={''} />
-                <p className="text-sm text-gray-500">Produit 1</p>
-              </div>
+          <div className="flex flex-row justify-start items-start gap-2.5">
+            <div className="flex flex-row items-center gap-2">
+              <ProductsTable />
             </div>
-            <div className="flex flex-auto min-w-0 max-w-xs sm:max-w-sm md:w-44 h-[244px] bg-white rounded-lg shadow border border-zinc-200 flex-col justify-start items-center p-4"></div>
-            <div className="flex flex-auto min-w-0 max-w-xs sm:max-w-sm md:w-44 h-[244px] bg-white rounded-lg shadow border border-zinc-200 flex-col justify-start items-center p-4"></div>
-            <div className="flex flex-auto min-w-0 max-w-xs sm:max-w-sm md:w-44 h-[244px] bg-white rounded-lg shadow border border-zinc-200 flex-col justify-start items-center p-4"></div>
-            <div className="flex flex-auto min-w-0 max-w-xs sm:max-w-sm md:w-44 h-[244px] bg-white rounded-lg shadow border border-zinc-200 flex-col justify-start items-center p-4"></div>
           </div>
           <Button className="max-w-[200px] mx-auto ">Parcourir la boutique</Button>
         </div>
