@@ -30,10 +30,9 @@ export const ProducersMap = () => {
   return isLoaded ? (
     <GoogleMap
       center={center}
-      zoom={10}
+      zoom={13}
       onLoad={onLoad}
       onUnmount={onUnmount}
-      tilt={0}
     >
       { /* Child components, such as markers, info windows, etc. */}
       <></>

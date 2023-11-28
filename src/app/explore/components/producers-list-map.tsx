@@ -53,7 +53,7 @@ export const ProducersListMap = () => {
     type: '',
     distance: '',
   })
-  const { data, isLoading, isError } = useProducers(params)
+  // const { data, isLoading, isError } = useProducers(params)
 
   const azerty = {
     id: "p7",
