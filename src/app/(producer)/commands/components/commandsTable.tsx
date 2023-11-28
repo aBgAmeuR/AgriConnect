@@ -5,12 +5,12 @@ import { DataTable } from './data-table'
 import { columns } from './columns'
 import { getCurrentUser } from '@/lib/session'
 import { useQuery } from '@tanstack/react-query'
-import { Stock } from '../data/schema'
+import { Order } from '../data/schema'
 import { env } from '@/lib/env'
 
-const getProducts = async () => {
+const getOrders = async () => {
   const user = await getCurrentUser()
-  const data = await fetch(env.API_URL + '/stocks', {
+  const data = await fetch(env.NEXT_PUBLIC_API_URL + '/orders', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -23,20 +23,19 @@ const getProducts = async () => {
   return data
 }
 
-function useStocks() {
-  return useQuery<Stock[]>({
-    queryKey: ['users'],
+function useOrders() {
+  return useQuery<Order[]>({
+    queryKey: ['orders'],
     queryFn: async () => {
-      const products = await getProducts();
-      if (Array.isArray(products)) return products;
+      const Orders = await getOrders();
+      if (Array.isArray(Orders)) return Orders;
       throw new Error('error occured');
     },
   });
 }
 
-export const StocksTable = () => {
-  const { data, isLoading, isError } = useStocks()
-
+export const OrdersTable = () => {
+  const { data, isLoading, isError } = useOrders()
   if (isError) return <div>Error</div>
   if (isLoading) return <div>Loading...</div>
 
