@@ -24,7 +24,7 @@ const columns = [
   { id: "available", label: "Disponible" },
   { id: "reserved", label: "Réservé" },
   { id: "price", label: "Prix" },
-  { id: "unit", label: "Unité" },
+  { id: "price", label: "Unité" },
 ]
 
 

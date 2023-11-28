@@ -10,7 +10,7 @@ import { env } from '@/lib/env'
 
 const getProducts = async () => {
   const user = await getCurrentUser()
-  const data = await fetch(env.NEXT_PUBLIC_API_URL + '/stocks', {
+  const data = await fetch(env.API_URL + '/stocks', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ const getProducts = async () => {
   }).then(res => res.json())
     .then(res => res.data)
     .catch(err => console.log(err))
-  
+
   return data
 }
 

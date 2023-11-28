@@ -11,6 +11,9 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '../ui/use-toast';
+import { env } from '@/lib/env';
+import { getCurrentUser } from '@/lib/session';
+
 
 const formSchema = z.object({
   surname: z.string().regex(/^[a-zA-Z]+$/, {
@@ -22,6 +25,9 @@ const formSchema = z.object({
   email: z.string().email({
     message: 'Veuillez entrer une adresse e-mail valide.',
   }),
+  phone: z.string().regex(/^[0-9]{10}$/, {
+    message: 'Veuillez entrer un numéro de téléphone valide.',
+  }),
   password: z.string().min(8, {
     message: 'Le mot de passe doit avoir au moins 8 caractères.',
   }),
@@ -29,6 +35,7 @@ const formSchema = z.object({
 
 export function RegisterProducerForm() {
   const [isPending, startTransition] = React.useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,6 +43,7 @@ export function RegisterProducerForm() {
       surname: '',
       name: '',
       email: '',
+      phone: '',
       password: '',
     },
   });
@@ -43,17 +51,29 @@ export function RegisterProducerForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
       try {
-        // TODO: send request
+        const formData = new FormData();
+        formData.append('surname', values.surname);
+        formData.append('name', values.name);
+        formData.append('email', values.email);
+        formData.append('phone', values.phone);
+        formData.append('password', values.password);
+        formData.append('role', 'producer');
+
+        const res = await fetch(env.NEXT_PUBLIC_API_URL+'/register', {
+          method: 'POST',
+          body: formData,
+        });
+        router.push('/commands')
+      } catch (err) {
+        // TODO: handle error
         toast({
-          title: 'Vous avez envoyé les valeurs suivantes :',
+          title: 'Erreur',
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-green-600 p-4">
-              <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+            <pre className="mt-2 w-[340px] rounded-md bg-red-600 p-4">
+              <code className="text-white">{JSON.stringify(err, null, 2)}</code>
             </pre>
           ),
         });
-      } catch (err) {
-        // TODO: handle error
       }
     });
   }
@@ -95,6 +115,19 @@ export function RegisterProducerForm() {
               {/* <FormLabel>Email</FormLabel> */}
               <FormControl>
                 <Input type="email" placeholder="damiencren35@gmail.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              {/* <FormLabel>Téléphone</FormLabel> */}
+              <FormControl>
+                <Input type="text" placeholder="Téléphone" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

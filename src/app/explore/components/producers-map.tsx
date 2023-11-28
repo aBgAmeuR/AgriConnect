@@ -3,8 +3,8 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { env } from '@/lib/env';
 
 const center = {
-  lat: 48.866667,
-  lng: 2.333333
+  lat: 46.6,
+  lng: 2.3
 };
 
 export const ProducersMap = () => {
@@ -30,7 +30,7 @@ export const ProducersMap = () => {
   return isLoaded ? (
     <GoogleMap
       center={center}
-      zoom={13}
+      zoom={6}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
