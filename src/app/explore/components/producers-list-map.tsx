@@ -23,7 +23,7 @@ export type Producer = {
 }
 
 const getProducers = async ({ text, location, type, distance }: FormValues) => {
-  const data = await fetch(env.NEXT_PUBLIC_API_URL + '/producer/search?text=&location=&type=&distance=', {
+  const data = await fetch(env.NEXT_PUBLIC_API_URL + `/producer/search?text=${text}&location=${location}&type=${type}&distance=${distance}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const getProducers = async ({ text, location, type, distance }: FormValues) => {
 
 function useProducers({ text, location, type, distance }: FormValues) {
   return useQuery<Producer[]>({
-    queryKey: ['users'],
+    queryKey: ['SearchProducers'],
     queryFn: async () => {
       const producers = await getProducers({ text, location, type, distance });
       if (Array.isArray(producers)) return producers;
@@ -53,26 +53,21 @@ export const ProducersListMap = () => {
     type: '',
     distance: '',
   })
-  // const { data, isLoading, isError } = useProducers(params)
+  const { data, isLoading, isError } = useProducers(params)
 
-  const azerty = {
-    id: "p7",
-    name: "MielsMich",
-    description: "Producteur de miel",
-    paymentMethod: "Espèces",
-    address: "404 rue de Nantes",
-    phone: 567891239,
-    latitude: 47.218371,
-    longitude: -1.553621,
-    category: "Miels",
-    createdAt: "2023-01-21"
-  }
+  if (isLoading) return <div>Loading...</div>
+
+  if (isError) return <div>Error occured</div>
 
   return (
     <>
       <div className="m-4">
         <ProducersFilters params={params} setParams={setParams} />
-        <ProducerCard {...azerty} />
+        <div className='mt-4 flex flex-col gap-4'>
+          {data?.map((producer) => (
+            <ProducerCard key={producer.id} {...producer} />
+          ))}
+        </div>
       </div>
       <ProducersMap />
     </>

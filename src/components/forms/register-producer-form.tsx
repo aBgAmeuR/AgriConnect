@@ -44,6 +44,8 @@ export function RegisterProducerForm() {
     startTransition(async () => {
       try {
         // TODO: send request
+        console.log(values);
+        
         toast({
           title: 'Vous avez envoyé les valeurs suivantes :',
           description: (

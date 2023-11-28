@@ -3,14 +3,14 @@
 import React from 'react'
 import { DataTable } from './data-table'
 import { columns } from './columns'
-import { config } from '@/config/config'
 import { getCurrentUser } from '@/lib/session'
 import { useQuery } from '@tanstack/react-query'
 import { Stock } from '../data/schema'
+import { env } from '@/lib/env'
 
 const getProducts = async () => {
   const user = await getCurrentUser()
-  const data = await fetch(config.API_URL + '/stocks', {
+  const data = await fetch(env.API_URL + '/stocks', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

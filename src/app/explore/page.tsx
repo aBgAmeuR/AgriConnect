@@ -9,7 +9,7 @@ export default async function Explore() {
   return (
     <>
       <MainNavBar role={user?.role || "visitor"} />
-      <main className="grid grid-cols-2 h-[calc(100vh-64px)]">
+      <main className="grid grid-cols-2 h-[calc(100vh-64px)] divide-x">
         <ProducersListMap />
       </main>
     </>

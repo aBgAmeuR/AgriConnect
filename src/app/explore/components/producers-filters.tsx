@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { env } from "@/lib/env"
 import AddressInput from "@/components/ui/address-input"
 
 const formSchema = z.object({
@@ -72,7 +71,6 @@ export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
             name="text"
             render={({ field }) => (
               <FormItem className="w-full">
-                {/* <FormLabel>Email</FormLabel> */}
                 <FormControl>
                   <Input
                     type="text"
@@ -89,13 +87,7 @@ export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
             name="location"
             render={({ field }) => (
               <FormItem className="w-full">
-                {/* <FormLabel>Password</FormLabel> */}
                 <FormControl>
-                  {/* <Input
-                    type="text"
-                    placeholder="Lieu..."
-                    {...field}
-                  /> */}
                   <AddressInput onChange={setAddress} />
                 </FormControl>
                 <FormMessage />
@@ -109,7 +101,6 @@ export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
             name="type"
             render={({ field }) => (
               <FormItem className="w-full">
-                {/* <FormLabel>Password</FormLabel> */}
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger className="w-full">
@@ -137,7 +128,6 @@ export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
             name="distance"
             render={({ field }) => (
               <FormItem className="w-full">
-                {/* <FormLabel>Password</FormLabel> */}
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger className="w-full">
