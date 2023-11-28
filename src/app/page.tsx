@@ -1,15 +1,48 @@
-import MainNavBar from "@/components/main-navbar"
-import { Step, Steps } from "@/components/ui/steps"
-import { getCurrentUser } from "@/lib/session"
+import MainNavBar from '@/components/main-navbar';
+import { Step, Steps } from '@/components/ui/steps';
+import { getCurrentUser } from '@/lib/session';
+import Image from 'next/image';
+import SearchBar from './home/components/search-bar';
+import CategoriesShowcase from './home/components/home-catego';
+import LocalProductsCard from './home/components/home-local';
+import { SellProductsCard } from './home/components/home-online';
+import InfoSection from './home/components/info-produit';
 
 export default async function Home() {
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
 
   return (
     <>
-      <MainNavBar role={user?.role || "visitor"} />
-      <h1>AgriConnect</h1>
-      <p>Role : {user?.role}</p>
+      <div className="flex flex-col items-stretch">
+        <MainNavBar role={user?.role || 'visitor'} />
+        <main className=" w-full min-h-screen">
+          <div className=" flex items-center justify-center realtive w-full h-[263px] text-center">
+            <div className="-z-10 w-full h-[263px] absolute">
+              <Image src="/bienfaits-fruits-legumes.jpg" alt="Background" fill style={{ objectFit: 'cover' }} />
+            </div>
+            <div className="banner-hero-title flex flex-col gap-2 mx-16  items-center">
+              <h1 className="text-3xl text-slate-50">Bienvenue sur agriconnect !</h1>
+              <p className="text-sm text-slate-50">Retrouvez les produits du terroir et les producteurs en circuit court.</p>
+            </div>
+          </div>
+          <div className="h-[100px] w-full flex flex-col justify-center items-center">
+            <SearchBar />
+          </div>
+
+          <CategoriesShowcase />
+
+          <InfoSection />
+
+          <div className="-z-10 w-full min-h-full h-[517px] absolute">
+            <Image src="/home-picture.jpg" alt="Background" fill style={{ objectFit: 'cover' }} />
+
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col space-y-8 sm:flex-row sm:space-y-0 sm:space-x-36">
+              <LocalProductsCard />
+              <SellProductsCard />
+            </div>
+          </div>
+        </main>
+      </div>
     </>
-  )
+  );
 }

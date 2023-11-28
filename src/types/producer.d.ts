@@ -1,8 +1,9 @@
 export type ProducerData = {
+  id: string;
   name: string;
   desc: string;
   payement: string;
-  adress: string;
+  address: string;
   phoneNumber: string;
   category: string;
 };

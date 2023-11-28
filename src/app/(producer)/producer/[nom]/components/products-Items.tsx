@@ -11,7 +11,7 @@ export const ProductItem = ({ product }: { product: Product }) => {
   return (
     <div className="flex flex-col justify-start items-center p-4 bg-white rounded-lg shadow border border-zinc-200 max-w-xs h-[244px]">
       <div className="w-full h-2/3 overflow-hidden rounded-t-lg">{/* <image src={imageUrl} alt={product.name} layout="fill" objectFit="cover" /> */}</div>
-      <h3 className="text-left w-full">{product.name}</h3> {/* Classe text-left pour aligner à gauche */}
+      <h3 className="text-left w-full">{product.name}</h3>
       <div className="mt-auto flex items-center gap-1 text-gray-500">
         <p>
           {product.price} €/{product.unit}

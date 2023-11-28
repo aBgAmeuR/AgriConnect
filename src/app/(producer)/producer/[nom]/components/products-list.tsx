@@ -35,7 +35,7 @@ export function useProducts() {
   });
 }
 
-export const ProductsTable = () => {
+export const ProductsList = () => {
   const { data, isLoading, isError } = useProducts();
 
   return (
