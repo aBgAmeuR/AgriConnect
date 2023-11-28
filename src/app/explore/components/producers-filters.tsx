@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { env } from "@/lib/env"
+import AddressInput from "@/components/ui/address-input"
 
 const formSchema = z.object({
   text: z.string().optional(),
@@ -31,8 +33,15 @@ type ProducersFiltersProps = {
   setParams: (params: FormValues) => void
 }
 
+type AddressProps = {
+  address: string;
+  lat: number;
+  lng: number;
+} | null;
+
 export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
   const [isPending, startTransition] = React.useTransition()
+  const [address, setAddress] = React.useState<AddressProps>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,7 +56,7 @@ export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
       try {
-        console.log(values);
+        console.log(values, address);
       } catch (err) {
         console.error(err);
       }
@@ -82,11 +91,12 @@ export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
               <FormItem className="w-full">
                 {/* <FormLabel>Password</FormLabel> */}
                 <FormControl>
-                  <Input
+                  {/* <Input
                     type="text"
                     placeholder="Lieu..."
                     {...field}
-                  />
+                  /> */}
+                  <AddressInput onChange={setAddress} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,7 +111,7 @@ export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
               <FormItem className="w-full">
                 {/* <FormLabel>Password</FormLabel> */}
                 <FormControl>
-                  <Select>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Type" />
                     </SelectTrigger>
@@ -129,7 +139,7 @@ export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
               <FormItem className="w-full">
                 {/* <FormLabel>Password</FormLabel> */}
                 <FormControl>
-                  <Select>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Distance" />
                     </SelectTrigger>
