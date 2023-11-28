@@ -1,12 +1,24 @@
 import MainNavBar from '@/components/main-navbar';
-import { Step, Steps } from '@/components/ui/steps';
 import { getCurrentUser } from '@/lib/session';
 import Image from 'next/image';
 import SearchBar from './home/components/search-bar';
 import CategoriesShowcase from './home/components/home-catego';
-import LocalProductsCard from './home/components/home-local';
-import { SellProductsCard } from './home/components/home-online';
 import InfoSection from './home/components/info-produit';
+import HomePageCard from '@/app/home/components/home-page-card';
+
+const cardExplore = {
+  title: 'Je veux acheter des produits locaux !',
+  description: 'Vous souhaitez découvrir les producteurs en circuit court proches de vous, connaître d’autres spécialités régionales et faire le plein de produits du terroir ? Inscrivez-vous et achetez vos produits directement auprès de vos producteurs.',
+  href: '/explore',
+  buttonLabel: 'Commencer',
+};
+
+const cardSell = {
+  title: 'Je veux vendre mes produits en ligne',
+  description: 'Vous souhaitez découvrir les producteurs en circuit court proches de vous, connaître d’autres spécialités régionales et faire le plein de produits du terroir ? Inscrivez-vous et achetez vos produits directement auprès de vos producteurs.',
+  href: '/register',
+  buttonLabel: "Créer un compte producteur",
+};
 
 export default async function Home() {
   const user = await getCurrentUser();
@@ -15,7 +27,7 @@ export default async function Home() {
     <>
       <div className="flex flex-col items-stretch">
         <MainNavBar role={user?.role || 'visitor'} />
-        <main className=" w-full min-h-screen">
+        <main className=" w-full min-h-screen flex flex-col">
           <div className=" flex items-center justify-center realtive w-full h-[263px] text-center">
             <div className="-z-10 w-full h-[263px] absolute">
               <Image src="/bienfaits-fruits-legumes.jpg" alt="Background" fill style={{ objectFit: 'cover' }} />
@@ -33,12 +45,12 @@ export default async function Home() {
 
           <InfoSection />
 
-          <div className="-z-10 w-full min-h-full h-[517px] absolute">
+          <div className="w-full min-h-full h-[517px] relative">
             <Image src="/home-picture.jpg" alt="Background" fill style={{ objectFit: 'cover' }} />
 
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col space-y-8 sm:flex-row sm:space-y-0 sm:space-x-36">
-              <LocalProductsCard />
-              <SellProductsCard />
+            <div className="relative mx-16 gap-12 flex flex-row items-center justify-between space-y-8 h-96">
+              <HomePageCard {...cardExplore} />
+              <HomePageCard {...cardSell} />
             </div>
           </div>
         </main>
