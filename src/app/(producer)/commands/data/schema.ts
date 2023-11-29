@@ -1,14 +1,11 @@
 import { z } from 'zod';
 
-export const StockSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  category: z.string(),
-  quantity: z.number(),
-  available: z.number(),
-  reserved: z.number(),
-  price: z.string(),
-  unit: z.string(),
+export const OrderSchema = z.object({
+  numero: z.string(),
+  status: z.enum(['pending', 'confirmed', 'delivered']),
+  date: z.date(),
+  montant: z.number(),
+  client: z.string(),
 });
 
-export type Stock = z.infer<typeof StockSchema>;
+export type Order = z.infer<typeof OrderSchema>;

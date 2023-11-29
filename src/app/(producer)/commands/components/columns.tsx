@@ -3,11 +3,11 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Checkbox } from "@/components/ui/checkbox"
 
-import { Stock } from "../data/schema"
+import { Order } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 
-export const columns: ColumnDef<Stock>[] = [
+export const columns: ColumnDef<Order>[] = [
   // {
   //   id: "select",
   //   header: ({ table }) => (
@@ -30,57 +30,38 @@ export const columns: ColumnDef<Stock>[] = [
   //   enableHiding: false,
   // },
   {
-    accessorKey: "name",
+    accessorKey: "numero",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Nom" />
+      <DataTableColumnHeader column={column} title="Numéro" />
     ),
-    cell: ({ row }) => <div className="w-[100px]">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="w-[100px]">{row.getValue("numero")}</div>,
   },
   {
-    accessorKey: "category",
+    accessorKey: "statut",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Catégorie" />
+      <DataTableColumnHeader column={column} title="Statut" />
     ),
-    cell: ({ row }) => <div className="w-[150px]">{row.getValue("category")}</div>,
+    cell: ({ row }) => <div className="w-[150px]">{row.getValue("statut")}</div>,
   },
   {
-    accessorKey: "quantity",
+    accessorKey: "date",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Quantité" />
+      <DataTableColumnHeader column={column} title="Date" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("quantity")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("date")}</div>,
   },
   {
-    accessorKey: "available",
+    accessorKey: "montant",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Disponible" />
+      <DataTableColumnHeader column={column} title="Montant" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("available")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("montant")}</div>,
   },
   {
-    accessorKey: "reserved",
+    accessorKey: "client",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Réservé" />
+      <DataTableColumnHeader column={column} title="Client" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("reserved")}</div>,
-  },
-  {
-    accessorKey: "price",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Prix" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("price")}</div>,
-  },
-  {
-    accessorKey: "unit",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Unité" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("unit")}</div>,
-    enableSorting: false,
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("client")}</div>,
   },
 ]

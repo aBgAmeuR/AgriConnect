@@ -1,12 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLoadScript } from '@react-google-maps/api';
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
-import { env } from '@/lib/env';
-
-// Déclarez le type Library pour les bibliothèques Google Maps
-type Library = "places";
-
-const libraries: Library[] = ["places"];
 
 type AddressProps = {
   label: string;
@@ -15,14 +8,10 @@ type AddressProps = {
 
 type AddressInputProps = {
   onChange: (address: { address: string, lat: number, lng: number }) => void;
+  isLoaded: boolean;
 };
 
-const AddressInput = ({ onChange }: AddressInputProps) => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-    libraries,
-  });
-
+const AddressInput = ({ onChange, isLoaded }: AddressInputProps) => {
   const [value, setValue] = useState<AddressProps>(null);
 
   React.useEffect(() => {

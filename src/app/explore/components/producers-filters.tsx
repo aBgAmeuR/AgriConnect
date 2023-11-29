@@ -30,6 +30,7 @@ export type FormValues = z.infer<typeof formSchema>
 type ProducersFiltersProps = {
   params: FormValues
   setParams: (params: FormValues) => void
+  isLoaded: boolean;
 }
 
 type AddressProps = {
@@ -38,7 +39,7 @@ type AddressProps = {
   lng: number;
 } | null;
 
-export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
+export function ProducersFilters({ params, setParams, isLoaded }: ProducersFiltersProps) {
   const [isPending, startTransition] = React.useTransition()
   const [address, setAddress] = React.useState<AddressProps>(null);
 
@@ -88,7 +89,7 @@ export function ProducersFilters({ params, setParams }: ProducersFiltersProps) {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <AddressInput onChange={setAddress} />
+                  <AddressInput onChange={setAddress} isLoaded={isLoaded} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
