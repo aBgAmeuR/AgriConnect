@@ -39,7 +39,6 @@ type Props = {
 };
 
 export const ProductsList = ({ id }: Props) => {
-  console.log('ici', id);
   const { data, isLoading, isError } = useProducts(id);
 
   return (
