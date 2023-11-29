@@ -6,8 +6,6 @@ import { ProducerCard } from './components/producer-card';
 import { ProducerTabs } from './components/producer-tabs';
 import { Button } from '@/components/ui/button';
 import { env } from '@/lib/env';
-import { error } from 'console';
-import { setErrorMap } from 'zod';
 
 const getData = async (nom: string) => {
   const producerData = await fetch(env.API_URL + '/producer?name=' + nom, {
@@ -29,7 +27,7 @@ export default async function ProducerPage({ params }: { params: { nom: string }
   if (!data) {
     return 404;
   }
-  console.log(data);
+
   return (
     <>
       <MainNavBar role={user?.role || 'visitor'} />
@@ -41,7 +39,7 @@ export default async function ProducerPage({ params }: { params: { nom: string }
         <aside className="min-w-[200px] max-w-[250px] w-full">
           <ProducerCard {...data} />
         </aside>
-        {/* <ProducerTabs data={data} /> */}
+        <ProducerTabs data={data} />
       </main>
     </>
   );

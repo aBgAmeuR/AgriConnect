@@ -17,11 +17,11 @@ export const ProducerTabs = ({ data }: Props) => {
   return (
     <div className="w-full">
       <ProducerNav current={nav} setNav={setNav} />
-      {nav == 'a-propos' ? <ProducerAboutTab data={data} /> : null}
+      {nav == 'a-propos' ? <ProducerAboutTab {...data} /> : null}
       {nav == 'boutique' ? (
         <div className="p-6">
           Boutique
-          <ProductsList />
+          <ProductsList {...data} />
         </div>
       ) : null}
       {nav == 'contact' ? (

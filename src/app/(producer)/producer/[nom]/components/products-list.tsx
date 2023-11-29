@@ -8,9 +8,9 @@ import { Product } from '../data/schema';
 import { env } from '@/lib/env';
 import { ProductItem } from './products-Items';
 
-const getProducts = async () => {
+const getProducts = async (id: string) => {
   const user = await getCurrentUser();
-  const data = await fetch(env.NEXT_PUBLIC_API_URL + '/products/p1', {
+  const data = await fetch(env.NEXT_PUBLIC_API_URL + '/producer/' + id + '/products', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -24,19 +24,23 @@ const getProducts = async () => {
   return data;
 };
 
-export function useProducts() {
+function useProducts(id: string) {
   return useQuery<Product[]>({
-    queryKey: ['products'],
+    queryKey: ['products', id],
     queryFn: async () => {
-      const products = await getProducts();
+      const products = await getProducts(id);
       if (Array.isArray(products)) return products;
       throw new Error('Error occurred while fetching products');
     },
   });
 }
+type Props = {
+  id: string;
+};
 
-export const ProductsList = () => {
-  const { data, isLoading, isError } = useProducts();
+export const ProductsList = ({ id }: Props) => {
+  console.log('ici', id);
+  const { data, isLoading, isError } = useProducts(id);
 
   return (
     <div className="flex flex-row">

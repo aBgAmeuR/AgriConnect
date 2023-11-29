@@ -5,10 +5,11 @@ import { Banknote, CreditCard, Landmark, MapPin, Phone } from 'lucide-react';
 import Image from 'next/image';
 
 import React from 'react';
-import { ProductsList, useProducts } from './products-list';
+import { ProductsList } from './products-list';
 import ProducerContact from './producer-contact';
 
-export const ProducerAboutTab = ({ data }: { data: ProducerData }) => {
+export const ProducerAboutTab = (data: ProducerData) => {
+  const { name, description, paymentMethod } = data;
   const renderPaymentIcon = (paymentMethod: string) => {
     switch (paymentMethod) {
       case 'Carte':
@@ -21,32 +22,29 @@ export const ProducerAboutTab = ({ data }: { data: ProducerData }) => {
         return null;
     }
   };
-  const { data: products, isLoading, isError } = useProducts();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error occurred while fetching products</div>;
-
   return (
     <div>
       <Badge className="mb-4">Producteur</Badge>
 
       <div className="flex flex-col">
-        <h1 className="text-xl font-semibold"> {data.name}</h1>
-        <p className="text-sm text-gray-500">{data.desc}</p>
+        <h1 className="text-xl font-semibold"> {name}</h1>
+        <p className="text-sm text-gray-500">{description}</p>
 
         <div>
           <h2 className="text-lg font-semibold mt-4">Moyens de paiement</h2>
           <div className="flex flex-col items-start">
             <div className="flex flex-col items-center gap-2">
-              {renderPaymentIcon(data.payement)}
-              <p className="text-sm text-gray-500">{data.payement}</p>
+              {renderPaymentIcon(paymentMethod)}
+              <p className="text-sm text-gray-500">{paymentMethod}</p>
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-6 ">
           <h2 className="text-lg font-semibold mt-4">Boutique</h2>
           <div className="flex flex-row justify-start items-start gap-2.5">
-            <div className="flex flex-row items-center gap-2">{/* <ProductsList /> */}</div>
+            <div className="flex flex-row items-center gap-2">
+              <ProductsList {...data} />
+            </div>
           </div>
           <Button className="max-w-[200px] mx-auto ">Parcourir la boutique</Button>
         </div>
