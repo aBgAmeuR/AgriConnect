@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import AddressInput from "@/components/ui/address-input"
+import { useQueryClient } from "@tanstack/react-query"
 
 const formSchema = z.object({
   text: z.string().optional(),
@@ -42,25 +43,31 @@ type AddressProps = {
 export function ProducersFilters({ params, setParams, isLoaded }: ProducersFiltersProps) {
   const [isPending, startTransition] = React.useTransition()
   const [address, setAddress] = React.useState<AddressProps>(null);
+  const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      text: params.text,
-      location: params.location,
-      type: params.type,
-      distance: params.distance,
+      text: '',
+      location: '',
+      type: '',
+      distance: '',
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    startTransition(async () => {
-      try {
-        console.log(values, address);
-      } catch (err) {
-        console.error(err);
-      }
-    })
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const location = address?.lat ? `${address?.lat},${address?.lng}` : '';
+      setParams({
+        text: values.text ?? '',
+        location: location,
+        type: values.type ?? '',
+        distance: values.distance ?? ''
+      })
+      queryClient.invalidateQueries({ queryKey: ['SearchProducers', params] });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
