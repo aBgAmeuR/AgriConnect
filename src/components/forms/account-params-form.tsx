@@ -137,7 +137,7 @@ export const AccountParamsForm = ({ data }: Props) => {
                 <FormMessage />
               ) : (
                 <FormDescription>
-                  Il s'agit de votre mots de passe.
+                  Il s'agit de votre mot de passe.
                 </FormDescription>
               )}
             </FormItem>
@@ -183,7 +183,7 @@ export const AccountParamsForm = ({ data }: Props) => {
                 <FormMessage />
               ) : (
                 <FormDescription>
-                  Il s'agit de votre numéro de téléphone d'affichage privée.
+                  Il s'agit de votre numéro de téléphone d'affichage privé.
                 </FormDescription>
               )}
             </FormItem>
