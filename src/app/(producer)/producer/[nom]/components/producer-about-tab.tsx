@@ -46,10 +46,7 @@ export const ProducerAboutTab = (data: ProducerData) => {
               <ProductsList {...data} />
             </div>
           </div>
-          <nav>
-            {' '}
-            <Button className="max-w-[200px] mx-auto ">Parcourir la boutique</Button>
-          </nav>
+          <Button className="max-w-[200px] mx-auto ">Parcourir la boutique</Button>
         </div>
 
         <h2 className="text-lg font-semibold mt-4">Contact</h2>
