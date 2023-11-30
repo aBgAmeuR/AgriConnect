@@ -114,7 +114,7 @@ export function ProducersFilters({ params, setParams, isLoaded }: ProducersFilte
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Type" />
+                      <SelectValue placeholder="Catégorie de produits" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
