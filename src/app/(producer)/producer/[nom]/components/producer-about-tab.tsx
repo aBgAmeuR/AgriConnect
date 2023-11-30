@@ -7,8 +7,12 @@ import Image from 'next/image';
 import React from 'react';
 import { ProductsList } from './products-list';
 import ProducerContact from './producer-contact';
+type ProducerAboutTabProps = {
+  data: ProducerData;
+  goToBoutique: () => void;
+};
 
-export const ProducerAboutTab = (data: ProducerData) => {
+export const ProducerAboutTab = ({ data, goToBoutique }: ProducerAboutTabProps) => {
   const { name, description, paymentMethod } = data;
   const renderPaymentIcon = (paymentMethod: string) => {
     switch (paymentMethod) {
@@ -46,7 +50,9 @@ export const ProducerAboutTab = (data: ProducerData) => {
               <ProductsList {...data} />
             </div>
           </div>
-          <Button className="max-w-[200px] mx-auto ">Parcourir la boutique</Button>
+          <Button className="max-w-[200px] mx-auto " onClick={goToBoutique}>
+            Parcourir la boutique
+          </Button>
         </div>
 
         <h2 className="text-lg font-semibold mt-4">Contact</h2>

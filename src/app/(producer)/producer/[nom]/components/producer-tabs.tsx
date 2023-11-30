@@ -14,10 +14,13 @@ type Props = {
 export const ProducerTabs = ({ data }: Props) => {
   const [nav, setNav] = React.useState('a-propos');
 
+  const goToBoutique = () => {
+    setNav('boutique');
+  };
   return (
     <div className="w-full">
       <ProducerNav current={nav} setNav={setNav} />
-      {nav == 'a-propos' ? <ProducerAboutTab {...data} /> : null}
+      {nav == 'a-propos' ? <ProducerAboutTab data={data} goToBoutique={goToBoutique} /> : null}
       {nav == 'boutique' ? (
         <div className="p-6">
           Boutique
