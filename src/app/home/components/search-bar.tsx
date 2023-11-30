@@ -6,7 +6,7 @@ export default function SearchBar() {
   return (
     <div className="flex flex-wrap justify-center items-center gap-2.5 px-4 md:px-8 lg:w-[1147px] lg:px-[184px]">
       {/* // TODO: Variant Input components */}
-      <Input type="search" placeholder="Que chercher vous ?" />
+      <Input type="search" placeholder="Que cherchez vous ?" />
 
       {/* // TODO: Pas besoin de ce composant */}
       <SelectCateg />

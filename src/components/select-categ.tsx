@@ -9,11 +9,11 @@ export function SelectCateg() {
         className="flex h-9 w-[227px] text-zinc-500 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 font-normal 
                 leading-tight file:font-medium  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50
                 bg-white ml-1 ">
-        <SelectValue placeholder="Selectionner une categorie" />
+        <SelectValue placeholder="Sélectionner une categorie" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Categorie de produits </SelectLabel>
+          <SelectLabel>Catégorie de produits </SelectLabel>
           <SelectItem value="Fruits">Fruits</SelectItem>
           <SelectItem value="Légumes">Légumes</SelectItem>
           <SelectItem value="Viande">Viande</SelectItem>

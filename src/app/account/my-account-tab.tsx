@@ -40,7 +40,7 @@ export const MyAccountTab = () => {
     <>
       <h2 className='text-lg font-medium'>Mon compte</h2>
       <p className='text-muted-foreground text-sm font-normal'>
-        C'est ainsi que les autres vous verront sur le site.
+        C'est ainsi que les autres utilisateurs vous verront sur le site.
       </p>
       <hr className="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
       <AccountParamsForm data={data} />

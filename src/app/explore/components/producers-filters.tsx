@@ -118,7 +118,7 @@ export function ProducersFilters({ params, setParams, isLoaded }: ProducersFilte
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>Categorie de produits </SelectLabel>
+                        <SelectLabel>Catégorie de produits </SelectLabel>
                         <SelectItem value="unassigned">Tous</SelectItem>
                         <SelectItem value="Confitures">Confitures</SelectItem>
                         <SelectItem value="Fromages">Fromages</SelectItem>

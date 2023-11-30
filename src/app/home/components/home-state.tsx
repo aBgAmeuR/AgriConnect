@@ -7,7 +7,7 @@ export default function OtherNumber() {
       <div className="flex flex-wrap justify-center gap-12">
         <InfoCard title="77% " description="Des Français privilégient l’approvisionnement auprès de leurs producteurs locaux.Rappelez à vos clients que vous le faites aussi !" />
         <InfoCard title="71%" description="Des Français prennent en compte l’origine du produit au moment de l’achat.Faites-vous connaître sur votre territoire." />
-        <InfoCard title="7,4 Milions%" description="De Français achètent leurs produits alimentaires en ligne.Montrez-leur les vôtres." />
+        <InfoCard title="7,4 Milions%" description="Des Français achètent leurs produits alimentaires en ligne.Montrez-leur les vôtres." />
       </div>
     </div>
   );
