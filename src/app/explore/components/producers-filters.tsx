@@ -15,8 +15,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import AddressInput from "@/components/ui/address-input"
+import { useQueryClient } from "@tanstack/react-query"
 
 const formSchema = z.object({
   text: z.string().optional(),
@@ -42,25 +43,33 @@ type AddressProps = {
 export function ProducersFilters({ params, setParams, isLoaded }: ProducersFiltersProps) {
   const [isPending, startTransition] = React.useTransition()
   const [address, setAddress] = React.useState<AddressProps>(null);
+  const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      text: params.text,
-      location: params.location,
-      type: params.type,
-      distance: params.distance,
+      text: '',
+      location: '',
+      type: '',
+      distance: '',
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    startTransition(async () => {
-      try {
-        console.log(values, address);
-      } catch (err) {
-        console.error(err);
-      }
-    })
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const location = address?.lat ? `${address?.lat},${address?.lng}` : '';
+      if (values.type === 'unassigned') values.type = '';
+      if (values.distance === 'unassigned') values.distance = '';
+      setParams({
+        text: values.text ?? '',
+        location: location,
+        type: values.type ?? '',
+        distance: values.distance ?? ''
+      })
+      queryClient.invalidateQueries({ queryKey: ['SearchProducers', params] });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -108,15 +117,19 @@ export function ProducersFilters({ params, setParams, isLoaded }: ProducersFilte
                       <SelectValue placeholder="Type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Confitures">Confitures</SelectItem>
-                      <SelectItem value="Fromages">Fromages</SelectItem>
-                      <SelectItem value="Fruits">Fruits</SelectItem>
-                      <SelectItem value="Laits">Laits</SelectItem>
-                      <SelectItem value="Légumes">Légumes</SelectItem>
-                      <SelectItem value="Miels">Miels</SelectItem>
-                      <SelectItem value="Produits laitiers">Produits laitiers</SelectItem>
-                      <SelectItem value="Viandes">Viandes</SelectItem>
-                      <SelectItem value="Vins">Vins</SelectItem>
+                      <SelectGroup>
+                        <SelectLabel>Categorie de produits </SelectLabel>
+                        <SelectItem value="unassigned">Tous</SelectItem>
+                        <SelectItem value="Confitures">Confitures</SelectItem>
+                        <SelectItem value="Fromages">Fromages</SelectItem>
+                        <SelectItem value="Fruits">Fruits</SelectItem>
+                        <SelectItem value="Laits">Laits</SelectItem>
+                        <SelectItem value="Légumes">Légumes</SelectItem>
+                        <SelectItem value="Miels">Miels</SelectItem>
+                        <SelectItem value="Produits laitiers">Produits laitiers</SelectItem>
+                        <SelectItem value="Viandes">Viandes</SelectItem>
+                        <SelectItem value="Vins">Vins</SelectItem>
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -135,10 +148,14 @@ export function ProducersFilters({ params, setParams, isLoaded }: ProducersFilte
                       <SelectValue placeholder="Distance" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="10">10 km</SelectItem>
-                      <SelectItem value="25">25 km</SelectItem>
-                      <SelectItem value="50">50 km</SelectItem>
-                      <SelectItem value="100">100 km</SelectItem>
+                      <SelectGroup>
+                        <SelectLabel>Distance</SelectLabel>
+                        <SelectItem value="unassigned">Tous</SelectItem>
+                        <SelectItem value="10">10 km</SelectItem>
+                        <SelectItem value="25">25 km</SelectItem>
+                        <SelectItem value="50">50 km</SelectItem>
+                        <SelectItem value="100">100 km</SelectItem>
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </FormControl>

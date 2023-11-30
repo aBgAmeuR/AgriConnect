@@ -1,6 +1,6 @@
 import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { env } from '@/lib/env';
+import { GoogleMap, InfoWindow, Marker } from '@react-google-maps/api';
+import { Producer } from './producers-list-map';
 
 const center = {
   lat: 46.6,
@@ -9,28 +9,59 @@ const center = {
 
 type Props = {
   isLoaded: boolean;
+  data: Producer[];
 };
 
-export const ProducersMap = ({ isLoaded }: Props) => {
-  // const [map, setMap] = React.useState(null)
+export const ProducersMap = ({ isLoaded, data }: Props) => {
+  const [map, setMap] = React.useState(null)
+  const [selected, setSelected] = React.useState<Producer | null>(null)
 
   const onLoad = React.useCallback(function callback(map: any) {
     map.setZoom(6)
-    // setMap(map)
+    setMap(map)
   }, [])
 
   const onUnmount = React.useCallback(function callback(map: any) {
-    // setMap(null)
+    setMap(null)
   }, [])
+
+  const centerPin = (producer: Producer) => {
+    if (map) {
+      (map as google.maps.Map).setZoom(12);
+      (map as google.maps.Map).setCenter({ lat: producer.latitude, lng: producer.longitude })
+    }
+  }
+
+  React.useEffect(() => {
+    if (selected) {
+      centerPin(selected)
+    }
+  }, [selected])
 
   return isLoaded ? (
     <GoogleMap
       center={center}
       onLoad={onLoad}
-      // onUnmount={onUnmount}
+      onUnmount={onUnmount}
     >
-      { /* Child components, such as markers, info windows, etc. */}
-      <></>
+      {data ? data.map((producer: Producer) => (
+        <Marker
+          key={producer.id}
+          position={{ lat: producer.latitude, lng: producer.longitude }}
+          clickable={true}
+          onClick={() => setSelected(producer)}
+        >
+          {selected === producer && (
+            <InfoWindow>
+              <div className="flex flex-col gap-2">
+                <h2 className="text-base">{producer.name}</h2>
+                <p className="text-sm text-muted-foreground">{producer.address}</p>
+              </div>
+            </InfoWindow>
+          )}
+        </Marker>
+      )) : <></>}
+
     </GoogleMap>
   ) : <></>
 }
