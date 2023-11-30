@@ -16,11 +16,10 @@ export const ProducerCard = (producer: Producer) => {
         </div>
         <div><Button variant='default'>En savoir plus</Button></div>
       </div>
-      <div className='h-[108px] w-auto flex justify-between items-center relative'>
-        {/* <Image src={producer.image}
-          fill={true} alt='Image de la boutique' loading="lazy"
-          className="rounded-[8px] overflow-hidden" 
-        /> */}
+      <div className='h-[108px] w-[108px] flex justify-center items-center  relative'>
+        <div className='absolute w-full h-full overflow-hidden rounded-[8px]'>
+          <Image src={producer.image} fill style={{ objectFit: 'cover' }} alt='Image de la boutique' loading="lazy" />
+        </div>
       </div>
     </Card>
   )

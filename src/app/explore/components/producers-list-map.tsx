@@ -63,7 +63,7 @@ export const ProducersListMap = () => {
     <>
       <div className="m-4 h-[calc(100vh-100px)] overflow-y-hidden">
         <ProducersFilters params={params} setParams={setParams} isLoaded={isLoaded} />
-        <div className='mt-4 flex flex-col h-[calc(100%-100px)] gap-4 overflow-y-scroll '>
+        <div className='mt-4 flex flex-col h-[calc(100%-100px)] gap-4 overflow-y-scroll pr-2'>
           {isLoading && <>
             <Skeleton className="w-full h-[156px] rounded-xl" />
             <Skeleton className="w-full h-[156px] rounded-xl" />
@@ -74,7 +74,7 @@ export const ProducersListMap = () => {
           ))}
         </div>
       </div>
-      <ProducersMap isLoaded={isLoaded} />
+      <ProducersMap isLoaded={isLoaded} data={data || []} />
     </>
   )
 }

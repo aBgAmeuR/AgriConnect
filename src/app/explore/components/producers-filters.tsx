@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import AddressInput from "@/components/ui/address-input"
 import { useQueryClient } from "@tanstack/react-query"
 
@@ -58,6 +58,8 @@ export function ProducersFilters({ params, setParams, isLoaded }: ProducersFilte
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const location = address?.lat ? `${address?.lat},${address?.lng}` : '';
+      if (values.type === 'unassigned') values.type = '';
+      if (values.distance === 'unassigned') values.distance = '';
       setParams({
         text: values.text ?? '',
         location: location,
@@ -115,15 +117,19 @@ export function ProducersFilters({ params, setParams, isLoaded }: ProducersFilte
                       <SelectValue placeholder="Type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Confitures">Confitures</SelectItem>
-                      <SelectItem value="Fromages">Fromages</SelectItem>
-                      <SelectItem value="Fruits">Fruits</SelectItem>
-                      <SelectItem value="Laits">Laits</SelectItem>
-                      <SelectItem value="Légumes">Légumes</SelectItem>
-                      <SelectItem value="Miels">Miels</SelectItem>
-                      <SelectItem value="Produits laitiers">Produits laitiers</SelectItem>
-                      <SelectItem value="Viandes">Viandes</SelectItem>
-                      <SelectItem value="Vins">Vins</SelectItem>
+                      <SelectGroup>
+                        <SelectLabel>Categorie de produits </SelectLabel>
+                        <SelectItem value="unassigned">Tous</SelectItem>
+                        <SelectItem value="Confitures">Confitures</SelectItem>
+                        <SelectItem value="Fromages">Fromages</SelectItem>
+                        <SelectItem value="Fruits">Fruits</SelectItem>
+                        <SelectItem value="Laits">Laits</SelectItem>
+                        <SelectItem value="Légumes">Légumes</SelectItem>
+                        <SelectItem value="Miels">Miels</SelectItem>
+                        <SelectItem value="Produits laitiers">Produits laitiers</SelectItem>
+                        <SelectItem value="Viandes">Viandes</SelectItem>
+                        <SelectItem value="Vins">Vins</SelectItem>
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -142,10 +148,14 @@ export function ProducersFilters({ params, setParams, isLoaded }: ProducersFilte
                       <SelectValue placeholder="Distance" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="10">10 km</SelectItem>
-                      <SelectItem value="25">25 km</SelectItem>
-                      <SelectItem value="50">50 km</SelectItem>
-                      <SelectItem value="100">100 km</SelectItem>
+                      <SelectGroup>
+                        <SelectLabel>Distance</SelectLabel>
+                        <SelectItem value="unassigned">Tous</SelectItem>
+                        <SelectItem value="10">10 km</SelectItem>
+                        <SelectItem value="25">25 km</SelectItem>
+                        <SelectItem value="50">50 km</SelectItem>
+                        <SelectItem value="100">100 km</SelectItem>
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </FormControl>
