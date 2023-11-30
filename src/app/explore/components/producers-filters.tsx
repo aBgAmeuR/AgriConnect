@@ -84,7 +84,7 @@ export function ProducersFilters({ params, setParams, isLoaded }: ProducersFilte
                 <FormControl>
                   <Input
                     type="text"
-                    placeholder="Search..."
+                    placeholder="Rechercher un producteur"
                     {...field}
                   />
                 </FormControl>

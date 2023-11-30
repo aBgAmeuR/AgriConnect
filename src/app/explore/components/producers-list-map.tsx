@@ -58,23 +58,28 @@ export const ProducersListMap = () => {
     googleMapsApiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries: libraries as Libraries,
   })
+  const [selected, setSelected] = React.useState<Producer | null>(null)
+
+  React.useEffect(() => {
+    setSelected(null)
+  }, [data])
 
   return (
     <>
-      <div className="m-4 h-[calc(100vh-100px)] overflow-y-hidden">
+      <div className="m-4 h-[calc(100vh-100px)]">
         <ProducersFilters params={params} setParams={setParams} isLoaded={isLoaded} />
-        <div className='mt-4 flex flex-col h-[calc(100%-100px)] gap-4 overflow-y-scroll pr-2'>
+        <div className='mt-4 flex flex-col h-[calc(100%-100px)] gap-4 overflow-y-scroll pr-2' id="customScrollBar1">
           {isLoading && <>
             <Skeleton className="w-full h-[156px] rounded-xl" />
             <Skeleton className="w-full h-[156px] rounded-xl" />
           </>}
           {isError && <div>Une erreur est survenue</div>}
           {data?.length === 0 ? <div>Aucun producteur trouvé</div> : data?.map((producer) => (
-            <ProducerCard key={producer.id} {...producer} />
+            <ProducerCard key={producer.id} producer={producer} selected={selected} setSelected={setSelected} />
           ))}
         </div>
       </div>
-      <ProducersMap isLoaded={isLoaded} data={data || []} />
+      <ProducersMap isLoaded={isLoaded} data={data || []} selected={selected} setSelected={setSelected} />
     </>
   )
 }

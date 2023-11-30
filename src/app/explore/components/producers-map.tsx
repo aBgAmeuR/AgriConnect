@@ -10,11 +10,12 @@ const center = {
 type Props = {
   isLoaded: boolean;
   data: Producer[];
+  selected: Producer | null;
+  setSelected: React.Dispatch<React.SetStateAction<Producer | null>>;
 };
 
-export const ProducersMap = ({ isLoaded, data }: Props) => {
+export const ProducersMap = ({ isLoaded, data, selected, setSelected }: Props) => {
   const [map, setMap] = React.useState(null)
-  const [selected, setSelected] = React.useState<Producer | null>(null)
 
   const onLoad = React.useCallback(function callback(map: any) {
     map.setZoom(6)

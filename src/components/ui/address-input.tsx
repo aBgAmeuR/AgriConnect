@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
+import { Input } from '@/components/ui/input';
 
 type AddressProps = {
   label: string;
@@ -23,7 +24,7 @@ const AddressInput = ({ onChange, isLoaded }: AddressInputProps) => {
     }
   }, [value]);
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <Input placeholder='Adresse' disabled></Input>;
 
   return (
     <GooglePlacesAutocomplete
@@ -33,21 +34,51 @@ const AddressInput = ({ onChange, isLoaded }: AddressInputProps) => {
         styles: {
           control: (provided) => ({
             ...provided,
-            height: '32px',
-            boxSizing: 'border-box',
-            borderRadius: '4px',
+            padding: '0 12px',
+            minHeight: '36px',
+            boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+            border: '1px solid #E4E4E7',
+            borderRadius: '6px',
+            '&:hover': {
+              borderColor: '#E4E4E7',
+            },
+          }),
+          valueContainer: (provided) => ({
+            ...provided,
+            padding: '0',
           }),
           input: (provided) => ({
             ...provided,
             width: '100%',
-            fontSize: '1rem',
+            height: '26px',
+            margin: '0',
+            padding: '0',
             color: '#1a202c',
+            fontSize: '14px',
+            lineHeight: '1.25rem',
+            fontWeight: '500',
           }),
-          option: (provided) => ({
+          indicatorsContainer: (provided) => ({
             ...provided,
-            borderBottom: '1px solid #e2e8f0',
+            padding: '0',
+          }),
+          indicatorSeparator: (provided) => ({
+            ...provided,
+            padding: '0',
+          }),
+          dropdownIndicator: (provided) => ({
+            ...provided,
+            padding: '0',
+            paddingLeft: '4px',
+          }),
+          placeholder: (provided) => ({
+            ...provided,
+            fontSize: '14px',
+            lineHeight: '1.25rem',
+            fontWeight: '500',
           }),
         },
+        placeholder: 'Adresse',
       }}
       apiOptions={{ language: 'fr', region: 'fr' }}
       autocompletionRequest={

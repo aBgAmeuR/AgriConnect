@@ -6,19 +6,11 @@ import { Table } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DataTableViewOptions } from "./data-table-view-options"
-
-import { DataTableFacetedFilter } from "./data-table-faceted-filter"
+import AddStock from "./add-stock"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
 }
-
-const roles = [
-  { value: 'Visiteur', label: 'Visiteur' },
-  { value: 'Client', label: 'Client' },
-  { value: 'Producteur', label: 'Producteur' },
-  { value: 'Admin', label: 'Administrateur' },
-]
 
 export function DataTableToolbar<TData>({
   table,
@@ -56,7 +48,8 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div className="flex flex-row gap-2">
-        <DataTableViewOptions table={table} />
+        <DataTableViewOptions table={table} /> 
+        <AddStock />
       </div>
     </div>
   )
