@@ -7,13 +7,14 @@ import { env } from '@/lib/env';
 
 export const ProductItem = ({ product }: { product: Product }) => {
   const imageUrl = product.image.includes('http') ? product.image : `${env.NEXT_PUBLIC_API_URL}/ressource/image/${product.image}`;
-  console.log('probleme', product.image);
   return (
     <div className="flex flex-col justify-start items-center p-4 bg-white rounded-lg shadow border border-zinc-200 max-w-xs h-[244px]">
-      <div className="w-full h-2/3 overflow-hidden rounded-t-lg">
-        <Image src={imageUrl} alt={product.name} width={200} height={200} objectFit="cover" />
+      <div className="h-[108px] w-[108px] flex justify-center items-center  relative">
+        <div className="w-full h-2/3 overflow-hidden rounded-t-lg">
+          <Image src={imageUrl} alt={product.name} fill style={{ objectFit: 'cover' }} />
+        </div>
       </div>
-      <h3 className="text-left w-full">{product.name}</h3>
+      <h3 className="text-left w-full mt-8">{product.name}</h3>
       <div className="mt-auto flex items-center gap-1 text-gray-500">
         <p>
           {product.price} €/{product.unit}
