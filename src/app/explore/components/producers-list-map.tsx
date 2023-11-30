@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FormValues, ProducersFilters } from './producers-filters';
 import { ProducerCard } from './producer-card';
 import { env } from '@/lib/env';
+import { Skeleton } from "@/components/ui/skeleton"
 import { Libraries, useJsApiLoader } from '@react-google-maps/api';
 
 const ProducersMap = dynamic(() => import("./producers-map"), { ssr: false });
@@ -51,7 +52,7 @@ export const ProducersListMap = () => {
     queryKey: ['SearchProducers', params],
     queryFn: async () => await getProducers(params)
   });
-  
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -62,8 +63,11 @@ export const ProducersListMap = () => {
     <>
       <div className="m-4 h-[calc(100vh-100px)] overflow-y-hidden">
         <ProducersFilters params={params} setParams={setParams} isLoaded={isLoaded} />
-        <div className='mt-4 flex flex-col h-[calc(100%-100px)] gap-4 overflow-y-scroll overscroll-y-contain'>
-          {isLoading && <div>Chargement...</div>}
+        <div className='mt-4 flex flex-col h-[calc(100%-100px)] gap-4 overflow-y-scroll '>
+          {isLoading && <>
+            <Skeleton className="w-full h-[156px] rounded-xl" />
+            <Skeleton className="w-full h-[156px] rounded-xl" />
+          </>}
           {isError && <div>Une erreur est survenue</div>}
           {data?.length === 0 ? <div>Aucun producteur trouvé</div> : data?.map((producer) => (
             <ProducerCard key={producer.id} {...producer} />

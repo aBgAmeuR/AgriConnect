@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 
 export const ProducerCard = (producer: Producer) => {
   return (
-    <Card className="flex flex-row justify-between w-full p-6">
+    <Card className="flex flex-row justify-between w-full p-6 cursor-pointer">
       <div className="flex flex-col gap-[10px]">
         <div className='gap-[2px]'>
           <h2 className="text-base">{producer.name}</h2>
