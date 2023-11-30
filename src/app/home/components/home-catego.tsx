@@ -8,7 +8,7 @@ export default function CategoriesShowcase() {
     { src: '../letus.jpg', alt: 'Category Image 2', link: '/categorie-2', text: 'Salades' },
     { src: '../viande.jpg', alt: 'Category Image 3', link: '/categorie-3', text: 'Viandes' },
     { src: '../charcuterie.jpg', alt: 'Category Image 4', link: '/categorie-4', text: 'Charcuterie' },
-    { src: '../frommage.jpg', alt: 'Category Image 5', link: '/categorie-5', text: 'Frommages' },
+    { src: '../frommage.jpg', alt: 'Category Image 5', link: '/categorie-5', text: 'Fromages' },
   ];
 
   return (

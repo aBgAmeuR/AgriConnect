@@ -14,8 +14,8 @@ const cardExplore = {
 };
 
 const cardSell = {
-  title: 'Je veux vendre mes produits en ligne',
-  description: 'Vous souhaitez découvrir les producteurs en circuit court proches de vous, connaître d’autres spécialités régionales et faire le plein de produits du terroir ? Inscrivez-vous et achetez vos produits directement auprès de vos producteurs.',
+  title: 'Je veux vendre mes produits en ligne !',
+  description: 'Vous souhaitez vendre vos produits en circuit court, vous faire connaître auprès des particuliers et promouvoir les produits du terroir ? Inscrivez-vous et vendez vos produits simplement et rapidement.',
   href: '/register',
   buttonLabel: "Créer un compte producteur",
 };
@@ -33,7 +33,7 @@ export default async function Home() {
               <Image src="/bienfaits-fruits-legumes.jpg" alt="Background" fill style={{ objectFit: 'cover' }} />
             </div>
             <div className="banner-hero-title flex flex-col gap-2 mx-16  items-center">
-              <h1 className="text-3xl text-slate-50">Bienvenue sur agriconnect !</h1>
+              <h1 className="text-3xl text-slate-50">Bienvenue sur AgriConnect !</h1>
               <p className="text-sm text-slate-50">Retrouvez les produits du terroir et les producteurs en circuit court.</p>
             </div>
           </div> 
