@@ -64,4 +64,8 @@ export const columns: ColumnDef<Order>[] = [
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("client")}</div>,
   },
+  {
+    id: "actions",
+    cell: ({ row }) => <DataTableRowActions row={row} />,
+  },
 ]
