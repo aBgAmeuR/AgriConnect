@@ -5,6 +5,6 @@ export type ProducerData = {
   paymentMethod: string;
   address: string;
   phoneNumber: string;
-
+  image: string;
   category: string;
 };

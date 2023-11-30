@@ -34,34 +34,38 @@ export const columns: ColumnDef<Order>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Numéro" />
     ),
-    cell: ({ row }) => <div className="w-[100px]">{row.getValue("numero")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("numero")}</div>,
   },
   {
     accessorKey: "statut",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Statut" />
     ),
-    cell: ({ row }) => <div className="w-[150px]">{row.getValue("statut")}</div>,
+    cell: ({ row }) => <div className="w-[100px]">{row.getValue("statut")}</div>,
   },
   {
     accessorKey: "date",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Date" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("date")}</div>,
+    cell: ({ row }) => <div className="w-[100px]">{row.getValue("date")}</div>,
   },
   {
     accessorKey: "montant",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Montant" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("montant")}</div>,
+    cell: ({ row }) => <div className="w-[100px]">{row.getValue("montant")}</div>,
   },
   {
     accessorKey: "client",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Client" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("client")}</div>,
+    cell: ({ row }) => <div className="w-[150px]">{row.getValue("client")}</div>,
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ]

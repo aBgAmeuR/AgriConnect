@@ -11,36 +11,30 @@ interface User {
   phoneNumber: string;
 }
 
-
-function useUserData() {
-  return useQuery<User[]>({
-    queryKey: ['user'],
-    queryFn: async () => {
-      const user = await getCurrentUser();
-      const data = await fetch(env.NEXT_PUBLIC_API_URL + '/user', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user?.accessToken}`,
-        },
-      })
-        .then(res => res.json())
-        .then(res => res.data)
-        .catch(err => console.log(err));
-
-      if (Array.isArray(data)) return data;
-      throw new Error('error occurred');
+const getUser = async () => {
+  const user = await getCurrentUser();
+  const data = await fetch(env.NEXT_PUBLIC_API_URL + '/user', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${user?.accessToken}`,
     },
-  });
+  })
+    .then(res => res.json())
+    .then(res => res.data)
+    .catch(err => console.log(err));
+
+  return data;
 }
 
 export const MyAccountTab = () => {
-  const { data, isLoading, isError } = useUserData();
+  const { data, isLoading, isError } = useQuery<User>({
+    queryKey: ['user'],
+    queryFn: async () => await getUser()
+  });
 
   if (isError) return <div>Error</div>;
   if (isLoading || data === undefined) return <div>Loading...</div>;
-
-  const userData = data[0];
 
   return (
     <>
@@ -49,7 +43,7 @@ export const MyAccountTab = () => {
         C'est ainsi que les autres vous verront sur le site.
       </p>
       <hr className="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
-      <AccountParamsForm data={userData} />
+      <AccountParamsForm data={data} />
     </>
   );
 };

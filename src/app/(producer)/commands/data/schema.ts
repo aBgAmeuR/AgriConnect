@@ -2,9 +2,9 @@ import { z } from 'zod';
 
 export const OrderSchema = z.object({
   numero: z.string(),
-  status: z.enum(['pending', 'confirmed', 'delivered']),
-  date: z.date(),
-  montant: z.number(),
+  statut: z.string(),
+  date: z.string(),
+  montant: z.string(),
   client: z.string(),
 });
 

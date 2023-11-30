@@ -18,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { StockSchema } from "../data/schema"
+import { OrderSchema } from "../data/schema"
 import { getAccessToken } from "@/lib/get-access-token"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 
@@ -36,7 +36,7 @@ const roles = [
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = StockSchema.parse(row.original)
+  const task = OrderSchema.parse(row.original)
   const queryClient = useQueryClient();
 
   // const { mutate: deleteUserMutation } = useMutation({

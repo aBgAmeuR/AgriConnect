@@ -20,10 +20,10 @@ import { signOut, useSession } from 'next-auth/react'
 
 type Props = {
   data: {
-    name: string
-    surname: string
-    email: string
-    phoneNumber: string,
+    name: string;
+    surname: string;
+    email: string;
+    phoneNumber: string;
   }
 }
 
