@@ -36,7 +36,7 @@ export default async function Home() {
               <h1 className="text-3xl text-slate-50">Bienvenue sur agriconnect !</h1>
               <p className="text-sm text-slate-50">Retrouvez les produits du terroir et les producteurs en circuit court.</p>
             </div>
-          </div>
+          </div> 
           <div className="h-[100px] w-full flex flex-col justify-center items-center">
             <SearchBar />
           </div>
