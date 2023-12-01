@@ -13,6 +13,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { OrderSchema } from "../data/schema"
 import { getAccessToken } from "@/lib/get-access-token"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
@@ -68,9 +69,19 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuItem>
-          Voir la commande
-        </DropdownMenuItem>
+        <Dialog>
+          <DialogTrigger asChild>
+          <DropdownMenuItem>
+            Voir commande
+          </DropdownMenuItem>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[500px] bg-[#ffffff] dark:bg-[#111315]">
+            <DialogHeader>
+              <DialogTitle>la command</DialogTitle>
+              <DialogDescription>voici plus d'informantion sur la commandes.</DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
