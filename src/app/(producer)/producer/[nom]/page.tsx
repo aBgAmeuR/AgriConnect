@@ -36,31 +36,20 @@ export default async function ProducerPage({ params }: { params: { nom: string }
         <Image src="/producer-page-bg.png" alt="background image" fill style={{ objectFit: 'cover' }} />
       </div>
       {user?.role === 'producer' ? (
-        <div>
-          <div className="flex mt-4 justify-end mx-4">
-            <Button className="flex gap-2 justify-between">
-              <Pen size={16} />
-              Modifier
-            </Button>
-          </div>
-          <main className="flex flex-row gap-4 justify-center mx-16 mt-6">
-            <aside className="min-w-[200px] max-w-[250px] w-full">
-              <ProducerCard {...data} />
-            </aside>
-
-            <ProducerTabs data={data} />
-          </main>
+        <div className="absolute flex mt-4 justify-end right-4">
+          <Button className="flex gap-2 justify-between">
+            <Pen size={16} />
+            Modifier
+          </Button>
         </div>
       ) : null}
-      {user?.role === 'client' || 'visitor' ? (
-        <main className="flex flex-row gap-4 justify-center mx-16 mt-20">
-          <aside className="min-w-[200px] max-w-[250px] w-full">
-            <ProducerCard {...data} />
-          </aside>
+      <main className="flex flex-row gap-4 justify-center mx-16 mt-20">
+        <aside className="min-w-[200px] max-w-[250px] w-full">
+          <ProducerCard {...data} />
+        </aside>
 
-          <ProducerTabs data={data} />
-        </main>
-      ) : null}
+        <ProducerTabs data={data} />
+      </main>
     </>
   );
 }
