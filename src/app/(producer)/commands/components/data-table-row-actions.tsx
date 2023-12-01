@@ -1,8 +1,5 @@
-"use client"
-
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
-
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -11,16 +8,17 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
 import { OrderSchema } from "../data/schema"
 import { getAccessToken } from "@/lib/get-access-token"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
+import { env } from "@/lib/env"
+import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu"
+import React from "react"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -39,23 +37,24 @@ export function DataTableRowActions<TData>({
   const task = OrderSchema.parse(row.original)
   const queryClient = useQueryClient();
 
-  // const { mutate: deleteUserMutation } = useMutation({
-  //   mutationFn: async (userId: string) => {
-  //     await fetch(`${config.API_URL}/user/${userId}`, {
-  //       method: 'DELETE',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer ' + await getAccessToken()
-  //       },
-  //     })
-  //   },
-  //   onError: (error: any) => {
-  //     console.log(error)
-  //   },
-  //   onSettled: () => {
-  //     queryClient.invalidateQueries({ queryKey: ['users'] });
-  //   },
-  // });
+
+  const updateOrder = async (statut: string) => {
+    const accessToken = await getAccessToken()
+    const data = await fetch(env.NEXT_PUBLIC_API_URL + '/order/' + task.numero, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({
+        
+        statut: statut,
+      })
+    }).then(res => res.json())
+      .then(res => res.data)
+      .catch(err => console.log(err))
+      window
+  }
 
   return (
     <DropdownMenu>
@@ -68,31 +67,28 @@ export function DataTableRowActions<TData>({
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
-        {/* {task.role === 'producer' ?
-          <DropdownMenuItem>
-            Voir le profile
-          </DropdownMenuItem> : null}
+      <DropdownMenuContent className="w-56">
         <DropdownMenuItem>
-          Contacter
-        </DropdownMenuItem> */}
-        {/* <DropdownMenuSeparator />
+          Voir la commande
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Rôle</DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger>
+            Statut
+          </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.name}>
-              {roles.map((role) => (
-                <DropdownMenuRadioItem key={role.value} value={role.value}>
-                  {role.label}
-                </DropdownMenuRadioItem>
-              ))}
+            <DropdownMenuRadioGroup value={task.statut} onValueChange={updateOrder}>
+              <DropdownMenuRadioItem value="Livrée">Livrée</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="Prête">Prête</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="En cours">En cours</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="Annulé">Annulé</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
-        </DropdownMenuSub> */}
+        </DropdownMenuSub>
         <DropdownMenuSeparator />
-        {/* <DropdownMenuItem onClick={e => deleteUserMutation(task.id)}>
-          Supprimer
-        </DropdownMenuItem> */}
+        <DropdownMenuItem>
+          Facture
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
