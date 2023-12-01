@@ -1,3 +1,5 @@
+'use client'
+
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
@@ -18,8 +20,7 @@ import { OrderSchema } from "../data/schema"
 import { getAccessToken } from "@/lib/get-access-token"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { env } from "@/lib/env"
-import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu"
-import React from "react"
+import React, { useState } from "react"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -37,6 +38,7 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const task = OrderSchema.parse(row.original)
   const queryClient = useQueryClient();
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
 
   const updateOrder = async (statut: string) => {
@@ -48,7 +50,7 @@ export function DataTableRowActions<TData>({
         'Authorization': `Bearer ${accessToken}`
       },
       body: JSON.stringify({
-        
+
         statut: statut,
       })
     }).then(res => res.json())
@@ -58,49 +60,49 @@ export function DataTableRowActions<TData>({
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-        >
-          <DotsHorizontalIcon className="h-4 w-4" />
-          <span className="sr-only">Open menu</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <Dialog>
-          <DialogTrigger asChild>
-          <DropdownMenuItem>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          >
+            <DotsHorizontalIcon className="h-4 w-4" />
+            <span className="sr-only">Open menu</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          <DropdownMenuItem onClick={() => setIsOpenModal(true)}>
             Voir commande
           </DropdownMenuItem>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px] bg-[#ffffff] dark:bg-[#111315]">
-            <DialogHeader>
-              <DialogTitle>la command</DialogTitle>
-              <DialogDescription>voici plus d'informantion sur la commandes.</DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-        <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            Statut
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.statut} onValueChange={updateOrder}>
-              <DropdownMenuRadioItem value="Livrée">Livrée</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="Prête">Prête</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="En cours">En cours</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="Annulé">Annulé</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Facture
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuSeparator />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              Statut
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup value={task.statut} onValueChange={updateOrder}>
+                <DropdownMenuRadioItem value="Livrée">Livrée</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="Prête">Prête</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="En cours">En cours</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="Annulé">Annulé</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            Facture
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <Dialog open={isOpenModal} onOpenChange={setIsOpenModal}>
+        <DialogContent className="sm:max-w-[500px] bg-[#ffffff] dark:bg-[#111315]">
+          <DialogHeader>
+            <DialogTitle>la command</DialogTitle>
+            <DialogDescription>voici plus d'informantion sur la commandes.</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }
