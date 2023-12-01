@@ -54,7 +54,7 @@ export function DataTableRowActions<TData>({
     }).then(res => res.json())
       .then(res => res.data)
       .catch(err => console.log(err))
-      window
+      window.location.reload();
   }
 
   return (
