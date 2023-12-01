@@ -15,9 +15,9 @@ type Props = {
 
 export const ProducerCard = ({ producer, selected, setSelected }: Props) => {
   function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    // si il clique sur le boutton en savoir plus on ne fait rien
+    // s'il clique sur le bouton en savoir plus on ne fait rien
     if (event.target instanceof HTMLButtonElement) return
-    // si il clique sur la carte on centre la carte sur le producteur
+    // s'il clique sur la carte on centre la carte sur le producteur
     setSelected(producer)
 
   }

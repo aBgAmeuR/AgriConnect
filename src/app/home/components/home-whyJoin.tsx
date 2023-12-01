@@ -4,7 +4,7 @@ export default function InfoSectionProducer() {
   return (
     <div className="w-full h-auto px-4 py-8 flex flex-col items-center gap-8 sm:flex-col sm:gap-12 sm:justify-center ">
       {/* // TODO: Utilise un h1 */}
-      <div className="mb-6 w-full sm:w-auto text-center text-black text-2xl font-normal leading-tight">Pourquoi rejoindre agriconnect ?</div>
+      <div className="mb-6 w-full sm:w-auto text-center text-black text-2xl font-normal leading-tight">Pourquoi rejoindre AgriConnect ?</div>
       <div className="flex flex-wrap justify-center gap-12">
         <InfoCard
           title="Fidélisez votre clientèle en optimisant la prise de commande"
