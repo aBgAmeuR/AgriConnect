@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { AddStockSchema } from '@/app/(producer)/stock/components/add-stock';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FileControllerInput } from '../ui/file-controller-input';
 
 type Props = {
   onSubmit: (values: z.infer<typeof AddStockSchema>) => void;
@@ -31,7 +32,7 @@ export function AddProductStockForm({ onSubmit }: Props) {
       quantity: '',
       price: '',
       unit: '',
-      image: undefined,
+      image: undefined
     },
   });
 
@@ -95,9 +96,11 @@ export function AddProductStockForm({ onSubmit }: Props) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Unité de mesure </SelectLabel>
-                        <SelectItem value="kg">Kilogramme</SelectItem>
-                        <SelectItem value="l">Litre</SelectItem>
-                        <SelectItem value="u">Unité</SelectItem>
+                        <SelectItem value="Kg">Kilogramme</SelectItem>
+                        <SelectItem value="Litre">Litre</SelectItem>
+                        <SelectItem value="Unité">Unité</SelectItem>
+                        <SelectItem value="Pièce">Pièce</SelectItem>
+                        <SelectItem value="Paquet">Paquet</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -147,19 +150,8 @@ export function AddProductStockForm({ onSubmit }: Props) {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image du produit</FormLabel>
-              <FormControl>
-                <Input type="file" placeholder="Image du produit" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <FormLabel className='my-1'>Image du produit</FormLabel>
+        <FileControllerInput name="image" errors={form.formState.errors} control={form.control} />
         <Button type="submit" disabled={isPending}>
           Ajouter
           <span className="sr-only">Ajouter</span>

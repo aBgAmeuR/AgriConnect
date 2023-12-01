@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import z from 'zod';
-import { useRouter } from 'next/navigation';
 import { toast } from '@/components/ui/use-toast';
 import { AddProductStockForm } from '@/components/forms/add-product-stock-form';
 import { env } from '@/lib/env';
 import { getCurrentUser } from '@/lib/session';
+import { useQueryClient } from '@tanstack/react-query';
 
 const MAX_FILE_SIZE = 1024 * 1024 * 5;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -20,22 +20,23 @@ export const AddStockSchema = z.object({
   quantity: z.string().nonempty({ message: 'Veuillez entrer une quantité.' }),
   price: z.string().nonempty({ message: 'Veuillez entrer un prix.' }),
   unit: z.string().nonempty({ message: 'Veuillez entrer une unité.' }),
-  image: z.any(),
-  // image: z
-  //   .any()
-  //   .refine((file) => file?.size <= MAX_FILE_SIZE, `L'image doit être inférieure à 5 Mo.`)
-  //   .refine(
-    //     (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
-  //     "L'image doit être au format JPEG, JPG ou PNG."
-  //   )
+  image: z
+    .any()
+    .refine((val) => typeof window === 'undefined' || val instanceof FileList, {
+      message: 'Veuillez ajouter une image.',
+    })
+    .refine((val) => val?.length > 0, 'Veuillez ajouter une image.')
+    .refine((val) => val[0]?.size < MAX_FILE_SIZE, 'La taille de l\'image ne doit pas dépasser 5 Mo.')
+    .refine((val) => ACCEPTED_IMAGE_TYPES.includes(val[0]?.type), 'Fichiers acceptés: jpeg, jpg, png.'),
 });
 
 const AddStock = () => {
   const [open, setOpen] = useState(false);
-  const router = useRouter();
-  
+  const queryClient = useQueryClient();
+
   async function onSubmit(values: z.infer<typeof AddStockSchema>) {
     const user = await getCurrentUser();
+
     const formData = new FormData();
     formData.append('name', values.name);
     formData.append('description', values.description);
@@ -43,8 +44,8 @@ const AddStock = () => {
     formData.append('price', values.price);
     formData.append('unit', values.unit);
     formData.append('stock', values.quantity);
-    formData.append('image', values.image);
-    
+    formData.append("image", values.image[0]);
+
     const response = await fetch(env.NEXT_PUBLIC_API_URL + '/product', {
       method: 'POST',
       headers: {
@@ -52,24 +53,20 @@ const AddStock = () => {
       },
       body: formData,
     });
-    
-    const data = await response.json();
 
-    console.log(data);
-
-    // if (!response?.ok) {
-    //   toast({
-    //     title: 'Error',
-    //     description: (
-    //       <div>
-    //         <p>Something went wrong. Please try again.</p>
-    //       </div>
-    //     ),
-    //   });
-    // } else {
-    //   setOpen(false);
-    //   router.refresh();
-    // }
+    if (!response?.ok) {
+      toast({
+        title: 'Error',
+        description: (
+          <div>
+            <p>Something went wrong. Please try again.</p>
+          </div>
+        ),
+      });
+    } else {
+      setOpen(false);
+      queryClient.invalidateQueries({ queryKey: ['stocks'] });
+    }
   }
 
   return (

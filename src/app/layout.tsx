@@ -19,11 +19,11 @@ export default function RootLayout({
     <html lang="fr">
       <body className={inter.className} suppressHydrationWarning={true}>
         <AuthProviders>
-          <ThemeProvider>
-            <QueryClientProvider>
-              {children}
-            </QueryClientProvider>
-          </ThemeProvider>
+          {/* <ThemeProvider> */}
+          <QueryClientProvider>
+            {children}
+          </QueryClientProvider>
+          {/* </ThemeProvider> */}
         </AuthProviders>
       </body>
     </html>

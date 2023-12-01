@@ -25,7 +25,7 @@ const getProducts = async () => {
 
 function useStocks() {
   return useQuery<Stock[]>({
-    queryKey: ['users'],
+    queryKey: ['stocks'],
     queryFn: async () => {
       const products = await getProducts();
       if (Array.isArray(products)) return products;
