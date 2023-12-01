@@ -64,7 +64,7 @@ export function AddProductStockForm({ onSubmit }: Props) {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>Categorie de produits </SelectLabel>
+                        <SelectLabel>Catégorie de produits </SelectLabel>
                         <SelectItem value="Confitures">Confitures</SelectItem>
                         <SelectItem value="Fromages">Fromages</SelectItem>
                         <SelectItem value="Fruits">Fruits</SelectItem>
