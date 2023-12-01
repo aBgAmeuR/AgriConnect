@@ -6,6 +6,7 @@ import { ProducerCard } from './components/producer-card';
 import { ProducerTabs } from './components/producer-tabs';
 import { Button } from '@/components/ui/button';
 import { env } from '@/lib/env';
+import { Pen } from 'lucide-react';
 
 const getData = async (nom: string) => {
   const producerData = await fetch(env.API_URL + '/producer?name=' + nom, {
@@ -31,16 +32,35 @@ export default async function ProducerPage({ params }: { params: { nom: string }
   return (
     <>
       <MainNavBar role={user?.role || 'visitor'} />
-
       <div className="absolute -z-10 w-full h-[100px]">
         <Image src="/producer-page-bg.png" alt="background image" fill style={{ objectFit: 'cover' }} />
       </div>
-      <main className="flex flex-row gap-4 justify-center mx-16 mt-20">
-        <aside className="min-w-[200px] max-w-[250px] w-full">
-          <ProducerCard {...data} />
-        </aside>
-        <ProducerTabs data={data} />
-      </main>
+      {user?.role === 'producer' ? (
+        <div>
+          <div className="flex mt-4 justify-end mx-4">
+            <Button className="flex gap-2 justify-between">
+              <Pen size={16} />
+              Modifier
+            </Button>
+          </div>
+          <main className="flex flex-row gap-4 justify-center mx-16 mt-6">
+            <aside className="min-w-[200px] max-w-[250px] w-full">
+              <ProducerCard {...data} />
+            </aside>
+
+            <ProducerTabs data={data} />
+          </main>
+        </div>
+      ) : null}
+      {user?.role === 'client' || 'visitor' ? (
+        <main className="flex flex-row gap-4 justify-center mx-16 mt-20">
+          <aside className="min-w-[200px] max-w-[250px] w-full">
+            <ProducerCard {...data} />
+          </aside>
+
+          <ProducerTabs data={data} />
+        </main>
+      ) : null}
     </>
   );
 }
