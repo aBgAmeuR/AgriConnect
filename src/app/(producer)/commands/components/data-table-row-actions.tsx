@@ -21,6 +21,8 @@ import { getAccessToken } from "@/lib/get-access-token"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { env } from "@/lib/env"
 import React, { useState } from "react"
+import { Data } from "@react-google-maps/api"
+import { DataTableCommandeInfoDialog } from "./data-table-dialog"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -56,7 +58,7 @@ export function DataTableRowActions<TData>({
     }).then(res => res.json())
       .then(res => res.data)
       .catch(err => console.log(err))
-      window.location.reload();
+    window.location.reload();
   }
 
   return (
@@ -95,7 +97,7 @@ export function DataTableRowActions<TData>({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      
+      <DataTableCommandeInfoDialog isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} order={task} />
     </>
   )
 }
