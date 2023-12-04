@@ -9,6 +9,7 @@ export const StockSchema = z.object({
   reserved: z.number(),
   price: z.string(),
   unit: z.string(),
+  image: z.string(),
 });
 
 export type Stock = z.infer<typeof StockSchema>;

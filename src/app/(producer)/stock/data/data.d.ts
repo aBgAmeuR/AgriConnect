@@ -31,4 +31,8 @@ export const Labels = [
     value: 'price',
     label: 'Unité',
   },
+  {
+    value: 'image',
+    label: 'Image',
+  },
 ];

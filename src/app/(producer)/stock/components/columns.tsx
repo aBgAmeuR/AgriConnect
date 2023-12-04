@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Stock } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
+import Image from "next/image"
 
 export const columns: ColumnDef<Stock>[] = [
   // {
@@ -29,6 +30,24 @@ export const columns: ColumnDef<Stock>[] = [
   //   enableSorting: false,
   //   enableHiding: false,
   // },
+  {
+    id: "image",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Image" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div>
+          <Image
+            src={row.original.image}
+            alt=""
+            width={30}
+            height={30}
+          />
+        </div>
+      )
+    },
+  },
   {
     accessorKey: "name",
     header: ({ column }) => (
