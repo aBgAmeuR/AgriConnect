@@ -12,17 +12,10 @@ import { useSession } from 'next-auth/react';
 import { Select } from '@radix-ui/react-select';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
+import { ProducerData } from '@/types/producer';
 
 type Props = {
-  data: {
-    name: string;
-    address: string;
-    category: string;
-    phoneNumber: string;
-    description: string;
-    image: string;
-    payement: string;
-  };
+  data: ProducerData;
 };
 
 const formSchema = z.object({
@@ -55,7 +48,7 @@ export const EditShopForm = ({ data }: Props) => {
       phone: data.phoneNumber,
       description: data.description,
       image: data.image,
-      payement: data.payement,
+      payement: data.paymentMethod,
     },
   });
   console.log(data);

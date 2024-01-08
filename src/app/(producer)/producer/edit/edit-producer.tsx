@@ -45,8 +45,9 @@ export const EditProducer = ({ id }: Props) => {
       <h2 className="text-lg font-medium">Ma Boutique</h2>
       <p className="text-muted-foreground text-sm font-normal">C'est ainsi que les autres utilisateurs vous verront sur le site.</p>
       <hr className="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
-
-      {/* <EditShopForm data={data || {}} /> */}
+      {data === undefined ? (
+        <p>Vous n'avez pas encore de boutique</p>
+      ) : <EditShopForm data={data} />}
     </>
   );
 };
