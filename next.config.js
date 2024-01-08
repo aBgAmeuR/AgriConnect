@@ -2,16 +2,19 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-      {
-        protocol: 'http',
-        hostname: '**',
-      }
-    ],
+    unoptimized: true,
+    // remotePatterns: [
+    //   {
+    //     protocol: 'https',
+    //     hostname: '**',
+    //   },
+    //   {
+    //     protocol: 'http',
+    //     hostname: '**',
+    //   },
+    // ],
+    loader: 'custom',
+    loaderFile: './src/lib/imagesLoader.ts',
   },
 };
 
