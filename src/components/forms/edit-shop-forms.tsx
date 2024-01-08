@@ -201,7 +201,7 @@ export const EditShopForm = ({ data }: Props) => {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="image"
           render={({ field }) => (
@@ -213,7 +213,7 @@ export const EditShopForm = ({ data }: Props) => {
               {form.formState.errors.phoneNumber?.message ? <FormMessage /> : <FormDescription>Il s'agit de votre image visible tout en haut de votre page.</FormDescription>}
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}
