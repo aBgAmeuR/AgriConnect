@@ -119,11 +119,14 @@ export const EditShopForm = ({ data }: Props) => {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Catégorie de produits </SelectLabel>
+                      <SelectItem value="Miels">Miels</SelectItem>
                       <SelectItem value="Fruits">Fruits</SelectItem>
+                      <SelectItem value="Confitures">Confitures</SelectItem>
                       <SelectItem value="Légumes">Légumes</SelectItem>
-                      <SelectItem value="Viande">Viande</SelectItem>
+                      <SelectItem value="Viandes">Viande</SelectItem>
+                      <SelectItem value="Fromages">Fromages</SelectItem>
                       <SelectItem value="Charcuterie">Charcuterie</SelectItem>
-                      <SelectItem value="laitiers">Produits laitiers</SelectItem>
+                      <SelectItem value="Laits">Produits laitiers</SelectItem>
                       <SelectItem value="Vins">Vins</SelectItem>
                       <SelectItem value="Bières">Bières</SelectItem>
                       <SelectItem value="Alcools">Alcools</SelectItem>
@@ -185,21 +188,21 @@ export const EditShopForm = ({ data }: Props) => {
                 <RadioGroup onValueChange={field.onChange} defaultValue={field.value}>
                   <FormItem className="flex items-center space-x-2">
                     <FormControl>
-                      <RadioGroupItem value="cash" />
+                      <RadioGroupItem value="Espèces" />
                     </FormControl>
-                    <FormLabel>Espèce</FormLabel>
+                    <FormLabel>Espèces</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center space-x-2">
                     <FormControl>
-                      <RadioGroupItem value="card" />
+                      <RadioGroupItem value="Carte" />
                     </FormControl>
                     <FormLabel>Carte Bancaire</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center space-x-2">
                     <FormControl>
-                      <RadioGroupItem value="crypto" />
+                      <RadioGroupItem value="Chèque" />
                     </FormControl>
-                    <FormLabel>Crypto-monnaie</FormLabel>
+                    <FormLabel>Chèque</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
