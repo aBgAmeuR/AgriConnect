@@ -81,22 +81,18 @@ export const AccountParamsForm = ({ data }: Props) => {
       },
       body: formData.toString(),
     });
-
     if (!response.ok) {
       throw new Error(`Failed to update user: ${response.statusText}`);
     }
-
     const responseData = await response.json();
     console.log('User updated:', responseData.data);
-
-    // Optionally, you can update the form values with the new data.
+    
     form.reset({
       name: responseData.data.name,
       surname: responseData.data.surname,
       email: responseData.data.email,
       phone: responseData.data.phoneNumber,
     });
-
   } catch (err) {
     console.error(err);
   }
