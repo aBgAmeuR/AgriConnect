@@ -36,7 +36,8 @@ export const ProducerCard = ({ producer, selected, setSelected }: Props) => {
       </div>
       <div className='h-[108px] w-[108px] flex justify-center items-center  relative'>
         <div className='absolute w-full h-full overflow-hidden rounded-[8px]'>
-          <Image src={producer.image} fill style={{ objectFit: 'cover' }} alt='Image de la boutique' loading="lazy" />
+          {/* <Image src={producer.image} fill style={{ objectFit: 'cover' }} alt='Image de la boutique' loading="lazy" /> */}
+          <img src={producer.image} alt='Image de la boutique' loading="lazy" style={{ objectFit: 'cover' }} className='h-full' />
         </div>
       </div>
     </Card>
