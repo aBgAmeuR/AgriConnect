@@ -53,7 +53,7 @@ export const columns: ColumnDef<Account>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Numéro de téléphone" />
     ),
-    cell: ({ row }) => <div className="w-[100px]">{row.getValue("phone")}</div>,
+    cell: ({ row }) => <div className="w-[100px]">{row.getValue("phoneNumber")}</div>,
     enableSorting: false,
   },
   {
