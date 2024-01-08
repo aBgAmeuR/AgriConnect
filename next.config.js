@@ -2,6 +2,16 @@
 const nextConfig = {
   images: {
     domains: ['localhost', 'agriconnect.antoinejosset.fr'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'agriconnect.antoinejosset.fr',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
   },
 };
 
