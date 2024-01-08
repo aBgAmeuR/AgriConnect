@@ -5,17 +5,19 @@ import { ProducerData } from '@/types/producer';
 export default function ProducerContact({ data }: { data: ProducerData }) {
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-6">
-      <div className="flex-1 bg-white shadow rounded-lg p-4">
-        <p className="text-base font-semibold mb-2">{data.name}</p>
-        <div className="flex flex-row gap-1 items-center mb-2">
-          <MapPin size={16} />
-          <p className="text-sm">{data.address}</p>
+      <div className="flex flex-col justify-between items-stretch bg-white shadow rounded-lg p-4">
+        <div>
+          <p className="text-base font-semibold mb-2">{data.name}</p>
+          <div className="flex flex-row gap-1 items-center mb-2">
+            <MapPin size={16} />
+            <p className="text-sm">{data.address}</p>
+          </div>
+          <div className="flex flex-row gap-1 items-center mb-2">
+            <Phone size={16} />
+            <p className="text-sm">{data.phoneNumber}</p>
+          </div>
         </div>
-        <div className="flex flex-row gap-1 items-center mb-2">
-          <Phone size={16} />
-          <p className="text-sm">{data.phoneNumber}</p>
-        </div>
-        <Button className="mt-24 bg-white text-green-500 hover:text-white">Envoyer un message</Button>
+        <Button variant='outlineGreen'>Envoyer un message</Button>
       </div>
       <div className="flex-1">
         <iframe

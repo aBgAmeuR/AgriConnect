@@ -22,7 +22,7 @@ import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { env } from "@/lib/env"
 import React, { useState } from "react"
 import { Data } from "@react-google-maps/api"
-import { DataTableCommandeInfoDialog } from "./data-table-dialog"
+import { DataTableCommandeInfoDialog } from "./modal/data-table-dialog"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -97,7 +97,7 @@ export function DataTableRowActions<TData>({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <DataTableCommandeInfoDialog isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} order={task} />
+      <DataTableCommandeInfoDialog isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} orderId={task.numero} />
     </>
   )
 }
