@@ -17,7 +17,7 @@ const roles = [
   { value: 'Visiteur', label: 'Visiteur' },
   { value: 'Client', label: 'Client' },
   { value: 'Producteur', label: 'Producteur' },
-  { value: 'Admin', label: 'Administrateur' },
+  { value: 'Administrateur', label: 'Administrateur' },
 ]
 
 export function DataTableToolbar<TData>({

@@ -78,19 +78,6 @@ export function DataTableRowActions<TData>({
         <DropdownMenuItem>
           Contacter
         </DropdownMenuItem>
-        {/* <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Rôle</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.name}>
-              {roles.map((role) => (
-                <DropdownMenuRadioItem key={role.value} value={role.value}>
-                  {role.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={e => deleteUserMutation(task.id)}>
           Supprimer
