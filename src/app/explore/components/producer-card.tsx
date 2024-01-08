@@ -22,6 +22,7 @@ export const ProducerCard = ({ producer, selected, setSelected }: Props) => {
     setSelected(producer)
 
   }
+  const imageUrl = "https://agriconnect.antoinejosset.fr/api/ressource/image/producteur1.png";
 
   return (
     <Card onClick={handleClick} className={cn("flex flex-row justify-between w-full p-6 cursor-pointer", selected === producer ? 'bg-gray-100' : '')}>
@@ -37,7 +38,7 @@ export const ProducerCard = ({ producer, selected, setSelected }: Props) => {
       </div>
       <div className='h-[108px] w-[108px] flex justify-center items-center  relative'>
         <div className='absolute w-full h-full overflow-hidden rounded-[8px]'>
-          <Image src={producer.image} fill style={{ objectFit: 'cover' }} alt='Image de la boutique' loading="lazy" />
+          <Image src={imageUrl} fill style={{ objectFit: 'cover' }} alt='Image de la boutique' loading="lazy" />
         </div>
       </div>
     </Card>
