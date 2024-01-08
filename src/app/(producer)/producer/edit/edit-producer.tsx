@@ -46,7 +46,7 @@ export const EditProducer = ({ id }: Props) => {
       <p className="text-muted-foreground text-sm font-normal">C'est ainsi que les autres utilisateurs vous verront sur le site.</p>
       <hr className="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700" />
 
-      <EditShopForm data={data} />
+      {/* <EditShopForm data={data || {}} /> */}
     </>
   );
 };
