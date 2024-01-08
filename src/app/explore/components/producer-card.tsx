@@ -22,7 +22,8 @@ export const ProducerCard = ({ producer, selected, setSelected }: Props) => {
     setSelected(producer)
 
   }
-  const imageUrl = "https://agriconnect.antoinejosset.fr/api/ressource/image/producteur1.png";
+
+  const imageUrl = producer.image;
 
   return (
     <Card onClick={handleClick} className={cn("flex flex-row justify-between w-full p-6 cursor-pointer", selected === producer ? 'bg-gray-100' : '')}>
