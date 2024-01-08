@@ -7,6 +7,8 @@ import { ProducerTabs } from './components/producer-tabs';
 import { Button } from '@/components/ui/button';
 import { env } from '@/lib/env';
 import { Pen } from 'lucide-react';
+import Link from 'next/link';
+import next from 'next';
 
 const getData = async (nom: string) => {
   const producerData = await fetch(env.API_URL + '/producer?name=' + nom, {
@@ -37,10 +39,12 @@ export default async function ProducerPage({ params }: { params: { nom: string }
       </div>
       {user?.role === 'producer' ? (
         <div className="absolute flex mt-4 justify-end right-4">
-          <Button className="flex gap-2 justify-between">
-            <Pen size={16} />
-            Modifier
-          </Button>
+          <Link href="edit">
+            <Button className="flex gap-2 justify-between">
+              <Pen size={16} />
+              Modifier
+            </Button>
+          </Link>
         </div>
       ) : null}
       <main className="flex flex-row gap-4 justify-center mx-16 mt-20">
@@ -53,3 +57,5 @@ export default async function ProducerPage({ params }: { params: { nom: string }
     </>
   );
 }
+
+// TODO changer le link pour un url plus simple /edit
