@@ -47,7 +47,7 @@ export const ProducerAboutTab = ({ data, goToBoutique }: ProducerAboutTabProps) 
           <h2 className="text-lg font-semibold mt-4">Boutique</h2>
           <div className="flex flex-row justify-start items-start gap-2.5">
             <div className="flex flex-row items-center gap-2">
-              <ProductsList {...data} />
+              {/* <ProductsList {...data} /> */}
             </div>
           </div>
           <Button className="max-w-[200px] mx-auto " onClick={goToBoutique}>

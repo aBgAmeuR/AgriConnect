@@ -1,15 +1,23 @@
 import React from 'react';
 import { Product } from '../data/schema';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, X } from 'lucide-react';
 import Image from 'next/image';
 import { env } from '@/lib/env';
 import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
-export const ProductItem = ({ product }: { product: Product }) => {
+type Props = {
+  product: Product;
+  isAdded: boolean;
+  addToCart: () => void;
+  removeFromCart: () => void;
+};
+
+export const ProductItem = ({ product, isAdded, addToCart, removeFromCart }: Props) => {
   const imageUrl = product.image.includes('http') ? product.image : `${env.NEXT_PUBLIC_API_URL}/ressource/image/${product.image}`;
   return (
-    <Card className="h-[244px] w-[176px]">
+    <Card className={cn("h-[244px] w-[176px] overflow-hidden", isAdded && "border-emerald-600")}>
       <div className="h-[150px] w-full flex justify-center items-center  relative">
         <div className="w-full h-2/3 overflow-hidden rounded-t-lg">
           <Image src={imageUrl} alt={product.name} fill style={{ objectFit: 'cover' }} />
@@ -21,9 +29,12 @@ export const ProductItem = ({ product }: { product: Product }) => {
           <p>
             {product.price} €/{product.unit}
           </p>
-          <Button size={'sm'}>
+          {isAdded ? (<Button size={'sm'} variant='outline' onClick={removeFromCart}>
+            <X size={16} />
+          </Button>) : (<Button size={'sm'} variant='default' onClick={addToCart}>
             <ShoppingCart size={16} />
-          </Button>
+          </Button>)}
+
         </div>
       </div>
     </Card>
