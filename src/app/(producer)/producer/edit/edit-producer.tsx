@@ -38,7 +38,6 @@ export const EditProducer = ({ id }: Props) => {
   const { data, isLoading, isError } = useProducer(id);
   if (isError) return <div>Error</div>;
   if (isLoading) return <div>Loading...</div>;
-  console.log(data, 'test');
 
   return (
     <>
