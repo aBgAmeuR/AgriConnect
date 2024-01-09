@@ -1,16 +1,23 @@
 import React, { HTMLAttributes } from 'react'
 import { Conversations, Conversation, Message, Messages } from '../messages'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { env } from '@/lib/env'
+import { Separator } from '@/components/ui/separator'
+import { User } from 'next-auth'
+import { VisitorAccount } from './visitor-account'
 
 type Props = {
   conversations: Conversations
   selectedConversation: Conversation | null
   setSelectedConversation: (conversation: Conversation) => void
+  user: User
 }
 
-export const LateralBar = ({ conversations, selectedConversation, setSelectedConversation }: Props) => {
+export const LateralBar = ({ conversations, selectedConversation, setSelectedConversation, user }: Props) => {
   return (
-    <nav className='flex flex-col w-1/5 min-w-[200px] p-2 gap-1'>
+    <nav className='flex flex-col w-1/5 min-w-[300px] p-2 gap-1 overflow-y-scroll overflow-x-hidden'>
+      {/* <VisitorAccount user={user} /> */}
+      {/* <Separator /> */}
       {conversations.map(
         (conversation: Conversation) => (
           <ConversationComponent key={conversation.receiver} conversation={conversation} onClick={() => setSelectedConversation(conversation)} />
@@ -40,3 +47,4 @@ const ConversationComponent = ({ conversation, onClick }: ConversationProps) => 
     </div>
   )
 }
+

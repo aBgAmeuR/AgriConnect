@@ -82,12 +82,12 @@ export const CartCheckout = ({ idUser, tokenUser }: Props) => {
       .then((res) => res.data)
       .catch((err) => console.log(err));
 
-    // if (res) {
-    //   localStorage.clear();
-    //   localStorage.setItem('cart', JSON.stringify(cartItems));
-    //   localStorage.setItem('cartShopId', cartItems[0].product.id_producter);
-    //   router.push('/');
-    // }
+    if (res) {
+      localStorage.clear();
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      localStorage.setItem('cartShopId', cartItems[0].product.id_producter);
+      router.push('/');
+    }
   }
 
   return (
