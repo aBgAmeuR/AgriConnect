@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 type CartItem = {
   product: Product;
@@ -22,6 +22,8 @@ const formatPrice = (price: number) => {
 }
 
 export const ShopCart = ({ cartItems, setCart }: Props) => {
+  const router = useRouter();
+
   const modifyQuantity = (product: Product, quantity: number) => {
     if (quantity > parseInt(product.stock)) return;
     if (quantity < 1) {
@@ -42,8 +44,12 @@ export const ShopCart = ({ cartItems, setCart }: Props) => {
   }
 
   const onSubmit = () => {
+    if (cartItems.length === 0) return;
+
+    localStorage.clear();
     localStorage.setItem('cart', JSON.stringify(cartItems));
-    redirect('/checkout');
+    localStorage.setItem('cartShopId', cartItems[0].product.id_producter);
+    router.push('/checkout');
   }
 
   return (
