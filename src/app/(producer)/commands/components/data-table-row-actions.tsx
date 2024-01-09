@@ -41,7 +41,7 @@ export function DataTableRowActions<TData>({
   const task = OrderSchema.parse(row.original)
   const queryClient = useQueryClient();
   const [isOpenModal, setIsOpenModal] = useState(false)
-
+  
 
   const updateOrder = async (statut: string) => {
     const accessToken = await getAccessToken()
