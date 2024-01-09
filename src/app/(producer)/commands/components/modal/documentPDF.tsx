@@ -1,9 +1,6 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-import { Separator } from '@radix-ui/react-select';
-
-
-
+import { InfoOrder } from './schema';
 // Créer des styles
 const styles = StyleSheet.create({
   page: {
@@ -18,25 +15,25 @@ const styles = StyleSheet.create({
 });
 
 // Créer le document
-export const DocumentPDF = ({ data }) => (
+export const DocumentPDF = ({ data }: { data: InfoOrder[] }) => (
   <Document>
-      <Page>
-        {data && (
+    <Page>
+      {data && (
         <>
           <Text>Client: {data[0].client}</Text>
           <Text>Mail: {data[0].email_user}</Text>
           <Text>Numéro: 0{data[0].phoneNumber_user}</Text>
-            <Text></Text>
+          <Text></Text>
         </>
-        )}
-        {data?.map((item) => (
-          <>
-            <Text>Produit commandé: {item.name_product}</Text>
-            <Text>{item.price_product}</Text>
-            <Text>{item.desc_product}</Text>
-            <Text></Text>
-          </>
-        ))}
-      </Page>
-    </Document>
+      )}
+      {data?.map((item) => (
+        <>
+          <Text>Produit commandé: {item.name_product}</Text>
+          <Text>{item.price_product}</Text>
+          <Text>{item.desc_product}</Text>
+          <Text></Text>
+        </>
+      ))}
+    </Page>
+  </Document>
 );

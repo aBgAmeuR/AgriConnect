@@ -16,8 +16,7 @@ type Props = {
 export const LateralBar = ({ conversations, selectedConversation, setSelectedConversation, user }: Props) => {
   return (
     <nav className='flex flex-col w-1/5 min-w-[300px] p-2 gap-1 overflow-y-scroll overflow-x-hidden'>
-      {/* <VisitorAccount user={user} /> */}
-      {/* <Separator /> */}
+      {user.role === 'admin' ? (<><VisitorAccount user={user} /><Separator /></>) : null}
       {conversations.map(
         (conversation: Conversation) => (
           <ConversationComponent key={conversation.receiver} conversation={conversation} onClick={() => setSelectedConversation(conversation)} />
