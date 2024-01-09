@@ -20,6 +20,7 @@ export default async function RegisterPage() {
 
   return (
     <div className="relative flex items-center justify-center p-8">
+      <Link className={buttonVariants({ variant: "ghost" }) + " absolute top-8 left-8"} href="explore">Accueil</Link>
       <Link className={buttonVariants({ variant: 'ghost' }) + ' absolute top-8 right-8'} href="login">
         Se connecter
       </Link>

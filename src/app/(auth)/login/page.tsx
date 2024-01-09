@@ -19,6 +19,7 @@ export default async function LoginPage() {
 
   return (
     <div className="relative flex items-center justify-center p-8">
+      <Link className={buttonVariants({ variant: "ghost" }) + " absolute top-8 left-8"} href="explore">Accueil</Link>
       <Link className={buttonVariants({ variant: "ghost" }) + " absolute top-8 right-8"} href="register">Créer un compte</Link>
       <div className="flex flex-col gap-3 w-[350px]">
         <h1 className="text-xl text-center">Se connecter</h1>

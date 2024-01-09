@@ -2,12 +2,15 @@ import AuthProviders from "@/hooks/auth-provider"
 import { ThemeProvider } from "@/hooks/theme-provider"
 import Image from "next/image"
 import { Toaster } from "@/components/ui/toaster"
+import { useRouter } from 'next/navigation';
 
 interface AuthLayoutProps {
   children: React.ReactNode
 }
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
+  
+
   return (
     <AuthProviders>
       <ThemeProvider>
@@ -19,8 +22,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             </div>
             <Image src="/auth-background.jpg" alt="Background" fill style={{ objectFit: "cover" }} />
             <div className="absolute bottom-10 flex flex-col gap-2 mr-10">
-              <p className="text-lg">“This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.”</p>
-              <p className="text-sm">Sofia Davis</p>
+              
             </div>
           </div>
           {children}
