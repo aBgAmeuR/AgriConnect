@@ -91,10 +91,6 @@ export function DataTableRowActions<TData>({
               </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            Facture
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <DataTableCommandeInfoDialog isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} orderId={task.numero} />

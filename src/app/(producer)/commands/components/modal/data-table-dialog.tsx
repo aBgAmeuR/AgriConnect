@@ -97,7 +97,7 @@ export const DataTableCommandeInfoDialog = ({ isOpenModal, setIsOpenModal, order
                 fileName={`commande-${orderId}.pdf`}
               >
                 {({ blob, url, loading, error }) =>
-                  loading ? 'Chargement du document...' : 'Télécharger en PDF'
+                  loading ? 'Chargement du document...' : 'Telecharcher la facture'
                 }
               </PDFDownloadLink>
               <button onClick={() => setIsOpenModal(false)}>Fermer</button>
