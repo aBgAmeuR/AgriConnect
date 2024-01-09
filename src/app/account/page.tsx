@@ -1,9 +1,15 @@
 import MainNavBar from '@/components/main-navbar'
 import { getCurrentUser } from '@/lib/session'
 import { TabsAccount } from '@/app/account/tabs-account';
+import { useRouter } from 'next/navigation';
 
 export default async function Account() {
   const user = await getCurrentUser();
+
+  if (user?.role === 'visitor' || !user) {
+    const router = useRouter();
+    router.push('/');
+  }
 
   return (
     <>
