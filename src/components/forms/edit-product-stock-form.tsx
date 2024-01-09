@@ -146,8 +146,8 @@ export function EditProductStockForm({ onSubmit, defaultValues }: Props) {
           )}
         /> */}
         <Button type="submit" >
-          Ajouter
-          <span className="sr-only">Ajouter</span>
+          Modifier
+          <span className="sr-only">Modifier</span>
         </Button>
       </form>
     </Form>

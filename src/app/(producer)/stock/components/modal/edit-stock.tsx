@@ -29,35 +29,34 @@ const EditStock = ({ isOpenModal, setIsOpenModal, stock }: Props) => {
   const queryClient = useQueryClient();
 
   async function onSubmit(values: z.infer<typeof EditStockSchema>) {
+    try{
     const user = await getCurrentUser();
 
-    const formData = new FormData();
+    const formData = new URLSearchParams();
+  
     formData.append('name', values.name);
     formData.append('type', values.category);
     formData.append('price', values.price);
     formData.append('unit', values.unit);
     formData.append('stock', values.quantity.toString());
 
-    const response = await fetch(env.NEXT_PUBLIC_API_URL + '/product' + stock.id, {
+    const response = await fetch(env.NEXT_PUBLIC_API_URL + '/product/' + stock.id, {
       method: 'PUT',
       headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: `Bearer ${user?.accessToken}`,
       },
-      body: formData,
+      body: formData.toString(),
     });
-
-    if (!response?.ok) {
-      toast({
-        title: 'Error',
-        description: (
-          <div>
-            <p>Something went wrong. Please try again.</p>
-          </div>
-        ),
-      });
-    } else {
-      setIsOpenModal(false);
-      queryClient.invalidateQueries({ queryKey: ['stocks'] });
+      if (!response.ok) {
+        throw new Error(`Failed to update product: ${response.statusText}`);
+      }
+  
+      const responseData = await response.json();
+      console.log('Product updated:', responseData.data);
+  
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -67,8 +66,8 @@ const EditStock = ({ isOpenModal, setIsOpenModal, stock }: Props) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px] bg-[#ffffff] dark:bg-[#111315]">
         <DialogHeader>
-          <DialogTitle>Ajouter un produit</DialogTitle>
-          <DialogDescription>Ajouter un produit à votre liste ici. Cliquez sur ajouter lorsque vous avez terminé.</DialogDescription>
+          <DialogTitle>Modifier un produit</DialogTitle>
+          <DialogDescription>Modifier un produit à votre liste ici. Cliquez sur modifier lorsque vous avez terminé.</DialogDescription>
         </DialogHeader>
         <EditProductStockForm onSubmit={onSubmit} defaultValues={stock} />
       </DialogContent>
