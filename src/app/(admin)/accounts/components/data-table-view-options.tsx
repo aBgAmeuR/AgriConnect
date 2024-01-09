@@ -21,7 +21,7 @@ const columns = [
   { id: "name", label: "Nom" },
   { id: "surname", label: "Prénom" },
   { id: "role", label: "Rôle" },
-  { id: "phone", label: "Téléphone" },
+  { id: "phoneNumber", label: "Téléphone" },
   { id: "email", label: "Email" },
 ]
 

@@ -17,6 +17,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { useForm } from 'react-hook-form'
 import { signOut, useSession } from 'next-auth/react'
+import { getCurrentUser } from '@/lib/session'
+import { env } from '@/lib/env'
+import { Save } from 'lucide-react'
 
 type Props = {
   data: {
@@ -59,15 +62,54 @@ export const AccountParamsForm = ({ data }: Props) => {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    startTransition(async () => {
-      try {
-        const user = session?.user
-        console.log(user);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+  try {
+    const userSession = await getCurrentUser();
+    const formData = new URLSearchParams();
 
-      } catch (err) {
-        // TODO: handle error
+    formData.append('nom', values.name || "");
+    formData.append('prenom', values.surname || "");
+    formData.append('email', values.email || "");
+    formData.append('numero', values.phone || "");
+    formData.append('password', values.password || "");
+
+    const response = await fetch(env.NEXT_PUBLIC_API_URL + '/user/' + userSession?.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Bearer ${userSession?.accessToken}`,
+      },
+      body: formData.toString(),
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to update user: ${response.statusText}`);
+    }
+    const responseData = await response.json();
+    console.log('User updated:', responseData.data);
+    
+    form.reset({
+      name: responseData.data.name,
+      surname: responseData.data.surname,
+      email: responseData.data.email,
+      phone: responseData.data.phoneNumber,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+  const deleteUser = async () => {
+    const user = await getCurrentUser()
+    await fetch(env.NEXT_PUBLIC_API_URL + '/user/'+user?.id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user?.accessToken}`
       }
+    })
+
+    signOut({
+      callbackUrl: '/',
     })
   }
 
@@ -176,7 +218,12 @@ export const AccountParamsForm = ({ data }: Props) => {
                 <Input
                   type="text"
                   placeholder="Votre numéro de téléphone"
-                  {...field}
+                  defaultValue={"0"+data.phoneNumber}
+                  onChange={e => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, '')
+                    field.onChange(e)
+                  }
+                  }
                 />
               </FormControl>
               {form.formState.errors.phone?.message ? (
@@ -200,7 +247,7 @@ export const AccountParamsForm = ({ data }: Props) => {
           </Button>
         </div>
         <div className='flex flex-row gap-2 pb-4'>
-          <Button variant="outlineDestructive">
+          <Button variant="outlineDestructive" onClick={deleteUser}>
             Supprimer le compte
             <span className="sr-only">Supprimer le compte</span>
           </Button>

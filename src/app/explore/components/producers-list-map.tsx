@@ -8,33 +8,15 @@ import { ProducerCard } from './producer-card';
 import { env } from '@/lib/env';
 import { Skeleton } from "@/components/ui/skeleton"
 import { Libraries, useJsApiLoader } from '@react-google-maps/api';
+import { ProduceurSchema, ProduceursSchema } from './schema';
+import { z } from 'zod';
 
 const ProducersMap = dynamic(() => import("./producers-map"), { ssr: false });
 
-export type Producer = {
-  id: string
-  name: string
-  description: string
-  address: string
-  category: string
-  paymentMethod: string
-  latitude: number
-  longitude: number
-  phone: number
-  image: string
-}
+export type Producer = z.infer<typeof ProduceurSchema>;
 
 const getProducers = async ({ text, location, type, distance }: FormValues = { text: '', location: '', type: '', distance: '' }) => {
-  const data = await fetch(env.NEXT_PUBLIC_API_URL + `/producer/search?name=${text}&location=${location}&type=${type}&distance=${distance}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  }).then(res => res.json())
-    .then(res => res.data)
-    .catch(err => console.log(err))
 
-  return data
 }
 
 type Librarie = "places";
@@ -50,7 +32,26 @@ export const ProducersListMap = () => {
 
   const { data, isLoading, isError } = useQuery<Producer[]>({
     queryKey: ['SearchProducers', params],
-    queryFn: async () => await getProducers(params)
+    queryFn: async ({ queryKey }) => {
+      const [_key, params] = queryKey as [string, FormValues];
+
+      const { text, location, type, distance } = params;
+
+      const response = await fetch(env.NEXT_PUBLIC_API_URL + `/producer/search?name=${text}&location=${location}&type=${type}&distance=${distance}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const json = await response.json();
+      let produceurs: Producer[] = [];
+      try {
+        produceurs = ProduceursSchema.parse(json.data)
+      } catch (error) {
+        console.log(error)
+      }
+      return produceurs
+    }
   });
 
   const { isLoaded } = useJsApiLoader({

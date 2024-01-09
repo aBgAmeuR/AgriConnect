@@ -5,28 +5,19 @@ import { Account } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 
+const roleOptions = [
+  { label: "Administrateur", value: "admin" },
+  { label: "Producteur", value: "producer" },
+  { label: "Client", value: "client" },
+  { label: "Visiteur", value: "visitor" },
+]
+
+const getLabelOfRole = (value: string) => {
+  const option = roleOptions.find((option) => option.value === value)
+  return option?.label ?? value
+}
+
 export const columns: ColumnDef<Account>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={table.getIsAllPageRowsSelected()}
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //       className="translate-y-[2px]"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //       className="translate-y-[2px]"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     accessorKey: "name",
     header: ({ column }) => (
@@ -46,14 +37,14 @@ export const columns: ColumnDef<Account>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Rôle" />
     ),
-    cell: ({ row }) => <div className="w-[100px]">{row.getValue("role")}</div>,
+    cell: ({ row }) => <div className="w-[100px]">{getLabelOfRole(row.getValue("role"))}</div>,
   },
   {
-    accessorKey: "phone",
+    accessorKey: "phoneNumber",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Numéro de téléphone" />
     ),
-    cell: ({ row }) => <div className="w-[100px]">{row.getValue("phone")}</div>,
+    cell: ({ row }) => <div className="w-[100px]">{row.getValue("phoneNumber")}</div>,
     enableSorting: false,
   },
   {
@@ -64,13 +55,13 @@ export const columns: ColumnDef<Account>[] = [
     cell: ({ row }) => <div className="w-[250px]">{row.getValue("email")}</div>,
     enableSorting: false,
   },
-  // {
-  //   accessorKey: "created_At",
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title="Date de création" />
-  //   ),
-  //   cell: ({ row }) => <div className="w-[250px]">{row.getValue("createdAt")}</div>,
-  // },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Date de création" />
+    ),
+    cell: ({ row }) => <div className="w-[100px]">{row.getValue("createdAt")}</div>,
+  },
   {
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} />,

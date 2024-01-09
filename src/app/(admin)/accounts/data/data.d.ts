@@ -16,7 +16,7 @@ export const Labels = [
     label: 'Rôle',
   },
   {
-    value: 'phone',
+    value: 'phoneNumber',
     label: 'Téléphone',
   },
   {

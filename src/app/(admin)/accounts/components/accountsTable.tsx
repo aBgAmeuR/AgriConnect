@@ -7,6 +7,9 @@ import { getCurrentUser } from '@/lib/session'
 import { useQuery } from '@tanstack/react-query'
 import { Account } from '../data/schema'
 import { env } from '@/lib/env'
+import { AccountSchema } from '../data/schema'
+
+const AccountsSchema = AccountSchema.array()
 
 const getUsers = async () => {
   const user = await getCurrentUser()
@@ -19,8 +22,8 @@ const getUsers = async () => {
   }).then(res => res.json())
     .then(res => res.data)
     .catch(err => console.log(err))
-  
-  return data
+
+  return AccountsSchema.parse(data)
 }
 
 function useUsers() {
@@ -36,7 +39,7 @@ function useUsers() {
 
 export const AccountsTable = () => {
   const { data, isLoading, isError } = useUsers()
-  
+
   if (isError) return <div>Error</div>
   if (isLoading) return <div>Loading...</div>
   

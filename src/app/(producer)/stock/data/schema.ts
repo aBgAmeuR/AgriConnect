@@ -1,3 +1,4 @@
+import { Description } from '@radix-ui/react-dialog';
 import { z } from 'zod';
 
 export const StockSchema = z.object({

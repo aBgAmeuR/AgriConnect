@@ -13,6 +13,8 @@ import { Select } from '@radix-ui/react-select';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
 import { ProducerData } from '@/types/producer';
+import { getCurrentUser } from '@/lib/session';
+import { env } from '@/lib/env';
 
 type Props = {
   data: ProducerData;
@@ -24,7 +26,7 @@ const formSchema = z.object({
   }),
   address: z.string().min(1, { message: "L'adresse ne peut pas être vide." }),
   category: z.string().min(1, { message: 'Veuillez choisir une catégorie.' }),
-  phone: z
+  phoneNumber: z
     .string()
     .regex(/^[0-9]+$/, {
       message: 'Veuillez entrer un numéro de téléphone valide.',
@@ -33,7 +35,10 @@ const formSchema = z.object({
   description: z.string().min(1, { message: 'La description ne peut pas être vide.' }),
   image: z.string().url({ message: 'Veuillez entrer une URL valide pour l’image.' }).optional(),
   payement: z.string().min(1, { message: 'Veuillez sélectionner un moyen de paiement.' }),
+  producerid: z.string(),
 });
+
+
 
 export const EditShopForm = ({ data }: Props) => {
   const [isPending, startTransition] = React.useTransition();
@@ -45,23 +50,48 @@ export const EditShopForm = ({ data }: Props) => {
       shopName: data.name,
       address: data.address,
       category: data.category,
-      phone: data.phoneNumber,
+      phoneNumber: data.phoneNumber,
       description: data.description,
       image: data.image,
       payement: data.paymentMethod,
+      producerid: data.id,
     },
   });
-  console.log(data);
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    startTransition(async () => {
-      try {
-        const user = session?.user;
-        console.log(user);
-      } catch (err) {
-        // TODO: handle error
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const userSession = await getCurrentUser();
+      const formData = new URLSearchParams();
+  
+      formData.append('name', values.shopName || "");
+      formData.append('adress', values.address || "");
+      formData.append('category', values.category || "");
+      formData.append('desc', values.description || "");
+      formData.append('phoneNumber', values.phoneNumber || "");
+      formData.append('payement', values.payement || "");
+      formData.append('image', values.image || "");
+  
+      const response = await fetch(env.NEXT_PUBLIC_API_URL + '/producer/' + values.producerid, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Bearer ${userSession?.accessToken}`,
+        },
+        body: formData.toString(),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to update producer: ${response.statusText}`);
       }
-    });
+  
+      const responseData = await response.json();
+      console.log('Producer updated:', responseData.data);
+  
+    } catch (error) {
+      console.error(error);
+    }
   }
+
 
   return (
     <Form {...form}>
@@ -94,14 +124,21 @@ export const EditShopForm = ({ data }: Props) => {
         />
         <FormField
           control={form.control}
-          name="phone"
+          name="phoneNumber"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Numéro de téléphone</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="Votre numéro de téléphone" {...field} />
+                <Input type="text" 
+                  placeholder="Votre numéro de téléphone" 
+                  defaultValue={"0"+data.phoneNumber}
+                  onChange={e => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, '')
+                    field.onChange(e)
+                  }
+                  } />
               </FormControl>
-              {form.formState.errors.phone?.message ? <FormMessage /> : <FormDescription>Il s'agit de votre numéro de téléphone d'affichage public.</FormDescription>}
+              {form.formState.errors.phoneNumber?.message ? <FormMessage /> : <FormDescription>Il s'agit de votre numéro de téléphone d'affichage public.</FormDescription>}
             </FormItem>
           )}
         />
@@ -159,12 +196,12 @@ export const EditShopForm = ({ data }: Props) => {
               <FormControl>
                 <Input type="text" placeholder="Une courte description" {...field} />
               </FormControl>
-              {form.formState.errors.phone?.message ? <FormMessage /> : <FormDescription>Il s'agit de votre description qui sera visible en haut de votre page.</FormDescription>}
+              {form.formState.errors.phoneNumber?.message ? <FormMessage /> : <FormDescription>Il s'agit de votre description qui sera visible en haut de votre page.</FormDescription>}
             </FormItem>
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="image"
           render={({ field }) => (
@@ -173,10 +210,10 @@ export const EditShopForm = ({ data }: Props) => {
               <FormControl>
                 <Input type="text" placeholder="Choisir une image" {...field} />
               </FormControl>
-              {form.formState.errors.phone?.message ? <FormMessage /> : <FormDescription>Il s'agit de votre image visible tout en haut de votre page.</FormDescription>}
+              {form.formState.errors.phoneNumber?.message ? <FormMessage /> : <FormDescription>Il s'agit de votre image visible tout en haut de votre page.</FormDescription>}
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}
@@ -206,7 +243,7 @@ export const EditShopForm = ({ data }: Props) => {
                   </FormItem>
                 </RadioGroup>
               </FormControl>
-              {form.formState.errors.phone?.message ? <FormMessage /> : <FormDescription>Il s'agit de vos moyen de payement autorisé.</FormDescription>}
+              {form.formState.errors.phoneNumber?.message ? <FormMessage /> : <FormDescription>Il s'agit de vos moyen de payement autorisé.</FormDescription>}
             </FormItem>
           )}
         />

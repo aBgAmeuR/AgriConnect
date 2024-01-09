@@ -16,7 +16,7 @@ type Props = {
 
 export const ProducersMap = ({ isLoaded, data, selected, setSelected }: Props) => {
   const [map, setMap] = React.useState(null)
-
+  
   const onLoad = React.useCallback(function callback(map: any) {
     map.setZoom(6)
     setMap(map)

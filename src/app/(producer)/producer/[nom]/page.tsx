@@ -27,6 +27,7 @@ const getData = async (nom: string) => {
 export default async function ProducerPage({ params }: { params: { nom: string } }) {
   const user = await getCurrentUser();
   const data: ProducerData = await getData(params.nom);
+  
   if (!data) {
     return 404;
   }
