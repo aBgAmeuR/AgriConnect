@@ -24,8 +24,8 @@ function useOrderById(orderId: string) {
         .then((res) => res.data)
         .catch((err) => console.log(err));
 
-        if (Array.isArray(data)) return data;
-        throw new Error('error occured');
+      if (Array.isArray(data)) return data;
+      throw new Error('error occured');
     },
   });
 }
@@ -43,7 +43,7 @@ export const DataTableCommandeInfoDialog = ({ isOpenModal, setIsOpenModal, order
   if (isError) return <div>Error</div>;
   if (isLoading) return <div>Loading...</div>;
 
-  
+
 
   return (
     <Dialog open={isOpenModal} onOpenChange={setIsOpenModal}>
@@ -89,14 +89,14 @@ export const DataTableCommandeInfoDialog = ({ isOpenModal, setIsOpenModal, order
               </>
             ))}
           </div>
-              
+
           {isOpenModal && (
             <>
               <PDFDownloadLink
-                document={<DocumentPDF data={data} />}
+                document={<DocumentPDF data={data ?? []} />}
                 fileName={`commande-${orderId}.pdf`}
               >
-                {({ blob, url, loading, error }) =>
+                {({ loading }: { loading: boolean }) =>
                   loading ? 'Chargement du document...' : 'Telecharcher la facture'
                 }
               </PDFDownloadLink>

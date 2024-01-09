@@ -15,16 +15,21 @@ import { env } from '@/lib/env';
 import { step4Schema } from '@/app/(producer)/producer/register/registerForm';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
+import { DataStore } from '@/app/(producer)/producer/register/shop-register';
 
-export function RegisterAutreForm() {
+type Props = {
+  data: DataStore,
+  setData: React.Dispatch<React.SetStateAction<DataStore>>
+}
+
+export function RegisterAutreForm({ data, setData }: Props) {
   const [isPending, startTransition] = React.useTransition();
   const router = useRouter();
   const [fileInputRef, setFileInputRef] = React.useState<HTMLInputElement | null>(null);
-  const [textFileData, setTextFileData] = React.useState<string[]>([]); // Added state for textFileData
+  const [textFileData, setTextFileData] = React.useState<string[]>([]);
   const form = useForm<z.infer<typeof step4Schema>>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      image: '',
       moyenDePayement: '',
     },
   });
@@ -35,79 +40,21 @@ export function RegisterAutreForm() {
     }
   }, [fileInputRef]);
 
-  function handleFileChange(target: HTMLInputElement | null) {
-    const files = target?.files;
-
-    if (files && files.length > 0) {
-      const file = files[0];
-
-      if (file) {
-        const reader = new FileReader();
-
-        reader.onload = (event) => {
-          const fileContent = (event.target as FileReader).result;
-          processFileContent(fileContent as string);
-        };
-
-        reader.readAsText(file);
-      }
-    }
-  }
-
-  function processFileContent(content: string) {
-    setTextFileData(content.split('\n'));
-  }
 
   function onSubmit(values: z.infer<typeof step4Schema>) {
-    startTransition(async () => {
-      try {
-        const updatedFileContent = textFileData.concat(
-          `image=${values.image}&moyenDePayement=${values.moyenDePayement}`
-        );
+    try {
+      setData({ ...data, payement: values.moyenDePayement });
 
-        for (const line of updatedFileContent) {
-          const formData = new FormData();
-          formData.append('line', line);
-
-          await fetch(env.NEXT_PUBLIC_API_URL + '/register', {
-            method: 'POST',
-            body: formData,
-          });
-        }
-
-        router.push('/explore');
-      } catch (err) {
-        toast({
-          title: 'Erreur',
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-red-600 p-4">
-              <code className="text-white">{JSON.stringify(err, null, 2)}</code>
-            </pre>
-          ),
-        });
-      }
-    });
+      console.log(data);
+      
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2">
-      <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              {/* <FormLabel>Nom</FormLabel> */}
-              <FormControl>
-                <Input type="text" placeholder="Veuillez renseigner l'URL de votre image" {...field} />
-              </FormControl>
-              <FormMessage />
-                <FormDescription>
-                  Il s'agit de votre image de boutique qui sera visible en haut de votre page.
-                </FormDescription>
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="moyenDePayement"
@@ -135,9 +82,9 @@ export function RegisterAutreForm() {
             </FormItem>)}
         />
         <Button type="submit" disabled={isPending}>
-                Créer
-                <span className="sr-only">Créer</span>
-              </Button>
+          Créer
+          <span className="sr-only">Créer</span>
+        </Button>
       </form>
     </Form>
   );

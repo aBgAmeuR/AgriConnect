@@ -1,8 +1,6 @@
 "use client"
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import Cookies from 'js-cookie';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -11,12 +9,15 @@ import { Input } from '@/components/ui/input';
 import { step1Schema } from '@/app/(producer)/producer/register/registerForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { env } from '@/lib/env';
-import { getCurrentUser } from '@/lib/session';
+import { DataStore } from '@/app/(producer)/producer/register/shop-register';
 
-export function RegisterNomForm() {
+type Props = {
+  data: DataStore,
+  setData: React.Dispatch<React.SetStateAction<DataStore>>
+}
+
+export function RegisterNomForm({ data, setData }: Props) {
   const [isPending, startTransition] = React.useTransition();
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof step1Schema>>({
     resolver: zodResolver(step1Schema),
@@ -25,33 +26,9 @@ export function RegisterNomForm() {
     },
   });
 
-  const storedFormData = Cookies.get('formData') || '';
-  const formDataAccumulator = React.useRef<string>(storedFormData);
-
   async function onSubmit(values: z.infer<typeof step1Schema>) {
     try {
-      const userSession = await getCurrentUser();
-      const formData = new URLSearchParams();
-  
-      formData.append('nom', values.name || "");
-
-      const response = await fetch(env.NEXT_PUBLIC_API_URL + '/user/' + userSession?.id, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Bearer ${userSession?.accessToken}`,
-        },
-        body: formData.toString(),
-      });
-      if (!response.ok) {
-        throw new Error(`Failed to update user: ${response.statusText}`);
-      }
-      const responseData = await response.json();
-      console.log('User updated:', responseData.data);
-      
-      form.reset({
-        name: responseData.data.name
-      });
+      setData({ ...data, nom: values.name });
     } catch (err) {
       console.error(err);
     }
@@ -79,7 +56,8 @@ export function RegisterNomForm() {
           Suivant
           <span className="sr-only">Suivant</span>
         </Button>
-        
-        </form>
+
+      </form>
     </Form>
-  );}
+  );
+}
