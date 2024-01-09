@@ -55,7 +55,7 @@ export function RegisterClientForm() {
         formData.append('email', values.email);
         formData.append('phone', values.phone);
         formData.append('password', values.password);
-        formData.append('role', 'client');
+        formData.append('role', 'visitor');
 
         const res = await fetch(env.NEXT_PUBLIC_API_URL+'/register', {
           method: 'POST',

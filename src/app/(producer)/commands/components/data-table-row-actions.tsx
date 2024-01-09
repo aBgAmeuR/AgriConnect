@@ -41,7 +41,7 @@ export function DataTableRowActions<TData>({
   const task = OrderSchema.parse(row.original)
   const queryClient = useQueryClient();
   const [isOpenModal, setIsOpenModal] = useState(false)
-
+  
 
   const updateOrder = async (statut: string) => {
     const accessToken = await getAccessToken()
@@ -91,10 +91,6 @@ export function DataTableRowActions<TData>({
               </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            Facture
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <DataTableCommandeInfoDialog isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} orderId={task.numero} />

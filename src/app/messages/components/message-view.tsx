@@ -4,6 +4,8 @@ import { MessageComponents } from './message'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { revalidatePath } from 'next/cache'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   conversation: Conversation | null
@@ -11,6 +13,7 @@ type Props = {
 }
 
 export const MessageView = ({ conversation, sendMessage }: Props) => {
+  const router = useRouter()
   const getMessageOrientation = (message: Message) => {
     if (message.sender === conversation?.receiver) {
       return 'left'
@@ -24,6 +27,7 @@ export const MessageView = ({ conversation, sendMessage }: Props) => {
     const formData = new FormData(e.currentTarget)
     const message = formData.get('message') as string
     sendMessage(message, conversation?.receiver as string)
+    router.refresh()
   }
 
   return (
