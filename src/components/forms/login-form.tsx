@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from "react-hook-form"
 import { signIn } from 'next-auth/react';
 
@@ -35,6 +35,8 @@ export function LoginForm() {
   const [isPending, startTransition] = React.useTransition()
   const { toast } = useToast()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect')
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,7 +54,7 @@ export function LoginForm() {
           password: values.password,
           redirect: false,
         })
-        
+
         if (!signInResponse || signInResponse.ok !== true) {
           toast({
             variant: "destructive",
@@ -62,6 +64,11 @@ export function LoginForm() {
           })
         } else {
           const user = await getCurrentUser();
+
+          if (redirect) {
+            router.push(redirect)
+            return
+          }
 
           switch (user?.role) {
             case 'admin':

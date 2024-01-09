@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { redirect } from 'next/navigation';
 
 type CartItem = {
   product: Product;
@@ -39,6 +40,12 @@ export const ShopCart = ({ cartItems, setCart }: Props) => {
       setCart(newCart);
     }
   }
+
+  const onSubmit = () => {
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    redirect('/checkout');
+  }
+
   return (
     <Card className='my-4 h-min sticky top-12 overflow-hidden min-w-[250px] max-w-[300px] w-full'>
       <div className='bg-primary px-4 py-2'>
@@ -77,7 +84,7 @@ export const ShopCart = ({ cartItems, setCart }: Props) => {
           <p>Prix total (TTC)</p>
           <p className='font-semibold'>{formatPrice(cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0))}</p>
         </div>
-        <Button variant='default'>
+        <Button variant='default' onClick={onSubmit}>
           Commander
         </Button>
       </div>
