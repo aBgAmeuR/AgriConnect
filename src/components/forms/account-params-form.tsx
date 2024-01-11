@@ -40,7 +40,10 @@ const formSchema = z.object({
   email: z.string().email({
     message: 'Veuillez entrer une adresse e-mail valide.',
   }).optional(),
-  phone: z.string().regex(/^[0-9\s]{10}$/, {
+  phone: z.string({
+    required_error: 'Veuillez entrer un numéro de téléphone valide.',
+    invalid_type_error: 'Veuillez entrer un numéro de téléphone valide.',
+  }).regex(/^[0-9\s]{10}$/, {
     message: 'Veuillez entrer un numéro de téléphone valide.',
   }).optional(),
   password: z.string().min(8, {
@@ -63,44 +66,44 @@ export const AccountParamsForm = ({ data }: Props) => {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-  try {
-    const userSession = await getCurrentUser();
-    const formData = new URLSearchParams();
+    try {
+      const userSession = await getCurrentUser();
+      const formData = new URLSearchParams();
 
-    formData.append('nom', values.name || "");
-    formData.append('prenom', values.surname || "");
-    formData.append('email', values.email || "");
-    formData.append('numero', values.phone || "");
-    formData.append('password', values.password || "");
+      formData.append('nom', values.name || "");
+      formData.append('prenom', values.surname || "");
+      formData.append('email', values.email || "");
+      formData.append('numero', values.phone || "");
+      formData.append('password', values.password || "");
 
-    const response = await fetch(env.NEXT_PUBLIC_API_URL + '/user/' + userSession?.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Bearer ${userSession?.accessToken}`,
-      },
-      body: formData.toString(),
-    });
-    if (!response.ok) {
-      throw new Error(`Failed to update user: ${response.statusText}`);
+      const response = await fetch(env.NEXT_PUBLIC_API_URL + '/user/' + userSession?.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Bearer ${userSession?.accessToken}`,
+        },
+        body: formData.toString(),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to update user: ${response.statusText}`);
+      }
+      const responseData = await response.json();
+      console.log('User updated:', responseData.data);
+
+      form.reset({
+        name: responseData.data.name,
+        surname: responseData.data.surname,
+        email: responseData.data.email,
+        phone: responseData.data.phoneNumber,
+      });
+    } catch (err) {
+      console.error(err);
     }
-    const responseData = await response.json();
-    console.log('User updated:', responseData.data);
-    
-    form.reset({
-      name: responseData.data.name,
-      surname: responseData.data.surname,
-      email: responseData.data.email,
-      phone: responseData.data.phoneNumber,
-    });
-  } catch (err) {
-    console.error(err);
   }
-}
 
   const deleteUser = async () => {
     const user = await getCurrentUser()
-    await fetch(env.NEXT_PUBLIC_API_URL + '/user/'+user?.id, {
+    await fetch(env.NEXT_PUBLIC_API_URL + '/user/' + user?.id, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -218,7 +221,7 @@ export const AccountParamsForm = ({ data }: Props) => {
                 <Input
                   type="text"
                   placeholder="Votre numéro de téléphone"
-                  defaultValue={"0"+data.phoneNumber}
+                  defaultValue={"0" + data.phoneNumber}
                   onChange={e => {
                     e.target.value = e.target.value.replace(/[^0-9]/g, '')
                     field.onChange(e)
