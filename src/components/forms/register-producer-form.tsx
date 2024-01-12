@@ -114,7 +114,7 @@ export function RegisterProducerForm() {
             <FormItem>
               {/* <FormLabel>Email</FormLabel> */}
               <FormControl>
-                <Input type="email" placeholder="damiencren35@gmail.com" {...field} />
+                <Input type="email" placeholder="email@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
