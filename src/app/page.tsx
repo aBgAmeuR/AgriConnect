@@ -5,6 +5,8 @@ import SearchBar from './home/components/search-bar';
 import CategoriesShowcase from './home/components/home-catego';
 import InfoSection from './home/components/info-produit';
 import HomePageCard from '@/app/home/components/home-page-card';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const cardExplore = {
   title: 'Je veux acheter des produits locaux !',
@@ -27,33 +29,48 @@ export default async function Home() {
     <>
       <div className="flex flex-col items-stretch">
         <MainNavBar role={user?.role || 'visitor'} />
-        <main className=" w-full min-h-screen flex flex-col">
-          <div className=" flex items-center justify-center realtive w-full h-[263px] text-center">
-            <div className="-z-10 w-full h-[263px] absolute">
-              <Image src="/bienfaits-fruits-legumes.jpg" alt="Background" fill style={{ objectFit: 'cover' }} />
+        <main className=" w-full flex flex-col gap-4">
+          <section className='relative w-full h-[650px] xl:h-[750px] 2xl:h-[850px]'>
+            <div className='absolute w-full h-full -z-10 overflow-hidden'>
+              <Image src="/p/svg/bg1.svg" alt="Background" fill style={{ objectFit: 'cover' }} />
             </div>
-            <div className="banner-hero-title flex flex-col gap-2 mx-16  items-center">
-              <h1 className="text-3xl text-slate-50">Bienvenue sur AgriConnect !</h1>
-              <p className="text-sm text-slate-50">Retrouvez les produits du terroir et les producteurs en circuit court.</p>
+            <div className='max-w-lg flex flex-col gap-6 mt-24 ml-[10vw] xl:mt-32 xl:ml-[15vw] 2xl:mt-44 2xl:ml-[17vw]'>
+              <h1 className='text-4xl font-extrabold leading-10'>L'achat en direct auprès des producteurs : une solution gagnante pour tous.</h1>
+              <div className='gap-2 flex'>
+                <Link href='/explore'>
+                  <Button variant="default">Commencer</Button>
+                </Link>
+                <Link href='/producer'>
+                  <Button variant="outlineGreen">Je suis un producteur</Button>
+                </Link>
+              </div>
             </div>
-          </div> 
-          <div className="h-[100px] w-full flex flex-col justify-center items-center">
-            <SearchBar />
-          </div>
-
-          <CategoriesShowcase />
-
-          <InfoSection />
-
-          <div className="w-full min-h-full h-[517px] relative">
-            <Image src="/home-picture.jpg" alt="Background" fill style={{ objectFit: 'cover' }} />
-
-            <div className="relative mx-16 gap-12 flex flex-row items-center justify-between space-y-8 h-96">
-              <HomePageCard {...cardExplore} />
-              <HomePageCard {...cardSell} />
+          </section>
+          <section className='relative w-full flex flex-col gap-12'>
+            <div className='w-full flex justify-center'>
+              <h2 className='text-3xl font-semibold max-w-2xl text-center leading-9'>Découvrez comment AgriConnect connecte les producteurs locaux avec les clients</h2>
             </div>
-          </div>
+            <div className='mx-4 flex flex-row justify-around'>
+              <div className='flex flex-col gap-3 max-w-xs justify-center items-center'>
+                <Image src="/p/svg/home1.svg" alt="Illutration 1" width={165} height={175} />
+                <h3 className='text-2xl font-semibold text-center'>Explorez une large gamme de produits d'origine locale sur AgriConnect</h3>
+              </div>
+              <div className='flex flex-col gap-3 max-w-xs justify-center items-center'>
+                <Image src="/p/svg/home2.svg" alt="Illutration 2" width={233} height={175} />
+                <h3 className='text-2xl font-semibold text-center'>Soutenez les producteurs locaux et profitez de produits frais et de qualité</h3>
+              </div>
+              <div className='flex flex-col gap-3 max-w-xs justify-center items-center'>
+                <Image src="/p/svg/home3.svg" alt="Illutration 3" width={175} height={175} />
+                <h3 className='text-2xl font-semibold text-center'>Découvrez les avantages d'acheter localement sur AgriConnect</h3>
+              </div>
+            </div>
+          </section>
         </main>
+        <footer className='relative w-full h-[350px] xl:h-[450px] 2xl:h-[550px] mt-20'>
+          <div className='absolute w-full h-full -z-10 flex overflow-hidden'>
+            <Image src="/p/svg/footer.svg" alt="Background" fill style={{ objectFit: 'cover' }} />
+          </div>
+        </footer>
       </div>
     </>
   );
