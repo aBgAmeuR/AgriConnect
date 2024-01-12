@@ -61,7 +61,7 @@ export const AccountParamsForm = ({ data }: Props) => {
       name: data.name,
       surname: data.surname,
       email: data.email,
-      phone: data.phoneNumber,
+      phone: data.phoneNumber.toString(),
     },
   })
 
