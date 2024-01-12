@@ -76,11 +76,11 @@ export const navBarBtns: NavBtnBar = {
     },
   ],
   client: [
-    {
-      title: 'Mon panier',
-      href: '/cart',
-      variant: 'outline',
-    },
+    // {
+    //   title: 'Mon panier',
+    //   href: '/cart',
+    //   variant: 'outline',
+    // },
     {
       title: 'Mon compte',
       href: '/account',
